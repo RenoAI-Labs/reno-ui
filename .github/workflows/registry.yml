@@ -119,17 +119,22 @@ jobs:
         run: |
           # The bundle split is the reason `table` and `data-grid` are separate
           # items; without this check it can regress silently.
-          rm -rf /tmp/light && mkdir -p /tmp/light
-          cp /tmp/consumer/components.json /tmp/light/
+          #
+          # Scaffolded with create-next-app rather than `npm init -y`: the shadcn
+          # CLI reads tsconfig.json to resolve path aliases and refuses to run
+          # without a real project.
+          npx --yes create-next-app@16.3.4 /tmp/light \
+            --ts --tailwind --app --no-src-dir --eslint --use-npm --yes --skip-install
+          cp /tmp/consumer/components.json /tmp/light/components.json
           cd /tmp/light
-          npm init -y >/dev/null
-          npm pkg set dependencies.react=19.2.8 dependencies.react-dom=19.2.8 >/dev/null
-          mkdir -p app components lib
           npx shadcn@4.19.1 add @reno/table @reno/theme-cms --yes
           node -e '
             const deps = Object.keys(require("/tmp/light/package.json").dependencies || {});
             const leaked = deps.filter((d) => d.includes("tanstack"));
-            if (leaked.length) { console.error("TanStack leaked into a table-only project: " + leaked); process.exit(1); }
+            if (leaked.length) {
+              console.error("TanStack leaked into a table-only project: " + leaked.join(", "));
+              process.exit(1);
+            }
             console.log("Bundle boundary holds: no TanStack in a table-only project.");
           '
 
