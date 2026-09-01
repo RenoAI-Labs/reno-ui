@@ -35,6 +35,16 @@ jobs:
       - run: npm run registry:build
       - run: npx next build
 
+      # Every step above this line checks the code without ever running it.
+      # That is how a DataGrid that rendered zero rows, and a client mode that
+      # filtered nothing, stayed green for weeks. This step opens the built site
+      # in the Chrome preinstalled on the runner and asserts it actually draws.
+      - name: Pages must actually render
+        run: |
+          npx next start -p 3000 &
+          npx --yes wait-on http://127.0.0.1:3000 --timeout 60000
+          npm run check:render
+
       - name: Upload registry output
         uses: actions/upload-artifact@v4
         with:

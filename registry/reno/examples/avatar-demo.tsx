@@ -13,8 +13,12 @@ export default function AvatarDemo() {
         <AvatarImage src="https://github.com/shadcn.png" alt="Ảnh đại diện" />
         <AvatarFallback>AN</AvatarFallback>
       </Avatar>
+      {/*
+        Fallback state. Shown by omitting the image rather than pointing at a
+        deliberately broken URL: the broken URL worked, but left a permanent 404
+        in the console of a public docs site on every page that renders this demo.
+      */}
       <Avatar size="lg">
-        <AvatarImage src="/khong-ton-tai.png" alt="Ảnh đại diện" />
         <AvatarFallback>BC</AvatarFallback>
       </Avatar>
     </div>

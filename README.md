@@ -111,8 +111,12 @@ license of every component the client now owns.
 npm install
 npm run dev              # docs site at localhost:3000
 npm run registry:build   # regenerate public/r/*.json
-npm run verify           # everything CI runs: gates + lint + types + tests
+npm run verify           # static gates + lint + types + tests
 npm run check:all        # the generated-artifact and policy gates only
+
+# The render gate needs a build and a running server, so it is separate:
+npm run build && npx next start &
+npm run check:render     # opens the site in Chrome and asserts it draws
 ```
 
 | Command | Purpose |
@@ -124,6 +128,8 @@ npm run check:all        # the generated-artifact and policy gates only
 | `npm run check:contrast` | WCAG AA gate across all presets |
 | `npm run check:provenance` | License gate; regenerates the inventory in `docs/ui-components.md` |
 | `npm run check:boundaries` | Layering, framework-neutrality and bundle-split gate |
+| `npm run check:render` | Opens the built site in Chrome: rows render, no horizontal overflow, clean console |
+| `npm run bench:data-grid` | Scroll benchmark: 10k rows, three runs, prints FPS (not a CI gate — runner frame timing is noise) |
 
 Generated files are never edited by hand — `check:all` fails if they drift from
 their sources.
