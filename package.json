@@ -20,7 +20,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "registry:build": "npm run registry:assemble && shadcn build",
+    "registry:build": "npm run items:sync && npm run registry:assemble && shadcn build",
     "theme:sync": "node scripts/sync-theme-vars.mjs",
     "theme:sync:check": "node scripts/sync-theme-vars.mjs --check",
     "check:contrast": "node scripts/check-contrast.mjs",
@@ -28,14 +28,16 @@
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "check:render": "node scripts/check-render.mjs",
     "bench:data-grid": "node scripts/bench-data-grid.mjs",
-    "check:all": "npm run theme:generate:check && npm run theme:sync:check && npm run registry:assemble:check && npm run demos:generate:check && npm run check:contrast && npm run check:provenance -- --check && npm run check:boundaries",
+    "check:all": "npm run theme:generate:check && npm run theme:sync:check && npm run items:sync:check && npm run registry:assemble:check && npm run demos:generate:check && npm run check:contrast && npm run check:provenance -- --check && npm run check:boundaries",
     "theme:generate": "node scripts/generate-scale.mjs",
     "theme:generate:check": "node scripts/generate-scale.mjs --check",
     "demos:generate": "node scripts/generate-demo-index.mjs",
     "demos:generate:check": "node scripts/generate-demo-index.mjs --check",
     "registry:assemble": "node scripts/build-registry-json.mjs",
     "registry:assemble:check": "node scripts/build-registry-json.mjs --check",
-    "verify": "npm run check:all && npm run lint && npm run typecheck && npm test"
+    "verify": "npm run check:all && npm run lint && npm run typecheck && npm test",
+    "items:sync": "node scripts/sync-item-deps.mjs",
+    "items:sync:check": "node scripts/sync-item-deps.mjs --check"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.1",

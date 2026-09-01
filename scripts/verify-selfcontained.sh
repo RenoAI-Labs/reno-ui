@@ -40,17 +40,40 @@ fi
 echo "✔ No $NAMESPACE references"
 
 echo "→ Checking components.json"
-if [ -f components.json ] && grep -q '"registries"' components.json; then
-  echo "✘ components.json still declares a registries block."
+# In a monorepo the file sits in the app package, not at the root, so look for
+# every copy rather than only ./components.json.
+LEFTOVER="$(grep -rl '"registries"' --include=components.json \
+              --exclude-dir=node_modules --exclude-dir=.git . || true)"
+if [ -n "$LEFTOVER" ]; then
+  echo "✘ components.json still declares a registries block:"
+  echo "$LEFTOVER" | sed 's/^/    /'
   exit 1
 fi
 echo "✔ components.json clean"
 
-echo "→ npm ci"
-npm ci --no-audit --no-fund
+# Which package manager the customer actually uses. Assuming npm made this check
+# fail on the first real monorepo it met (pnpm workspace, no package-lock.json),
+# and a handover proof that cannot run is worth nothing.
+if [ -f pnpm-lock.yaml ]; then
+  PM="pnpm"; INSTALL="pnpm install --frozen-lockfile"
+elif [ -f yarn.lock ]; then
+  PM="yarn"; INSTALL="yarn install --immutable"
+elif [ -f bun.lockb ] || [ -f bun.lock ]; then
+  PM="bun"; INSTALL="bun install --frozen-lockfile"
+else
+  PM="npm"; INSTALL="npm ci --no-audit --no-fund"
+fi
 
-echo "→ npm run build"
-npm run build
+if ! command -v "$PM" >/dev/null 2>&1; then
+  echo "✘ Lockfile says this project uses $PM, which is not installed here."
+  exit 1
+fi
+
+echo "→ $INSTALL"
+$INSTALL
+
+echo "→ $PM run build"
+"$PM" run build
 
 echo
 echo "✔ Self-contained: clean clone installs and builds with no reno dependency."

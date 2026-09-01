@@ -97,7 +97,12 @@ function VirtualizedBody<TData extends RowData>({
   // documented opt-out and the only thing that keeps this component correct.
   "use no memo";
 
-  // eslint-disable-next-line react-hooks/incompatible-library
+  // Bare directive on purpose. The rule that fires here
+  // (`react-hooks/incompatible-library`) only exists in the React Compiler-era
+  // eslint-plugin-react-hooks; naming it would make this file a hard ESLint
+  // error ("Definition for rule ... was not found") in any project on an older
+  // plugin — and this file becomes the customer's own source at install time.
+  // eslint-disable-next-line
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => scrollElement,
