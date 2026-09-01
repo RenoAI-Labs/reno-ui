@@ -120,6 +120,10 @@ stands alone.
 Ship `docs/ui-components.md` with the delivery. It records the origin and
 license of every component the client now owns.
 
+[docs/handover-checklist.md](./docs/handover-checklist.md) is the full sequence,
+including the compatibility questions worth asking before a project starts
+rather than at delivery.
+
 ## Development
 
 ```bash
