@@ -70,7 +70,12 @@ export function SidebarInset({ className, ...props }: React.ComponentProps<"main
     <main
       data-slot="sidebar-inset"
       className={cn(
-        "bg-background relative flex w-full flex-1 flex-col",
+        // `min-w-0` is load-bearing. As a flex item this defaults to
+        // `min-width: auto`, so it refuses to shrink below the min-content width
+        // of whatever it holds — one wide table and the entire application
+        // scrolls sideways, sidebar and all, with nothing in the page itself
+        // looking wrong. Every app shell built on this hits it.
+        "bg-background relative flex w-full min-w-0 flex-1 flex-col",
         "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2",
         className,
       )}
@@ -93,7 +98,15 @@ export function SidebarSeparator({ className, ...props }: React.ComponentProps<t
   return (
     <Separator
       data-slot="sidebar-separator"
-      className={cn("bg-sidebar-border mx-2 w-auto", className)}
+      // The width override has to carry the same `data-[orientation]` modifier as
+      // the rule it replaces: tailwind-merge treats a modified utility and its
+      // bare form as different keys, so a plain `w-auto` loses to Separator's
+      // `data-[orientation=horizontal]:w-full` and the divider overhangs the
+      // sidebar by its own margins, giving the rail a horizontal scrollbar.
+      className={cn(
+        "bg-sidebar-border mx-2 data-[orientation=horizontal]:w-auto",
+        className,
+      )}
       {...props}
     />
   );

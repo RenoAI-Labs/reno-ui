@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { SiteHeader } from "@/app/site-header";
 import { ThemeProvider } from "@/app/theme-provider";
 
 import "./globals.css";
@@ -23,10 +22,13 @@ export default function RootLayout({
     // onto <html> before paint to avoid a flash of the wrong theme.
     <html lang="vi" suppressHydrationWarning>
       <body className="min-h-dvh antialiased">
-        <ThemeProvider>
-          <SiteHeader />
-          <main className="mx-auto w-full max-w-6xl px-6 py-10">{children}</main>
-        </ThemeProvider>
+        {/*
+          No chrome here on purpose. The docs route group supplies the header and
+          the reading-width container; /showcase is a full-bleed app screen that
+          owns the whole viewport and brings its own. A single shared wrapper
+          could not serve both — a nested layout cannot widen a parent container.
+        */}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

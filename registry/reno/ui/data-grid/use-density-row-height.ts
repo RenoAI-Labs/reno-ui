@@ -7,11 +7,11 @@ import * as React from "react";
  * so switching theme preset re-measures the virtualizer instead of leaving rows
  * at the previous preset's height.
  */
-export function useDensityRowHeight(ref: React.RefObject<HTMLElement | null>): number {
+export function useDensityRowHeight(element: HTMLElement | null): number {
   const [height, setHeight] = React.useState(44);
 
   React.useEffect(() => {
-    const el = ref.current;
+    const el = element;
     if (!el) return;
     const read = () => {
       const value = getComputedStyle(el).getPropertyValue("--density-row-height").trim();
@@ -30,7 +30,7 @@ export function useDensityRowHeight(ref: React.RefObject<HTMLElement | null>): n
       attributeFilter: ["class", "data-preset", "style"],
     });
     return () => observer.disconnect();
-  }, [ref]);
+  }, [element]);
 
   return height;
 }

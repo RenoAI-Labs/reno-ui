@@ -1497,6 +1497,47 @@
       }
     },
     {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "Biểu đồ cột/đường/vùng trên recharts. API khai báo (data + series), không có type recharts trong props. Màu series đọc --chart-1..5 nên đổi theo preset và light/dark. Chỉ cài khi cần — dự án không dùng biểu đồ không dính recharts.",
+      "dependencies": [
+        "recharts"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/chart/chart-series.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/chart/chart-legend.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/chart/chart-marks.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/chart/chart-tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/chart/index.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno trên recharts 3; shadcn/ui có chart nhưng theo hướng compose children của recharts, reno chọn API khai báo để giữ ranh giới thư viện như DataGrid",
+        "added": "2026-09-01",
+        "group": "Data"
+      }
+    },
+    {
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
@@ -1641,6 +1682,7 @@
         "@reno/button",
         "@reno/select",
         "@reno/dropdown-menu",
+        "@reno/checkbox",
         "@reno/skeleton",
         "@reno/grid-state",
         "@reno/grid-query",
@@ -1673,6 +1715,10 @@
         },
         {
           "path": "registry/reno/ui/data-grid/data-grid-states.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/data-grid/selection-column.tsx",
           "type": "registry:ui"
         },
         {

@@ -18,7 +18,13 @@ function ScrollArea({
     >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
-        className="size-full rounded-[inherit] outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1"
+        // `[&>div]:block!` overrides the `display: table` Radix sets inline on its
+        // content wrapper. A table box sizes to max-content, so nothing inside a
+        // ScrollArea can ever shrink: `truncate` never engages, and a row with a
+        // trailing badge overflows its card instead of ellipsising. Block keeps
+        // Radix's `min-width: 100%`, so horizontally scrollable content still
+        // scrolls.
+        className="size-full rounded-[inherit] outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 [&>div]:block!"
       >
         {children}
       </ScrollAreaPrimitive.Viewport>

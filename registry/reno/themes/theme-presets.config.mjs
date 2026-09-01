@@ -11,6 +11,8 @@
  * `npm run theme:generate`. Never edit the generated `.css` files directly.
  */
 
+import { clampChroma } from "culori";
+
 /** Lightness stops for an 11-step OKLCH ramp (50 -> 950). */
 export const RAMP_STOPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
@@ -27,6 +29,44 @@ export const RAMP_LIGHTNESS = [
 export const RAMP_CHROMA_SCALE = [
   0.09, 0.18, 0.35, 0.6, 0.85, 1.0, 1.0, 0.92, 0.8, 0.7, 0.55,
 ];
+
+/**
+ * Ramp construction lives here, not in `scripts/generate-scale.mjs`, because it
+ * has two callers: the build script that writes the shipped presets, and the
+ * showcase brand picker that builds a ramp in the browser. Two copies would
+ * mean the picker previews colours the presets never produce — the same class
+ * of drift `sync-theme-vars.mjs` guards against one layer up.
+ *
+ * This module is plain `.mjs` on purpose: Node 20 cannot import TypeScript, so
+ * a `.ts` module could not be shared with the build script at all.
+ */
+
+/** Round to 4 decimals so generated files are byte-stable across runs. */
+export const r4 = (n) => Math.round(n * 10000) / 10000;
+
+/** Build an sRGB-safe OKLCH colour object. */
+export function mk(l, c, h) {
+  return clampChroma({ mode: "oklch", l, c, h }, "oklch", "rgb");
+}
+
+/** Serialise as `oklch(L C H)` with stable precision. */
+export function css(color) {
+  const { l, c, h } = color;
+  if (c < 0.0005) return `oklch(${r4(l)} 0 0)`;
+  return `oklch(${r4(l)} ${r4(c)} ${r4(h ?? 0)})`;
+}
+
+/**
+ * Build an 11-step ramp for a hue. Lightness comes from the shared stop table;
+ * chroma is scaled so it peaks mid-ramp, which keeps the light end from looking
+ * muddy and the dark end from looking neon.
+ */
+export function buildRamp({ h, c }) {
+  return RAMP_STOPS.map((stop, i) => ({
+    stop,
+    color: mk(RAMP_LIGHTNESS[i], c * RAMP_CHROMA_SCALE[i], h),
+  }));
+}
 
 /** WCAG AA thresholds. `check-contrast.mjs` enforces the same numbers. */
 export const CONTRAST = {

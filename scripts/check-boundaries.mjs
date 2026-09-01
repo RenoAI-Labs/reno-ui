@@ -39,6 +39,13 @@ const RULES = [
       "`table` is the lightweight styled <table> for CMS and e-learning list views. Heavy grid features belong to @reno/data-grid, so a project installing only `table` pays no TanStack bundle cost.",
   },
   {
+    dir: "registry/reno/ui",
+    forbid: [{ pattern: /^recharts(\/|$)/, why: "recharts belongs to the chart item alone" }],
+    except: ["registry/reno/ui/chart"],
+    reason:
+      "`chart` is a separate registry item so a project that draws no charts never installs recharts. The moment another primitive imports it, that split is gone and every consumer pays for it — the same reason `table` may not import TanStack.",
+  },
+  {
     dir: "registry/reno/ui/data-grid",
     forbid: [/\bnext-intl\b/, /\bi18next\b/, /react-i18next/, /\@lingui\//],
     reason:
@@ -56,14 +63,18 @@ const RULES = [
   },
 ];
 
-// Static import/export, CommonJS require, and dynamic import().
+// Static import/export, side-effect import, CommonJS require, and dynamic import().
 //
 // `[^;]` rather than `[\s\S]` in the static branch matters: an unbounded lazy
 // scan starting at the `import` of `import("x")` runs forward to the NEXT
 // `from "..."` in the file and swallows the dynamic import whole, so the
 // dynamic branch never gets a chance to match.
+//
+// The bare `import "x"` branch is not academic: it is the one form that pulls a
+// package in for its side effects alone, so a banned dependency written that way
+// would land in the consumer's bundle with every other branch here blind to it.
 const IMPORT_RE =
-  /(?:import|export)[^;]*?from\s*["']([^"']+)["']|require\(\s*["']([^"']+)["']\s*\)|\bimport\(\s*["']([^"']+)["']\s*\)/g;
+  /(?:import|export)[^;]*?from\s*["']([^"']+)["']|\bimport\s+["']([^"']+)["']|require\(\s*["']([^"']+)["']\s*\)|\bimport\(\s*["']([^"']+)["']\s*\)/g;
 
 function collectFiles(target) {
   const abs = join(ROOT, target);
@@ -82,7 +93,7 @@ function collectFiles(target) {
 function importsOf(source) {
   const found = [];
   for (const match of source.matchAll(IMPORT_RE)) {
-    found.push(match[1] ?? match[2] ?? match[3]);
+    found.push(match[1] ?? match[2] ?? match[3] ?? match[4]);
   }
   return found.filter(Boolean);
 }
@@ -119,8 +130,13 @@ function main() {
   let filesChecked = 0;
 
   for (const rule of RULES) {
-    const files = collectFiles(rule.dir);
     const patterns = normalise(rule.forbid);
+    // `except` carves the owning directory out of a rule aimed at its parent,
+    // which is how "recharts anywhere under ui/ except ui/chart" is expressed.
+    const exceptions = (rule.except ?? []).map((dir) => join(ROOT, dir));
+    const files = collectFiles(rule.dir).filter(
+      (file) => !exceptions.some((dir) => file.startsWith(`${dir}/`) || file === dir),
+    );
 
     for (const file of files) {
       filesChecked += 1;

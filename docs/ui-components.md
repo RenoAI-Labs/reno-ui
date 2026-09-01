@@ -66,6 +66,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `button` | ui | Form | shadcn/ui | MIT | shadcn button, new-york style; sizes rewritten to read density tokens | 2026-09-01 |
 | `calendar` | ui | Data | shadcn/ui | MIT | shadcn calendar, new-york style, react-day-picker v10; sizing rewritten to read density tokens, locale defaulted to vi | 2026-09-01 |
 | `card` | ui | Layout | shadcn/ui | MIT | shadcn card, new-york style; no changes needed, padding already uses normal spacing | 2026-09-01 |
+| `chart` | ui | Data | original | original | Viết cho reno trên recharts 3; shadcn/ui có chart nhưng theo hướng compose children của recharts, reno chọn API khai báo để giữ ranh giới thư viện như DataGrid | 2026-09-01 |
 | `checkbox` | ui | Form | shadcn/ui | MIT | shadcn checkbox, new-york style; unchanged | 2026-09-01 |
 | `collapsible` | ui | Layout | shadcn/ui | MIT | shadcn collapsible, new-york style; unchanged | 2026-09-01 |
 | `combobox` | ui | Form | original | original | shadcn only documents this as a recipe combining Popover/Command/Button; written from scratch as a typed, reusable component | 2026-09-01 |

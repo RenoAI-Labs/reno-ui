@@ -270,3 +270,81 @@ describe("DataGrid feature flags", () => {
     expect(screen.queryAllByRole("separator")).toHaveLength(0);
   });
 });
+
+/**
+ * Client mode was never exercised end-to-end before the showcase used it, and
+ * all three of these failed silently: the toolbar and pager updated, the rows
+ * did not. They fail silently because every stage of the v9 row-model chain
+ * falls through to the core rows when the model is not registered, so nothing
+ * throws and nothing looks wrong until you read the rows themselves.
+ */
+describe("DataGrid client mode", () => {
+  type Item = { id: string; name: string; qty: number };
+
+  const manyColumns = createGridColumns<Item>((col) => [
+    col.accessor("name", { header: "Tên" }),
+    col.accessor("qty", { header: "Số lượng" }),
+  ]);
+
+  const many: Item[] = Array.from({ length: 240 }, (_, i) => ({
+    id: String(i),
+    // Zero-padded so string ordering and numeric ordering agree, which keeps
+    // the sort assertion about the grid rather than about collation.
+    name: `Mục ${String(i).padStart(3, "0")}`,
+    qty: 240 - i,
+  }));
+
+  function ClientHarness({ initial }: { initial?: Partial<GridState> }) {
+    const [state, setState] = React.useState<GridState>(() => ({
+      ...emptyGridState(25),
+      ...initial,
+    }));
+    return (
+      <DataGrid
+        columns={manyColumns}
+        data={many}
+        state={state}
+        onStateChange={setState}
+        getRowId={(row) => row.id}
+        mode="client"
+        labels={englishLabels}
+      />
+    );
+  }
+
+  it("renders only the requested page, not the whole dataset", () => {
+    render(<ClientHarness />);
+    expect(screen.getAllByRole("row")).toHaveLength(26); // 25 rows + header
+    expect(screen.getByText("Mục 000")).toBeInTheDocument();
+    expect(screen.queryByText("Mục 025")).not.toBeInTheDocument();
+  });
+
+  it("moves to the rows of the requested page", () => {
+    render(<ClientHarness initial={{ pagination: { pageIndex: 1, pageSize: 25 } }} />);
+    expect(screen.getByText("Mục 025")).toBeInTheDocument();
+    expect(screen.queryByText("Mục 000")).not.toBeInTheDocument();
+  });
+
+  it("applies the global filter to the rendered rows and to the total", () => {
+    render(<ClientHarness initial={{ globalFilter: "Mục 12" }} />);
+    // Matches "Mục 120" through "Mục 129": ten rows, plus the header row.
+    expect(screen.getAllByRole("row")).toHaveLength(11);
+    expect(screen.getByText("Mục 120")).toBeInTheDocument();
+    expect(screen.queryByText("Mục 000")).not.toBeInTheDocument();
+  });
+
+  it("applies sorting to the rendered rows", () => {
+    render(<ClientHarness initial={{ sorting: [{ id: "qty", desc: false }] }} />);
+    const firstDataRow = screen.getAllByRole("row")[1];
+    expect(within(firstDataRow).getByText("Mục 239")).toBeInTheDocument();
+  });
+
+  it("renders rows through the virtualizer once the page is large enough", () => {
+    // Above DEFAULT_VIRTUALIZE_THRESHOLD the body switches to the virtualized
+    // path, which renders nothing at all unless it re-renders after the scroll
+    // viewport is attached.
+    render(<ClientHarness initial={{ pagination: { pageIndex: 0, pageSize: 240 } }} />);
+    expect(screen.getAllByRole("row").length).toBeGreaterThan(1);
+    expect(screen.getByText("Mục 000")).toBeInTheDocument();
+  });
+});

@@ -22,19 +22,20 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { clampChroma, formatCss, oklch, wcagContrast } from "culori";
+import { formatCss, oklch, wcagContrast } from "culori";
 
 import {
   BASE_PRESET,
   CONTRAST,
   PRESETS,
-  RAMP_CHROMA_SCALE,
-  RAMP_LIGHTNESS,
   RAMP_STOPS,
   ANIMATION_CSS,
   ANIMATION_THEME_TOKENS,
   STATIC_THEME_TOKENS,
   STATUS_HUES,
+  buildRamp,
+  css,
+  mk,
 } from "../registry/reno/themes/theme-presets.config.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -46,35 +47,11 @@ const STATUS_STOPS = [100, 500, 700];
 // Colour helpers
 // ---------------------------------------------------------------------------
 
-/** Round to 4 decimals so generated files are byte-stable across runs. */
-const r4 = (n) => Math.round(n * 10000) / 10000;
-
-/** Build an sRGB-safe OKLCH colour object. */
-function mk(l, c, h) {
-  return clampChroma({ mode: "oklch", l, c, h }, "oklch", "rgb");
-}
-
-/** Serialise as `oklch(L C H)` with stable precision. */
-function css(color) {
-  const { l, c, h } = color;
-  if (c < 0.0005) return `oklch(${r4(l)} 0 0)`;
-  return `oklch(${r4(l)} ${r4(c)} ${r4(h ?? 0)})`;
-}
+// `mk`, `css` and `buildRamp` come from theme-presets.config.mjs so the browser
+// brand picker in the showcase builds ramps with the exact same maths.
 
 function contrast(a, b) {
   return wcagContrast(css(a), css(b));
-}
-
-/**
- * Build an 11-step ramp for a hue. Lightness comes from the shared stop table;
- * chroma is scaled so it peaks mid-ramp, which keeps the light end from looking
- * muddy and the dark end from looking neon.
- */
-function buildRamp({ h, c }) {
-  return RAMP_STOPS.map((stop, i) => ({
-    stop,
-    color: mk(RAMP_LIGHTNESS[i], c * RAMP_CHROMA_SCALE[i], h),
-  }));
 }
 
 /**

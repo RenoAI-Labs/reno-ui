@@ -36,7 +36,17 @@ type BodyProps<TData extends RowData> = {
   rows: Row<GridFeatures, TData>[];
   onRowClick?: (rowId: string) => void;
   estimatedRowHeight: number;
-  scrollRef: React.RefObject<HTMLDivElement | null>;
+  /**
+   * The scroll viewport, as an element rather than a ref.
+   *
+   * This is load-bearing for the virtualized path below: TanStack Virtual only
+   * attaches its resize and scroll observers once `getScrollElement()` returns a
+   * node, and it re-checks that on render. A ref is populated *after* the render
+   * that creates it and triggers no second render, so with a ref the virtualizer
+   * could stay unattached forever and the body would render a full-height
+   * spacer containing no rows. Passing state guarantees the extra render.
+   */
+  scrollElement: HTMLElement | null;
   virtualizeThreshold?: number;
 };
 
@@ -44,7 +54,7 @@ export function DataGridBody<TData extends RowData>({
   rows,
   onRowClick,
   estimatedRowHeight,
-  scrollRef,
+  scrollElement,
   virtualizeThreshold = DEFAULT_VIRTUALIZE_THRESHOLD,
 }: BodyProps<TData>) {
   if (rows.length <= virtualizeThreshold) {
@@ -67,7 +77,7 @@ export function DataGridBody<TData extends RowData>({
       rows={rows}
       onRowClick={onRowClick}
       estimatedRowHeight={estimatedRowHeight}
-      scrollRef={scrollRef}
+      scrollElement={scrollElement}
     />
   );
 }
@@ -76,16 +86,21 @@ function VirtualizedBody<TData extends RowData>({
   rows,
   onRowClick,
   estimatedRowHeight,
-  scrollRef,
+  scrollElement,
 }: Omit<BodyProps<TData>, "virtualizeThreshold">) {
-  // React Compiler cannot analyse TanStack Virtual's returned functions, so it
-  // skips this component rather than memoising it. That is an upstream
-  // limitation, not a defect here — and it applies only to the large-list path,
-  // which is why the plain body above is kept separate.
+  // TanStack Virtual keeps its window in a mutable instance and signals updates
+  // by forcing a re-render; the values it returns are not derived from props or
+  // state React can see. React Compiler therefore caches `getVirtualItems()`
+  // from the first render — when the scroll element has not been measured yet
+  // and the window is empty — and never recomputes it, so the body renders a
+  // full-height spacer containing no rows at all. `"use no memo"` is TanStack's
+  // documented opt-out and the only thing that keeps this component correct.
+  "use no memo";
+
   // eslint-disable-next-line react-hooks/incompatible-library
   const virtualizer = useVirtualizer({
     count: rows.length,
-    getScrollElement: () => scrollRef.current,
+    getScrollElement: () => scrollElement,
     estimateSize: () => estimatedRowHeight,
     // A larger overscan costs a few extra rows of DOM but removes the blank
     // band users see when flicking a trackpad hard.

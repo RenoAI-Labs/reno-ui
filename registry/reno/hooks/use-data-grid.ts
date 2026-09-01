@@ -1,7 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { useTable, type RowData } from "@tanstack/react-table";
+import {
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
+  useTable,
+  type RowData,
+} from "@tanstack/react-table";
 import {
   gridFeatures,
   type GridColumn,
@@ -45,6 +51,26 @@ export type UseDataGridOptions<TData extends RowData> = {
   enableColumnResizing?: boolean;
   enableColumnPinning?: boolean;
 };
+
+/**
+ * Client-side row models, registered alongside the features.
+ *
+ * v9 makes these opt-in, and the failure when they are missing is silent rather
+ * than loud: every stage of the model chain falls through to the core rows, so
+ * the toolbar filters, the sort arrow flips and the pager advances while the
+ * rendered rows never change. Registered only in client mode — in server mode
+ * the manual flags short-circuit the chain anyway, so building them would be
+ * pure waste.
+ */
+function clientRowModels(manual: boolean) {
+  if (manual) return gridFeatures;
+  return {
+    ...gridFeatures,
+    filteredRowModel: createFilteredRowModel(),
+    sortedRowModel: createSortedRowModel(),
+    paginatedRowModel: createPaginatedRowModel(),
+  };
+}
 
 /**
  * TanStack's per-slice handlers take an `Updater<T>` — a value or a function.
@@ -111,7 +137,8 @@ export function useDataGrid<TData extends RowData>({
   }, [onStateChange]);
 
   const table = useTable<GridFeatures, TData>({
-    features: gridFeatures,
+    features: clientRowModels(manual),
+
     data,
     columns,
     getRowId,

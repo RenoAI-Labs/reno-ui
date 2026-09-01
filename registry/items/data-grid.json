@@ -13,6 +13,7 @@
     "@reno/button",
     "@reno/select",
     "@reno/dropdown-menu",
+    "@reno/checkbox",
     "@reno/skeleton",
     "@reno/grid-state",
     "@reno/grid-query",
@@ -45,6 +46,10 @@
     },
     {
       "path": "registry/reno/ui/data-grid/data-grid-states.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/data-grid/selection-column.tsx",
       "type": "registry:ui"
     },
     {

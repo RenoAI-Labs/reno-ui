@@ -77,7 +77,13 @@ export function DataGridPagination({
         )}
       </div>
 
-      <div className="ms-auto flex items-center gap-[var(--density-gap)]">
+      {/*
+        Wraps as well as the bar itself. A grid is not always full width — put
+        one in a side panel or a three-up dashboard column and this group,
+        unwrapped, runs the last-page button straight off the edge where nothing
+        can scroll to it.
+      */}
+      <div className="ms-auto flex flex-wrap items-center justify-end gap-[var(--density-gap)]">
         <div className="flex items-center gap-2">
           <span className="whitespace-nowrap text-muted-foreground">
             {labels.rowsPerPage}

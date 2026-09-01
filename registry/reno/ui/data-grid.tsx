@@ -21,6 +21,7 @@ import {
   DataGridSkeleton,
 } from "@/components/ui/data-grid/data-grid-states";
 import { useDensityRowHeight } from "@/components/ui/data-grid/use-density-row-height";
+import { selectionColumn } from "@/components/ui/data-grid/selection-column";
 
 /**
  * A virtualized data grid for admin and ERP screens.
@@ -99,7 +100,9 @@ export function DataGrid<TData extends RowData>({
   emptyAction,
 }: DataGridProps<TData>) {
   const labels = React.useMemo(() => resolveLabels(labelOverrides), [labelOverrides]);
-  const scrollRef = React.useRef<HTMLDivElement>(null);
+  // State, not a ref: the virtualized body needs a render once the viewport
+  // exists — see the `scrollElement` prop on DataGridBody.
+  const [scrollElement, setScrollElement] = React.useState<HTMLDivElement | null>(null);
 
   const table = useDataGrid<TData>({
     data,
@@ -116,7 +119,17 @@ export function DataGrid<TData extends RowData>({
     enableColumnPinning,
   });
 
-  const rows = table.getRowModel().rows;
+  /**
+   * `getPaginatedRowModel()`, not `getRowModel()`.
+   *
+   * In TanStack v9 the row models are a chain and `getRowModel()` is the *core*
+   * one — unfiltered, unsorted, unpaged. Rendering from it silently ignores
+   * every client-mode operation: the footer moves to page 2, the sort arrow
+   * flips, the search box fills, and the rows never change. The paginated model
+   * sits at the end of the chain, and in server mode the manual flags make each
+   * link a pass-through, so this is correct for both modes.
+   */
+  const rows = table.getPaginatedRowModel().rows;
   const headerGroups = table.getHeaderGroups();
 
   /**
@@ -138,11 +151,15 @@ export function DataGrid<TData extends RowData>({
   };
 
   const totalWidth = table.getVisibleLeafColumns().reduce((sum, c) => sum + c.getSize(), 0);
-  const total = mode === "server" ? (rowCount ?? 0) : rows.length;
+  // The row count the footer reports is "rows matching the current filters",
+  // which in client mode is the filtered model — `rows` is only the current
+  // page, so using it would make every page claim to be the whole result.
+  const total =
+    mode === "server" ? (rowCount ?? 0) : table.getFilteredRowModel().rows.length;
 
   // Density drives row height, so ERP renders more rows per screen than
   // e-learning with no prop and no code change.
-  const rowHeight = useDensityRowHeight(scrollRef);
+  const rowHeight = useDensityRowHeight(scrollElement);
 
   const showEmpty = !isLoading && !error && rows.length === 0;
 
@@ -163,7 +180,7 @@ export function DataGrid<TData extends RowData>({
         className={cn("flex flex-col overflow-hidden rounded-lg border border-border", className)}
       >
         <div
-          ref={scrollRef}
+          ref={setScrollElement}
           className="relative overflow-auto"
           style={{ height }}
         >
@@ -189,7 +206,7 @@ export function DataGrid<TData extends RowData>({
                 rows={rows}
                 onRowClick={onRowClick}
                 estimatedRowHeight={rowHeight}
-                scrollRef={scrollRef}
+                scrollElement={scrollElement}
               />
             ) : null}
           </table>
@@ -231,3 +248,5 @@ export function DataGrid<TData extends RowData>({
     </DataGridProvider>
   );
 }
+
+export { selectionColumn };

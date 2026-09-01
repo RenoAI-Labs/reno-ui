@@ -6,6 +6,7 @@ const NAV = [
   { href: "/", label: "Tổng quan" },
   { href: "/components", label: "Component" },
   { href: "/theming", label: "Theme" },
+  { href: "/showcase", label: "Showcase" },
   { href: "/perf/data-grid", label: "Benchmark" },
 ];
 
