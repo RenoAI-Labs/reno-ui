@@ -60,8 +60,6 @@ const MOBILE = { width: 390, height: 844 };
  */
 const IGNORED_CONSOLE = [
   /Download the React DevTools/i,
-  // No favicon is declared yet. Cosmetic, and unrelated to whether a page drew.
-  /\/favicon\.ico$/i,
 ];
 
 function findChrome() {
