@@ -69,6 +69,21 @@ empty, loading and error states.
 They are separate registry items on purpose — a CMS project installing `table`
 gets no TanStack in its bundle, and CI fails if that ever stops being true.
 
+TanStack Table v9 was chosen partly because its features are tree-shakable.
+Measured rather than assumed (`npm run bench:tanstack`, esbuild, minified, React
+external):
+
+| Build | Minified | Gzipped |
+|---|---|---|
+| v8.21.3, all features (v8 has no opt-out) | 53.0 kB | 14.1 kB |
+| v9.2.4, the ten features DataGrid registers | 77.0 kB | 21.2 kB |
+| v9.2.4, core row model only | 32.4 kB | 10.5 kB |
+
+The tree-shaking is real — dropping to the core model cuts 58% — but DataGrid
+registers every feature, so as shipped it costs about 45% more than v8 would.
+The saving is available to a grid that lets a project opt features out, which
+this one does not do yet.
+
 The grid never fetches. It emits state; you wire that to React Query, a server
 action, or the URL via `@reno/use-data-grid-url-state`. See the server contract
 doc for the wiring.

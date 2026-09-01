@@ -37,7 +37,8 @@
     "registry:assemble:check": "node scripts/build-registry-json.mjs --check",
     "verify": "npm run check:all && npm run lint && npm run typecheck && npm test",
     "items:sync": "node scripts/sync-item-deps.mjs",
-    "items:sync:check": "node scripts/sync-item-deps.mjs --check"
+    "items:sync:check": "node scripts/sync-item-deps.mjs --check",
+    "bench:tanstack": "node scripts/measure-tanstack-bundle.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.1",
