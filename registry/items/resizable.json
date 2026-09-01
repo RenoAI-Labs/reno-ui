@@ -3,8 +3,13 @@
   "type": "registry:ui",
   "title": "Resizable",
   "description": "Bố cục nhiều khung có thể kéo giãn, dựa trên react-resizable-panels v4 (Group/Panel/Separator).",
-  "dependencies": ["react-resizable-panels", "lucide-react"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "react-resizable-panels@^4.12.3",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
     {
       "path": "registry/reno/ui/resizable.tsx",

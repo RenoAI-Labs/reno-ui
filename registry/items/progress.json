@@ -3,8 +3,12 @@
   "type": "registry:ui",
   "title": "Progress",
   "description": "Thanh tiến trình dựa trên Radix Progress, phần chỉ báo dùng bg-primary.",
-  "dependencies": ["@radix-ui/react-progress"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "@radix-ui/react-progress@^1.1.16"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
     {
       "path": "registry/reno/ui/progress.tsx",

@@ -4,8 +4,8 @@
   "title": "Button",
   "description": "Button and link-button. Sizes read the density tokens, so the same code renders compact in ERP and roomy in e-learning.",
   "dependencies": [
-    "@radix-ui/react-slot",
-    "class-variance-authority"
+    "@radix-ui/react-slot@^1.3.3",
+    "class-variance-authority@^0.7.1"
   ],
   "registryDependencies": [
     "@reno/utils"

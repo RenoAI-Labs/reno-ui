@@ -3,9 +3,21 @@
   "type": "registry:ui",
   "title": "Calendar",
   "description": "Lịch chọn ngày dựa trên react-day-picker v10, mặc định locale tiếng Việt (date-fns/locale/vi). Nút điều hướng tái sử dụng buttonVariants.",
-  "dependencies": ["react-day-picker", "date-fns", "lucide-react"],
-  "registryDependencies": ["@reno/utils", "@reno/button"],
-  "files": [{ "path": "registry/reno/ui/calendar.tsx", "type": "registry:ui" }],
+  "dependencies": [
+    "react-day-picker@^10.0.1",
+    "date-fns@^4.4.0",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/calendar.tsx",
+      "type": "registry:ui"
+    }
+  ],
   "meta": {
     "source": "shadcn/ui",
     "license": "MIT",

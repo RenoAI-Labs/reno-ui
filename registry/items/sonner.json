@@ -3,8 +3,12 @@
   "type": "registry:ui",
   "title": "Sonner",
   "description": "Bọc Toaster của sonner, không phụ thuộc next-themes; màu sắc ánh xạ qua CSS variable API của sonner theo token reno.",
-  "dependencies": ["sonner"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "sonner@^2.0.8"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
     {
       "path": "registry/reno/ui/sonner.tsx",

@@ -3,10 +3,17 @@
   "type": "registry:ui",
   "title": "Slider",
   "description": "Thanh trượt chọn giá trị dựa trên Radix Slider, hỗ trợ nhiều điểm kéo.",
-  "dependencies": ["@radix-ui/react-slider"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "@radix-ui/react-slider@^1.4.7"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
-    { "path": "registry/reno/ui/slider.tsx", "type": "registry:ui" }
+    {
+      "path": "registry/reno/ui/slider.tsx",
+      "type": "registry:ui"
+    }
   ],
   "meta": {
     "source": "shadcn/ui",

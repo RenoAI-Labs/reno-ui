@@ -3,8 +3,12 @@
   "type": "registry:ui",
   "title": "Aspect Ratio",
   "description": "Giữ tỉ lệ khung hình cố định cho nội dung con, dựa trên Radix Aspect Ratio.",
-  "dependencies": ["@radix-ui/react-aspect-ratio"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "@radix-ui/react-aspect-ratio@^1.1.15"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
     {
       "path": "registry/reno/ui/aspect-ratio.tsx",

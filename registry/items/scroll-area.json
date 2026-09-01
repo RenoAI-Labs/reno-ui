@@ -3,8 +3,12 @@
   "type": "registry:ui",
   "title": "Scroll Area",
   "description": "Vùng cuộn có thanh cuộn tuỳ biến, dựa trên Radix Scroll Area.",
-  "dependencies": ["@radix-ui/react-scroll-area"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "@radix-ui/react-scroll-area@^1.2.18"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
     {
       "path": "registry/reno/ui/scroll-area.tsx",

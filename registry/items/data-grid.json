@@ -4,9 +4,9 @@
   "title": "DataGrid",
   "description": "Grid ảo hoá cho admin/ERP: 10k+ dòng, server-side pagination/sort/filter, ghim/resize/ẩn cột, chọn dòng xuyên trang, empty/loading/error có sẵn. Chỉ cài khi cần — dự án nhẹ dùng @reno/table.",
   "dependencies": [
-    "@tanstack/react-table",
-    "@tanstack/react-virtual",
-    "lucide-react"
+    "@tanstack/react-table@^9.2.4",
+    "@tanstack/react-virtual@^3.14.10",
+    "lucide-react@^1.38.0"
   ],
   "registryDependencies": [
     "@reno/utils",

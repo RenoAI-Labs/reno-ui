@@ -4,8 +4,8 @@
   "title": "Badge",
   "description": "Nhãn nhỏ với các biến thể default/secondary/destructive/outline/success/warning/info, hỗ trợ asChild.",
   "dependencies": [
-    "@radix-ui/react-slot",
-    "class-variance-authority"
+    "@radix-ui/react-slot@^1.3.3",
+    "class-variance-authority@^0.7.1"
   ],
   "registryDependencies": [
     "@reno/utils"

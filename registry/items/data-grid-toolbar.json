@@ -3,7 +3,9 @@
   "type": "registry:ui",
   "title": "DataGrid Toolbar",
   "description": "Thanh công cụ cho DataGrid: tìm kiếm có debounce, chip bộ lọc đang bật, ẩn/hiện cột, xuất dữ liệu. Item riêng để màn hình không cần thì không phải cài.",
-  "dependencies": ["lucide-react"],
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
   "registryDependencies": [
     "@reno/utils",
     "@reno/button",
@@ -13,7 +15,12 @@
     "@reno/grid-state",
     "@reno/grid-labels"
   ],
-  "files": [{ "path": "registry/reno/ui/data-grid-toolbar.tsx", "type": "registry:ui" }],
+  "files": [
+    {
+      "path": "registry/reno/ui/data-grid-toolbar.tsx",
+      "type": "registry:ui"
+    }
+  ],
   "meta": {
     "source": "original",
     "license": "original",

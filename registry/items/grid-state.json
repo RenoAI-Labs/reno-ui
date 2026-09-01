@@ -4,7 +4,7 @@
   "title": "Grid State",
   "description": "Kiểu state và column của DataGrid. Cho phép dự án khai báo state, URL sync, React Query key mà không cần import TanStack Table.",
   "dependencies": [
-    "@tanstack/react-table"
+    "@tanstack/react-table@^9.2.4"
   ],
   "registryDependencies": [
     "@reno/grid-query"

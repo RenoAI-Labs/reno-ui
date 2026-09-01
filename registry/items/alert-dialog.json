@@ -4,7 +4,7 @@
   "title": "Alert Dialog",
   "description": "Hộp thoại xác nhận bắt buộc phản hồi (Radix Alert Dialog), nút hành động dùng lại buttonVariants.",
   "dependencies": [
-    "@radix-ui/react-alert-dialog"
+    "@radix-ui/react-alert-dialog@^1.1.23"
   ],
   "registryDependencies": [
     "@reno/utils",

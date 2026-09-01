@@ -4,8 +4,8 @@
   "title": "Sheet",
   "description": "Bảng trượt vào từ cạnh màn hình (Radix Dialog), hỗ trợ bốn hướng top/right/bottom/left.",
   "dependencies": [
-    "@radix-ui/react-dialog",
-    "class-variance-authority"
+    "@radix-ui/react-dialog@^1.1.23",
+    "class-variance-authority@^0.7.1"
   ],
   "registryDependencies": [
     "@reno/utils"

@@ -3,9 +3,19 @@
   "type": "registry:ui",
   "title": "Avatar",
   "description": "Ảnh đại diện với ảnh, chữ viết tắt dự phòng và ba cỡ đọc token density, đồng bộ chiều cao với Button.",
-  "dependencies": ["@radix-ui/react-avatar", "class-variance-authority"],
-  "registryDependencies": ["@reno/utils"],
-  "files": [{ "path": "registry/reno/ui/avatar.tsx", "type": "registry:ui" }],
+  "dependencies": [
+    "@radix-ui/react-avatar@^1.2.6",
+    "class-variance-authority@^0.7.1"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/avatar.tsx",
+      "type": "registry:ui"
+    }
+  ],
   "meta": {
     "source": "shadcn/ui",
     "license": "MIT",

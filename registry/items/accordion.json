@@ -3,8 +3,13 @@
   "type": "registry:ui",
   "title": "Accordion",
   "description": "Danh sách mục có thể mở/thu gọn dựa trên Radix, kèm biểu tượng mũi tên xoay.",
-  "dependencies": ["@radix-ui/react-accordion", "lucide-react"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "@radix-ui/react-accordion@^1.2.20",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
     {
       "path": "registry/reno/ui/accordion.tsx",

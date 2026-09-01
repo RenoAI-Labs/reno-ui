@@ -4,7 +4,7 @@
   "title": "Command",
   "description": "Bảng lệnh tìm kiếm nhanh (bọc cmdk); CommandDialog kết hợp dialog để dùng như command palette.",
   "dependencies": [
-    "cmdk"
+    "cmdk@^1.1.1"
   ],
   "registryDependencies": [
     "@reno/utils",

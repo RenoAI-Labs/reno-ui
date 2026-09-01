@@ -3,9 +3,20 @@
   "type": "registry:ui",
   "title": "Pagination",
   "description": "Phân trang không phụ thuộc next/link, tái sử dụng buttonVariants. Nhãn Trước/Sau và mô tả trợ năng có tiếng Việt mặc định, ghi đè được qua props.",
-  "dependencies": ["@radix-ui/react-slot", "lucide-react"],
-  "registryDependencies": ["@reno/utils", "@reno/button"],
-  "files": [{ "path": "registry/reno/ui/pagination.tsx", "type": "registry:ui" }],
+  "dependencies": [
+    "@radix-ui/react-slot@^1.3.3",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/pagination.tsx",
+      "type": "registry:ui"
+    }
+  ],
   "meta": {
     "source": "shadcn/ui",
     "license": "MIT",

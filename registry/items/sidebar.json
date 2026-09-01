@@ -3,7 +3,11 @@
   "type": "registry:ui",
   "title": "Sidebar",
   "description": "Thanh điều hướng ứng dụng đầy đủ tính năng: thu/phóng, chế độ icon, sheet trên mobile, tooltip khi thu gọn, lưu trạng thái qua cookie. Menu item dùng asChild thay vì gắn cứng router.",
-  "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
+  "dependencies": [
+    "@radix-ui/react-slot@^1.3.3",
+    "class-variance-authority@^0.7.1",
+    "lucide-react@^1.38.0"
+  ],
   "registryDependencies": [
     "@reno/utils",
     "@reno/button",
@@ -15,13 +19,34 @@
     "@reno/use-mobile"
   ],
   "files": [
-    { "path": "registry/reno/ui/sidebar/context.tsx", "type": "registry:ui" },
-    { "path": "registry/reno/ui/sidebar/sidebar.tsx", "type": "registry:ui" },
-    { "path": "registry/reno/ui/sidebar/sidebar-controls.tsx", "type": "registry:ui" },
-    { "path": "registry/reno/ui/sidebar/sidebar-group.tsx", "type": "registry:ui" },
-    { "path": "registry/reno/ui/sidebar/sidebar-menu.tsx", "type": "registry:ui" },
-    { "path": "registry/reno/ui/sidebar/sidebar-menu-sub.tsx", "type": "registry:ui" },
-    { "path": "registry/reno/ui/sidebar/index.tsx", "type": "registry:ui" }
+    {
+      "path": "registry/reno/ui/sidebar/context.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/sidebar/sidebar.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/sidebar/sidebar-controls.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/sidebar/sidebar-group.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/sidebar/sidebar-menu.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/sidebar/sidebar-menu-sub.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/sidebar/index.tsx",
+      "type": "registry:ui"
+    }
   ],
   "meta": {
     "source": "shadcn/ui",

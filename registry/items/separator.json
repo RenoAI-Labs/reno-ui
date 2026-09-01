@@ -3,8 +3,12 @@
   "type": "registry:ui",
   "title": "Separator",
   "description": "Đường phân cách ngang hoặc dọc, dùng bg-border.",
-  "dependencies": ["@radix-ui/react-separator"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "@radix-ui/react-separator@^1.1.15"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
     {
       "path": "registry/reno/ui/separator.tsx",

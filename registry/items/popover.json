@@ -4,7 +4,7 @@
   "title": "Popover",
   "description": "Lớp phủ nổi neo theo trigger (Radix Popover) cho nội dung tương tác ngắn.",
   "dependencies": [
-    "@radix-ui/react-popover"
+    "@radix-ui/react-popover@^1.1.23"
   ],
   "registryDependencies": [
     "@reno/utils"

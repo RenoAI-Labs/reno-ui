@@ -47,7 +47,7 @@
       "title": "Grid State",
       "description": "Kiểu state và column của DataGrid. Cho phép dự án khai báo state, URL sync, React Query key mà không cần import TanStack Table.",
       "dependencies": [
-        "@tanstack/react-table"
+        "@tanstack/react-table@^9.2.4"
       ],
       "registryDependencies": [
         "@reno/grid-query"
@@ -72,8 +72,8 @@
       "title": "Utils",
       "description": "cn() class-merging helper. Every reno component depends on it.",
       "dependencies": [
-        "clsx",
-        "tailwind-merge"
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.6.0"
       ],
       "files": [
         {
@@ -1247,8 +1247,8 @@
       "title": "Accordion",
       "description": "Danh sách mục có thể mở/thu gọn dựa trên Radix, kèm biểu tượng mũi tên xoay.",
       "dependencies": [
-        "@radix-ui/react-accordion",
-        "lucide-react"
+        "@radix-ui/react-accordion@^1.2.20",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1296,7 +1296,7 @@
       "title": "Alert Dialog",
       "description": "Hộp thoại xác nhận bắt buộc phản hồi (Radix Alert Dialog), nút hành động dùng lại buttonVariants.",
       "dependencies": [
-        "@radix-ui/react-alert-dialog"
+        "@radix-ui/react-alert-dialog@^1.1.23"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1322,7 +1322,7 @@
       "title": "Aspect Ratio",
       "description": "Giữ tỉ lệ khung hình cố định cho nội dung con, dựa trên Radix Aspect Ratio.",
       "dependencies": [
-        "@radix-ui/react-aspect-ratio"
+        "@radix-ui/react-aspect-ratio@^1.1.15"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1347,8 +1347,8 @@
       "title": "Avatar",
       "description": "Ảnh đại diện với ảnh, chữ viết tắt dự phòng và ba cỡ đọc token density, đồng bộ chiều cao với Button.",
       "dependencies": [
-        "@radix-ui/react-avatar",
-        "class-variance-authority"
+        "@radix-ui/react-avatar@^1.2.6",
+        "class-variance-authority@^0.7.1"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1373,8 +1373,8 @@
       "title": "Badge",
       "description": "Nhãn nhỏ với các biến thể default/secondary/destructive/outline/success/warning/info, hỗ trợ asChild.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority"
+        "@radix-ui/react-slot@^1.3.3",
+        "class-variance-authority@^0.7.1"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1399,8 +1399,8 @@
       "title": "Breadcrumb",
       "description": "Điều hướng breadcrumb không phụ thuộc router. BreadcrumbLink nhận asChild để gắn next/link hoặc thẻ <a> tuỳ dự án.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "lucide-react"
+        "@radix-ui/react-slot@^1.3.3",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1425,8 +1425,8 @@
       "title": "Button",
       "description": "Button and link-button. Sizes read the density tokens, so the same code renders compact in ERP and roomy in e-learning.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority"
+        "@radix-ui/react-slot@^1.3.3",
+        "class-variance-authority@^0.7.1"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1451,9 +1451,9 @@
       "title": "Calendar",
       "description": "Lịch chọn ngày dựa trên react-day-picker v10, mặc định locale tiếng Việt (date-fns/locale/vi). Nút điều hướng tái sử dụng buttonVariants.",
       "dependencies": [
-        "react-day-picker",
-        "date-fns",
-        "lucide-react"
+        "react-day-picker@^10.0.1",
+        "date-fns@^4.4.0",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1502,7 +1502,7 @@
       "title": "Chart",
       "description": "Biểu đồ cột/đường/vùng trên recharts. API khai báo (data + series), không có type recharts trong props. Màu series đọc --chart-1..5 nên đổi theo preset và light/dark. Chỉ cài khi cần — dự án không dùng biểu đồ không dính recharts.",
       "dependencies": [
-        "recharts"
+        "recharts@^3.10.1"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1543,8 +1543,8 @@
       "title": "Checkbox",
       "description": "Hộp kiểm dựa trên Radix Checkbox với trạng thái đã chọn, chưa chọn và không xác định.",
       "dependencies": [
-        "@radix-ui/react-checkbox",
-        "lucide-react"
+        "@radix-ui/react-checkbox@^1.3.11",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1569,7 +1569,7 @@
       "title": "Collapsible",
       "description": "Vùng nội dung có thể ẩn/hiện đơn giản, không có phần trang trí riêng.",
       "dependencies": [
-        "@radix-ui/react-collapsible"
+        "@radix-ui/react-collapsible@^1.1.20"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1594,7 +1594,7 @@
       "title": "Combobox",
       "description": "Ô chọn có tìm kiếm (Popover + Command + Button), generic theo kiểu giá trị, hỗ trợ xoá lựa chọn và tuỳ chọn bị vô hiệu hoá.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1622,7 +1622,7 @@
       "title": "Command",
       "description": "Bảng lệnh tìm kiếm nhanh (bọc cmdk); CommandDialog kết hợp dialog để dùng như command palette.",
       "dependencies": [
-        "cmdk"
+        "cmdk@^1.1.1"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1648,7 +1648,7 @@
       "title": "Context Menu",
       "description": "Menu ngữ cảnh khi chuột phải (item, checkbox, radio, submenu) từ Radix Context Menu; chiều cao mục đọc token mật độ.",
       "dependencies": [
-        "@radix-ui/react-context-menu"
+        "@radix-ui/react-context-menu@^2.3.7"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1673,9 +1673,9 @@
       "title": "DataGrid",
       "description": "Grid ảo hoá cho admin/ERP: 10k+ dòng, server-side pagination/sort/filter, ghim/resize/ẩn cột, chọn dòng xuyên trang, empty/loading/error có sẵn. Chỉ cài khi cần — dự án nhẹ dùng @reno/table.",
       "dependencies": [
-        "@tanstack/react-table",
-        "@tanstack/react-virtual",
-        "lucide-react"
+        "@tanstack/react-table@^9.2.4",
+        "@tanstack/react-virtual@^3.14.10",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1748,7 +1748,7 @@
       "title": "DataGrid Toolbar",
       "description": "Thanh công cụ cho DataGrid: tìm kiếm có debounce, chip bộ lọc đang bật, ẩn/hiện cột, xuất dữ liệu. Item riêng để màn hình không cần thì không phải cài.",
       "dependencies": [
-        "lucide-react"
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1779,8 +1779,8 @@
       "title": "Date Picker",
       "description": "DatePicker (một ngày) và DateRangePicker (khoảng ngày), ghép từ Popover + Calendar + Button, định dạng và locale mặc định tiếng Việt.",
       "dependencies": [
-        "date-fns",
-        "lucide-react"
+        "date-fns@^4.4.0",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1808,7 +1808,7 @@
       "title": "Dialog",
       "description": "Hộp thoại modal dùng Radix Dialog, với overlay và nội dung theo thang z-index modal của reno.",
       "dependencies": [
-        "@radix-ui/react-dialog"
+        "@radix-ui/react-dialog@^1.1.23"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1833,7 +1833,7 @@
       "title": "Drawer",
       "description": "Bảng kéo lên từ dưới cho thao tác trên di động, bọc thư viện vaul.",
       "dependencies": [
-        "vaul"
+        "vaul@^1.1.2"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1858,7 +1858,7 @@
       "title": "Dropdown Menu",
       "description": "Menu thả xuống đầy đủ (item, checkbox, radio, submenu) từ Radix Dropdown Menu; chiều cao mục đọc token mật độ.",
       "dependencies": [
-        "@radix-ui/react-dropdown-menu"
+        "@radix-ui/react-dropdown-menu@^2.1.24"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1883,11 +1883,11 @@
       "title": "Form",
       "description": "Bộ khung biểu mẫu kết hợp react-hook-form và zod, cung cấp Form/FormField/FormItem/FormLabel/FormControl/FormDescription/FormMessage và hook useFormField với liên kết ARIA tự động.",
       "dependencies": [
-        "react-hook-form",
-        "zod",
-        "@hookform/resolvers",
-        "@radix-ui/react-slot",
-        "@radix-ui/react-label"
+        "react-hook-form@^7.87.0",
+        "zod@^4.5.4",
+        "@hookform/resolvers@^5.9.1",
+        "@radix-ui/react-slot@^1.3.3",
+        "@radix-ui/react-label@^2.1.15"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1913,7 +1913,7 @@
       "title": "Hover Card",
       "description": "Thẻ xem trước hiện khi di chuột vào trigger (Radix Hover Card).",
       "dependencies": [
-        "@radix-ui/react-hover-card"
+        "@radix-ui/react-hover-card@^1.1.23"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1961,8 +1961,8 @@
       "title": "Input OTP",
       "description": "Trường nhập mã OTP nhiều ô dựa trên thư viện input-otp, kích thước ô đọc từ token mật độ.",
       "dependencies": [
-        "input-otp",
-        "lucide-react"
+        "input-otp@^1.5.0",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1987,7 +1987,7 @@
       "title": "Label",
       "description": "Nhãn cho trường biểu mẫu dựa trên Radix Label, tự động làm mờ khi điều khiển liên kết bị vô hiệu hoá.",
       "dependencies": [
-        "@radix-ui/react-label"
+        "@radix-ui/react-label@^2.1.15"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2012,8 +2012,8 @@
       "title": "Menubar",
       "description": "Thanh menu kiểu ứng dụng desktop, đầy đủ menu con, checkbox và radio item của Radix. Lớp nổi dùng z-index token --z-dropdown.",
       "dependencies": [
-        "@radix-ui/react-menubar",
-        "lucide-react"
+        "@radix-ui/react-menubar@^1.1.24",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2038,9 +2038,9 @@
       "title": "Navigation Menu",
       "description": "Menu điều hướng cấp cao với viewport và indicator của Radix. Lớp nổi dùng z-index token --z-dropdown.",
       "dependencies": [
-        "@radix-ui/react-navigation-menu",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-navigation-menu@^1.2.22",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2065,8 +2065,8 @@
       "title": "Pagination",
       "description": "Phân trang không phụ thuộc next/link, tái sử dụng buttonVariants. Nhãn Trước/Sau và mô tả trợ năng có tiếng Việt mặc định, ghi đè được qua props.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "lucide-react"
+        "@radix-ui/react-slot@^1.3.3",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -2092,7 +2092,7 @@
       "title": "Popover",
       "description": "Lớp phủ nổi neo theo trigger (Radix Popover) cho nội dung tương tác ngắn.",
       "dependencies": [
-        "@radix-ui/react-popover"
+        "@radix-ui/react-popover@^1.1.23"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2117,7 +2117,7 @@
       "title": "Progress",
       "description": "Thanh tiến trình dựa trên Radix Progress, phần chỉ báo dùng bg-primary.",
       "dependencies": [
-        "@radix-ui/react-progress"
+        "@radix-ui/react-progress@^1.1.16"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2142,8 +2142,8 @@
       "title": "Radio Group",
       "description": "Nhóm nút chọn một dựa trên Radix Radio Group.",
       "dependencies": [
-        "@radix-ui/react-radio-group",
-        "lucide-react"
+        "@radix-ui/react-radio-group@^1.4.7",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2168,8 +2168,8 @@
       "title": "Resizable",
       "description": "Bố cục nhiều khung có thể kéo giãn, dựa trên react-resizable-panels v4 (Group/Panel/Separator).",
       "dependencies": [
-        "react-resizable-panels",
-        "lucide-react"
+        "react-resizable-panels@^4.12.3",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2194,7 +2194,7 @@
       "title": "Scroll Area",
       "description": "Vùng cuộn có thanh cuộn tuỳ biến, dựa trên Radix Scroll Area.",
       "dependencies": [
-        "@radix-ui/react-scroll-area"
+        "@radix-ui/react-scroll-area@^1.2.18"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2219,8 +2219,8 @@
       "title": "Select",
       "description": "Hộp chọn dựa trên Radix Select, hỗ trợ hai kích thước và đọc token mật độ cho chiều cao trigger.",
       "dependencies": [
-        "@radix-ui/react-select",
-        "lucide-react"
+        "@radix-ui/react-select@^2.3.7",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2245,7 +2245,7 @@
       "title": "Separator",
       "description": "Đường phân cách ngang hoặc dọc, dùng bg-border.",
       "dependencies": [
-        "@radix-ui/react-separator"
+        "@radix-ui/react-separator@^1.1.15"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2270,8 +2270,8 @@
       "title": "Sheet",
       "description": "Bảng trượt vào từ cạnh màn hình (Radix Dialog), hỗ trợ bốn hướng top/right/bottom/left.",
       "dependencies": [
-        "@radix-ui/react-dialog",
-        "class-variance-authority"
+        "@radix-ui/react-dialog@^1.1.23",
+        "class-variance-authority@^0.7.1"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2296,9 +2296,9 @@
       "title": "Sidebar",
       "description": "Thanh điều hướng ứng dụng đầy đủ tính năng: thu/phóng, chế độ icon, sheet trên mobile, tooltip khi thu gọn, lưu trạng thái qua cookie. Menu item dùng asChild thay vì gắn cứng router.",
       "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "lucide-react"
+        "@radix-ui/react-slot@^1.3.3",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -2377,7 +2377,7 @@
       "title": "Slider",
       "description": "Thanh trượt chọn giá trị dựa trên Radix Slider, hỗ trợ nhiều điểm kéo.",
       "dependencies": [
-        "@radix-ui/react-slider"
+        "@radix-ui/react-slider@^1.4.7"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2402,7 +2402,7 @@
       "title": "Sonner",
       "description": "Bọc Toaster của sonner, không phụ thuộc next-themes; màu sắc ánh xạ qua CSS variable API của sonner theo token reno.",
       "dependencies": [
-        "sonner"
+        "sonner@^2.0.8"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2427,8 +2427,8 @@
       "title": "Spinner",
       "description": "Chỉ báo đang tải nhỏ gọn, role=status, kích thước đọc density token, màu theo currentColor.",
       "dependencies": [
-        "lucide-react",
-        "class-variance-authority"
+        "lucide-react@^1.38.0",
+        "class-variance-authority@^0.7.1"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2453,7 +2453,7 @@
       "title": "Switch",
       "description": "Công tắc bật/tắt dựa trên Radix Switch.",
       "dependencies": [
-        "@radix-ui/react-switch"
+        "@radix-ui/react-switch@^1.3.7"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2501,7 +2501,7 @@
       "title": "Tabs",
       "description": "Điều hướng dạng thẻ tab dựa trên Radix; chiều cao TabsList đọc density-control-height.",
       "dependencies": [
-        "@radix-ui/react-tabs"
+        "@radix-ui/react-tabs@^1.1.21"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -2549,7 +2549,7 @@
       "title": "Tooltip",
       "description": "Chú giải nổi khi di chuột/focus vào trigger (Radix Tooltip).",
       "dependencies": [
-        "@radix-ui/react-tooltip"
+        "@radix-ui/react-tooltip@^1.2.16"
       ],
       "registryDependencies": [
         "@reno/utils"

@@ -4,7 +4,7 @@
   "title": "Drawer",
   "description": "Bảng kéo lên từ dưới cho thao tác trên di động, bọc thư viện vaul.",
   "dependencies": [
-    "vaul"
+    "vaul@^1.1.2"
   ],
   "registryDependencies": [
     "@reno/utils"

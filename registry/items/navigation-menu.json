@@ -3,9 +3,20 @@
   "type": "registry:ui",
   "title": "Navigation Menu",
   "description": "Menu điều hướng cấp cao với viewport và indicator của Radix. Lớp nổi dùng z-index token --z-dropdown.",
-  "dependencies": ["@radix-ui/react-navigation-menu", "class-variance-authority", "lucide-react"],
-  "registryDependencies": ["@reno/utils"],
-  "files": [{ "path": "registry/reno/ui/navigation-menu.tsx", "type": "registry:ui" }],
+  "dependencies": [
+    "@radix-ui/react-navigation-menu@^1.2.22",
+    "class-variance-authority@^0.7.1",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/navigation-menu.tsx",
+      "type": "registry:ui"
+    }
+  ],
   "meta": {
     "source": "shadcn/ui",
     "license": "MIT",

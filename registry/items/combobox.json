@@ -3,10 +3,20 @@
   "type": "registry:ui",
   "title": "Combobox",
   "description": "Ô chọn có tìm kiếm (Popover + Command + Button), generic theo kiểu giá trị, hỗ trợ xoá lựa chọn và tuỳ chọn bị vô hiệu hoá.",
-  "dependencies": ["lucide-react"],
-  "registryDependencies": ["@reno/utils", "@reno/button", "@reno/popover", "@reno/command"],
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button",
+    "@reno/popover",
+    "@reno/command"
+  ],
   "files": [
-    { "path": "registry/reno/ui/combobox.tsx", "type": "registry:ui" }
+    {
+      "path": "registry/reno/ui/combobox.tsx",
+      "type": "registry:ui"
+    }
   ],
   "meta": {
     "source": "original",

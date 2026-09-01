@@ -4,7 +4,7 @@
   "title": "Hover Card",
   "description": "Thẻ xem trước hiện khi di chuột vào trigger (Radix Hover Card).",
   "dependencies": [
-    "@radix-ui/react-hover-card"
+    "@radix-ui/react-hover-card@^1.1.23"
   ],
   "registryDependencies": [
     "@reno/utils"

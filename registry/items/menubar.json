@@ -3,9 +3,19 @@
   "type": "registry:ui",
   "title": "Menubar",
   "description": "Thanh menu kiểu ứng dụng desktop, đầy đủ menu con, checkbox và radio item của Radix. Lớp nổi dùng z-index token --z-dropdown.",
-  "dependencies": ["@radix-ui/react-menubar", "lucide-react"],
-  "registryDependencies": ["@reno/utils"],
-  "files": [{ "path": "registry/reno/ui/menubar.tsx", "type": "registry:ui" }],
+  "dependencies": [
+    "@radix-ui/react-menubar@^1.1.24",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/menubar.tsx",
+      "type": "registry:ui"
+    }
+  ],
   "meta": {
     "source": "shadcn/ui",
     "license": "MIT",

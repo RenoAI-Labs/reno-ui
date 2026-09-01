@@ -3,10 +3,18 @@
   "type": "registry:ui",
   "title": "Radio Group",
   "description": "Nhóm nút chọn một dựa trên Radix Radio Group.",
-  "dependencies": ["@radix-ui/react-radio-group", "lucide-react"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "@radix-ui/react-radio-group@^1.4.7",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
-    { "path": "registry/reno/ui/radio-group.tsx", "type": "registry:ui" }
+    {
+      "path": "registry/reno/ui/radio-group.tsx",
+      "type": "registry:ui"
+    }
   ],
   "meta": {
     "source": "shadcn/ui",

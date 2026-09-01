@@ -4,7 +4,7 @@
   "title": "Chart",
   "description": "Biểu đồ cột/đường/vùng trên recharts. API khai báo (data + series), không có type recharts trong props. Màu series đọc --chart-1..5 nên đổi theo preset và light/dark. Chỉ cài khi cần — dự án không dùng biểu đồ không dính recharts.",
   "dependencies": [
-    "recharts"
+    "recharts@^3.10.1"
   ],
   "registryDependencies": [
     "@reno/utils"

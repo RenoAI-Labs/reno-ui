@@ -3,10 +3,18 @@
   "type": "registry:ui",
   "title": "Input OTP",
   "description": "Trường nhập mã OTP nhiều ô dựa trên thư viện input-otp, kích thước ô đọc từ token mật độ.",
-  "dependencies": ["input-otp", "lucide-react"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "input-otp@^1.5.0",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
-    { "path": "registry/reno/ui/input-otp.tsx", "type": "registry:ui" }
+    {
+      "path": "registry/reno/ui/input-otp.tsx",
+      "type": "registry:ui"
+    }
   ],
   "meta": {
     "source": "shadcn/ui",

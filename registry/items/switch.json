@@ -3,10 +3,17 @@
   "type": "registry:ui",
   "title": "Switch",
   "description": "Công tắc bật/tắt dựa trên Radix Switch.",
-  "dependencies": ["@radix-ui/react-switch"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "@radix-ui/react-switch@^1.3.7"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
-    { "path": "registry/reno/ui/switch.tsx", "type": "registry:ui" }
+    {
+      "path": "registry/reno/ui/switch.tsx",
+      "type": "registry:ui"
+    }
   ],
   "meta": {
     "source": "shadcn/ui",

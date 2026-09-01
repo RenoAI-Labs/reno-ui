@@ -3,10 +3,21 @@
   "type": "registry:ui",
   "title": "Date Picker",
   "description": "DatePicker (một ngày) và DateRangePicker (khoảng ngày), ghép từ Popover + Calendar + Button, định dạng và locale mặc định tiếng Việt.",
-  "dependencies": ["date-fns", "lucide-react"],
-  "registryDependencies": ["@reno/utils", "@reno/button", "@reno/popover", "@reno/calendar"],
+  "dependencies": [
+    "date-fns@^4.4.0",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button",
+    "@reno/popover",
+    "@reno/calendar"
+  ],
   "files": [
-    { "path": "registry/reno/ui/date-picker.tsx", "type": "registry:ui" }
+    {
+      "path": "registry/reno/ui/date-picker.tsx",
+      "type": "registry:ui"
+    }
   ],
   "meta": {
     "source": "original",

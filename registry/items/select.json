@@ -3,10 +3,18 @@
   "type": "registry:ui",
   "title": "Select",
   "description": "Hộp chọn dựa trên Radix Select, hỗ trợ hai kích thước và đọc token mật độ cho chiều cao trigger.",
-  "dependencies": ["@radix-ui/react-select", "lucide-react"],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "@radix-ui/react-select@^2.3.7",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
-    { "path": "registry/reno/ui/select.tsx", "type": "registry:ui" }
+    {
+      "path": "registry/reno/ui/select.tsx",
+      "type": "registry:ui"
+    }
   ],
   "meta": {
     "source": "shadcn/ui",
