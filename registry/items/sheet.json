@@ -1,0 +1,26 @@
+{
+  "name": "sheet",
+  "type": "registry:ui",
+  "title": "Sheet",
+  "description": "Bảng trượt vào từ cạnh màn hình (Radix Dialog), hỗ trợ bốn hướng top/right/bottom/left.",
+  "dependencies": [
+    "@radix-ui/react-dialog",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/sheet.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn sheet, new-york style; content/overlay z-index read from --z-modal/--z-overlay",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

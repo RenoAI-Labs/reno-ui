@@ -1,0 +1,18 @@
+{
+  "name": "form",
+  "type": "registry:ui",
+  "title": "Form",
+  "description": "Bộ khung biểu mẫu kết hợp react-hook-form và zod, cung cấp Form/FormField/FormItem/FormLabel/FormControl/FormDescription/FormMessage và hook useFormField với liên kết ARIA tự động.",
+  "dependencies": ["react-hook-form", "zod", "@hookform/resolvers", "@radix-ui/react-slot", "@radix-ui/react-label"],
+  "registryDependencies": ["@reno/utils", "@reno/label"],
+  "files": [
+    { "path": "registry/reno/ui/form.tsx", "type": "registry:ui" }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn form, new-york style; unchanged logic, restyled label error state via data-error",
+    "added": "2026-09-01",
+    "group": "Form"
+  }
+}

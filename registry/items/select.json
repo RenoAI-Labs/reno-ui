@@ -1,0 +1,18 @@
+{
+  "name": "select",
+  "type": "registry:ui",
+  "title": "Select",
+  "description": "Hộp chọn dựa trên Radix Select, hỗ trợ hai kích thước và đọc token mật độ cho chiều cao trigger.",
+  "dependencies": ["@radix-ui/react-select", "lucide-react"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    { "path": "registry/reno/ui/select.tsx", "type": "registry:ui" }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn select, new-york style; trigger height rewritten to read density tokens, content z-index rewritten to --z-dropdown",
+    "added": "2026-09-01",
+    "group": "Form"
+  }
+}

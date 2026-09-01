@@ -1,0 +1,347 @@
+{
+  "name": "theme-base",
+  "type": "registry:theme",
+  "title": "Theme Base",
+  "description": "Neutral fallback theme. Declares every semantic token reno components read, plus the Tailwind mapping layer. Installed automatically by every preset.",
+  "cssVars": {
+    "theme": {
+      "color-background": "var(--background)",
+      "color-foreground": "var(--foreground)",
+      "color-card": "var(--card)",
+      "color-card-foreground": "var(--card-foreground)",
+      "color-popover": "var(--popover)",
+      "color-popover-foreground": "var(--popover-foreground)",
+      "color-primary": "var(--primary)",
+      "color-primary-foreground": "var(--primary-foreground)",
+      "color-secondary": "var(--secondary)",
+      "color-secondary-foreground": "var(--secondary-foreground)",
+      "color-muted": "var(--muted)",
+      "color-muted-foreground": "var(--muted-foreground)",
+      "color-accent": "var(--accent)",
+      "color-accent-foreground": "var(--accent-foreground)",
+      "color-destructive": "var(--destructive)",
+      "color-destructive-foreground": "var(--destructive-foreground)",
+      "color-success": "var(--success)",
+      "color-success-foreground": "var(--success-foreground)",
+      "color-warning": "var(--warning)",
+      "color-warning-foreground": "var(--warning-foreground)",
+      "color-info": "var(--info)",
+      "color-info-foreground": "var(--info-foreground)",
+      "color-border": "var(--border)",
+      "color-input": "var(--input)",
+      "color-ring": "var(--ring)",
+      "color-overlay": "var(--overlay)",
+      "color-chart-1": "var(--chart-1)",
+      "color-chart-2": "var(--chart-2)",
+      "color-chart-3": "var(--chart-3)",
+      "color-chart-4": "var(--chart-4)",
+      "color-chart-5": "var(--chart-5)",
+      "color-sidebar": "var(--sidebar)",
+      "color-sidebar-foreground": "var(--sidebar-foreground)",
+      "color-sidebar-primary": "var(--sidebar-primary)",
+      "color-sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+      "color-sidebar-accent": "var(--sidebar-accent)",
+      "color-sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+      "color-sidebar-border": "var(--sidebar-border)",
+      "color-sidebar-ring": "var(--sidebar-ring)",
+      "radius-sm": "calc(var(--radius) - 4px)",
+      "radius-md": "calc(var(--radius) - 2px)",
+      "radius-lg": "var(--radius)",
+      "radius-xl": "calc(var(--radius) + 4px)",
+      "font-sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+      "font-mono": "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace",
+      "shadow-xs": "0 1px 2px 0 oklch(0 0 0 / 0.05)",
+      "shadow-sm": "0 1px 3px 0 oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1)",
+      "shadow-md": "0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1)",
+      "shadow-lg": "0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1)",
+      "z-dropdown": "1000",
+      "z-sticky": "1100",
+      "z-overlay": "1200",
+      "z-modal": "1300",
+      "z-popover": "1400",
+      "z-toast": "1500",
+      "animate-in": "reno-enter 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+      "animate-out": "reno-exit 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+      "animate-accordion-down": "reno-accordion-down 200ms cubic-bezier(0.87, 0, 0.13, 1)",
+      "animate-accordion-up": "reno-accordion-up 200ms cubic-bezier(0.87, 0, 0.13, 1)",
+      "animate-caret-blink": "reno-caret-blink 1.25s ease-out infinite"
+    },
+    "light": {
+      "reno-brand-50": "oklch(0.985 0.0073 250)",
+      "reno-brand-100": "oklch(0.967 0.0162 250)",
+      "reno-brand-200": "oklch(0.929 0.0354 250)",
+      "reno-brand-300": "oklch(0.871 0.0658 250)",
+      "reno-brand-400": "oklch(0.746 0.1105 250)",
+      "reno-brand-500": "oklch(0.637 0.13 250)",
+      "reno-brand-600": "oklch(0.577 0.13 250)",
+      "reno-brand-700": "oklch(0.505 0.1196 250)",
+      "reno-brand-800": "oklch(0.444 0.104 250)",
+      "reno-brand-900": "oklch(0.396 0.091 250)",
+      "reno-brand-950": "oklch(0.269 0.0715 250)",
+      "reno-neutral-50": "oklch(0.985 0 0)",
+      "reno-neutral-100": "oklch(0.967 0.0007 250)",
+      "reno-neutral-200": "oklch(0.929 0.0014 250)",
+      "reno-neutral-300": "oklch(0.871 0.0024 250)",
+      "reno-neutral-400": "oklch(0.746 0.0034 250)",
+      "reno-neutral-500": "oklch(0.637 0.004 250)",
+      "reno-neutral-600": "oklch(0.577 0.004 250)",
+      "reno-neutral-700": "oklch(0.505 0.0037 250)",
+      "reno-neutral-800": "oklch(0.444 0.0032 250)",
+      "reno-neutral-900": "oklch(0.396 0.0028 250)",
+      "reno-neutral-950": "oklch(0.269 0.0022 250)",
+      "reno-destructive-100": "oklch(0.967 0.0162 27)",
+      "reno-destructive-500": "oklch(0.637 0.19 27)",
+      "reno-destructive-700": "oklch(0.505 0.1748 27)",
+      "reno-success-100": "oklch(0.967 0.0252 150)",
+      "reno-success-500": "oklch(0.637 0.14 150)",
+      "reno-success-700": "oklch(0.505 0.1288 150)",
+      "reno-warning-100": "oklch(0.967 0.0265 75)",
+      "reno-warning-500": "oklch(0.637 0.1344 75)",
+      "reno-warning-700": "oklch(0.505 0.1065 75)",
+      "reno-info-100": "oklch(0.967 0.0184 235)",
+      "reno-info-500": "oklch(0.637 0.1351 235)",
+      "reno-info-700": "oklch(0.505 0.1071 235)",
+      "radius": "0.5rem",
+      "density-control-height-sm": "2rem",
+      "density-control-height": "2.25rem",
+      "density-control-height-lg": "2.5rem",
+      "density-control-px": "0.75rem",
+      "density-row-height": "2.75rem",
+      "density-cell-padding-x": "0.75rem",
+      "density-cell-padding-y": "0.5rem",
+      "density-gap": "0.75rem",
+      "density-font-size": "0.875rem",
+      "density-line-height": "1.45",
+      "background": "oklch(0.995 0.0016 250)",
+      "foreground": "oklch(0.21 0.012 250)",
+      "card": "oklch(1 0 0)",
+      "card-foreground": "oklch(0.21 0.012 250)",
+      "popover": "oklch(1 0 0)",
+      "popover-foreground": "oklch(0.21 0.012 250)",
+      "primary": "var(--reno-brand-700)",
+      "primary-foreground": "oklch(0.985 0.005 250)",
+      "secondary": "oklch(0.967 0.0048 250)",
+      "secondary-foreground": "oklch(0.21 0.012 250)",
+      "muted": "oklch(0.967 0.0048 250)",
+      "muted-foreground": "var(--reno-neutral-700)",
+      "accent": "oklch(0.967 0.0048 250)",
+      "accent-foreground": "oklch(0.21 0.012 250)",
+      "destructive": "var(--reno-destructive-700)",
+      "destructive-foreground": "oklch(0.985 0.005 27)",
+      "success": "var(--reno-success-700)",
+      "success-foreground": "oklch(0.985 0.005 150)",
+      "warning": "var(--reno-warning-700)",
+      "warning-foreground": "oklch(0.985 0.005 75)",
+      "info": "var(--reno-info-700)",
+      "info-foreground": "oklch(0.985 0.005 235)",
+      "border": "oklch(0.915 0.008 250)",
+      "input": "var(--reno-neutral-500)",
+      "ring": "var(--reno-brand-500)",
+      "overlay": "oklch(0 0 0 / 0.5)",
+      "chart-1": "oklch(0.6 0.1235 250)",
+      "chart-2": "oklch(0.6 0.1235 312)",
+      "chart-3": "oklch(0.6 0.1235 20)",
+      "chart-4": "oklch(0.6 0.1232 95)",
+      "chart-5": "oklch(0.6 0.1131 175)",
+      "sidebar": "oklch(0.978 0.0048 250)",
+      "sidebar-foreground": "oklch(0.21 0.012 250)",
+      "sidebar-primary": "var(--reno-brand-700)",
+      "sidebar-primary-foreground": "oklch(0.985 0.005 250)",
+      "sidebar-accent": "oklch(0.94 0.006 250)",
+      "sidebar-accent-foreground": "oklch(0.21 0.012 250)",
+      "sidebar-border": "oklch(0.915 0.008 250)",
+      "sidebar-ring": "var(--reno-brand-500)"
+    },
+    "dark": {
+      "reno-brand-50": "oklch(0.985 0.0073 250)",
+      "reno-brand-100": "oklch(0.967 0.0162 250)",
+      "reno-brand-200": "oklch(0.929 0.0354 250)",
+      "reno-brand-300": "oklch(0.871 0.0658 250)",
+      "reno-brand-400": "oklch(0.746 0.1105 250)",
+      "reno-brand-500": "oklch(0.637 0.13 250)",
+      "reno-brand-600": "oklch(0.577 0.13 250)",
+      "reno-brand-700": "oklch(0.505 0.1196 250)",
+      "reno-brand-800": "oklch(0.444 0.104 250)",
+      "reno-brand-900": "oklch(0.396 0.091 250)",
+      "reno-brand-950": "oklch(0.269 0.0715 250)",
+      "reno-neutral-50": "oklch(0.985 0 0)",
+      "reno-neutral-100": "oklch(0.967 0.0007 250)",
+      "reno-neutral-200": "oklch(0.929 0.0014 250)",
+      "reno-neutral-300": "oklch(0.871 0.0024 250)",
+      "reno-neutral-400": "oklch(0.746 0.0034 250)",
+      "reno-neutral-500": "oklch(0.637 0.004 250)",
+      "reno-neutral-600": "oklch(0.577 0.004 250)",
+      "reno-neutral-700": "oklch(0.505 0.0037 250)",
+      "reno-neutral-800": "oklch(0.444 0.0032 250)",
+      "reno-neutral-900": "oklch(0.396 0.0028 250)",
+      "reno-neutral-950": "oklch(0.269 0.0022 250)",
+      "reno-destructive-100": "oklch(0.967 0.0162 27)",
+      "reno-destructive-500": "oklch(0.637 0.19 27)",
+      "reno-destructive-700": "oklch(0.505 0.1748 27)",
+      "reno-success-100": "oklch(0.967 0.0252 150)",
+      "reno-success-500": "oklch(0.637 0.14 150)",
+      "reno-success-700": "oklch(0.505 0.1288 150)",
+      "reno-warning-100": "oklch(0.967 0.0265 75)",
+      "reno-warning-500": "oklch(0.637 0.1344 75)",
+      "reno-warning-700": "oklch(0.505 0.1065 75)",
+      "reno-info-100": "oklch(0.967 0.0184 235)",
+      "reno-info-500": "oklch(0.637 0.1351 235)",
+      "reno-info-700": "oklch(0.505 0.1071 235)",
+      "radius": "0.5rem",
+      "density-control-height-sm": "2rem",
+      "density-control-height": "2.25rem",
+      "density-control-height-lg": "2.5rem",
+      "density-control-px": "0.75rem",
+      "density-row-height": "2.75rem",
+      "density-cell-padding-x": "0.75rem",
+      "density-cell-padding-y": "0.5rem",
+      "density-gap": "0.75rem",
+      "density-font-size": "0.875rem",
+      "density-line-height": "1.45",
+      "background": "oklch(0.165 0.006 250)",
+      "foreground": "oklch(0.985 0.005 250)",
+      "card": "oklch(0.205 0.006 250)",
+      "card-foreground": "oklch(0.985 0.005 250)",
+      "popover": "oklch(0.205 0.006 250)",
+      "popover-foreground": "oklch(0.985 0.005 250)",
+      "primary": "var(--reno-brand-400)",
+      "primary-foreground": "oklch(0.21 0.012 250)",
+      "secondary": "oklch(0.255 0.006 250)",
+      "secondary-foreground": "oklch(0.985 0.005 250)",
+      "muted": "oklch(0.255 0.006 250)",
+      "muted-foreground": "var(--reno-neutral-400)",
+      "accent": "oklch(0.255 0.006 250)",
+      "accent-foreground": "oklch(0.985 0.005 250)",
+      "destructive": "var(--reno-destructive-500)",
+      "destructive-foreground": "oklch(0.21 0.012 27)",
+      "success": "var(--reno-success-500)",
+      "success-foreground": "oklch(0.21 0.012 150)",
+      "warning": "var(--reno-warning-500)",
+      "warning-foreground": "oklch(0.21 0.012 75)",
+      "info": "var(--reno-info-500)",
+      "info-foreground": "oklch(0.21 0.012 235)",
+      "border": "oklch(0.31 0.008 250)",
+      "input": "var(--reno-neutral-500)",
+      "ring": "var(--reno-brand-400)",
+      "overlay": "oklch(0 0 0 / 0.65)",
+      "chart-1": "oklch(0.68 0.1235 250)",
+      "chart-2": "oklch(0.68 0.1235 312)",
+      "chart-3": "oklch(0.68 0.1235 20)",
+      "chart-4": "oklch(0.68 0.1235 95)",
+      "chart-5": "oklch(0.68 0.1235 175)",
+      "sidebar": "oklch(0.195 0.006 250)",
+      "sidebar-foreground": "oklch(0.985 0.005 250)",
+      "sidebar-primary": "var(--reno-brand-400)",
+      "sidebar-primary-foreground": "oklch(0.21 0.012 250)",
+      "sidebar-accent": "oklch(0.265 0.006 250)",
+      "sidebar-accent-foreground": "oklch(0.985 0.005 250)",
+      "sidebar-border": "oklch(0.31 0.008 250)",
+      "sidebar-ring": "var(--reno-brand-400)"
+    }
+  },
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Generated by scripts/generate-scale.mjs; token names follow shadcn",
+    "added": "2026-09-01",
+    "group": "Theme"
+  },
+  "css": {
+    "@keyframes reno-enter": {
+      "from": {
+        "opacity": "var(--reno-enter-opacity, 1)",
+        "transform": "translate3d(var(--reno-enter-translate-x, 0), var(--reno-enter-translate-y, 0), 0) scale3d(var(--reno-enter-scale, 1), var(--reno-enter-scale, 1), var(--reno-enter-scale, 1))"
+      }
+    },
+    "@keyframes reno-exit": {
+      "to": {
+        "opacity": "var(--reno-exit-opacity, 1)",
+        "transform": "translate3d(var(--reno-exit-translate-x, 0), var(--reno-exit-translate-y, 0), 0) scale3d(var(--reno-exit-scale, 1), var(--reno-exit-scale, 1), var(--reno-exit-scale, 1))"
+      }
+    },
+    "@keyframes reno-accordion-down": {
+      "from": {
+        "height": "0"
+      },
+      "to": {
+        "height": "var(--radix-accordion-content-height)"
+      }
+    },
+    "@keyframes reno-accordion-up": {
+      "from": {
+        "height": "var(--radix-accordion-content-height)"
+      },
+      "to": {
+        "height": "0"
+      }
+    },
+    "@keyframes reno-caret-blink": {
+      "0%,70%,100%": {
+        "opacity": "1"
+      },
+      "20%,50%": {
+        "opacity": "0"
+      }
+    },
+    "@utility fade-in-*": {
+      "--reno-enter-opacity": "calc(--value(integer) / 100)"
+    },
+    "@utility fade-out-*": {
+      "--reno-exit-opacity": "calc(--value(integer) / 100)"
+    },
+    "@utility zoom-in-*": {
+      "--reno-enter-scale": "calc(--value(integer) / 100)"
+    },
+    "@utility zoom-out-*": {
+      "--reno-exit-scale": "calc(--value(integer) / 100)"
+    },
+    "@utility slide-in-from-top-*": {
+      "--reno-enter-translate-y": "calc(--value(integer) * 1px)"
+    },
+    "@utility slide-out-to-top-*": {
+      "--reno-exit-translate-y": "calc(--value(integer) * 1px)"
+    },
+    "@utility slide-in-from-top": {
+      "--reno-enter-translate-y": "-100%"
+    },
+    "@utility slide-out-to-top": {
+      "--reno-exit-translate-y": "-100%"
+    },
+    "@utility slide-in-from-bottom-*": {
+      "--reno-enter-translate-y": "calc(--value(integer) * 1px)"
+    },
+    "@utility slide-out-to-bottom-*": {
+      "--reno-exit-translate-y": "calc(--value(integer) * 1px)"
+    },
+    "@utility slide-in-from-bottom": {
+      "--reno-enter-translate-y": "100%"
+    },
+    "@utility slide-out-to-bottom": {
+      "--reno-exit-translate-y": "100%"
+    },
+    "@utility slide-in-from-left-*": {
+      "--reno-enter-translate-x": "calc(--value(integer) * 1px)"
+    },
+    "@utility slide-out-to-left-*": {
+      "--reno-exit-translate-x": "calc(--value(integer) * 1px)"
+    },
+    "@utility slide-in-from-left": {
+      "--reno-enter-translate-x": "-100%"
+    },
+    "@utility slide-out-to-left": {
+      "--reno-exit-translate-x": "-100%"
+    },
+    "@utility slide-in-from-right-*": {
+      "--reno-enter-translate-x": "calc(--value(integer) * 1px)"
+    },
+    "@utility slide-out-to-right-*": {
+      "--reno-exit-translate-x": "calc(--value(integer) * 1px)"
+    },
+    "@utility slide-in-from-right": {
+      "--reno-enter-translate-x": "100%"
+    },
+    "@utility slide-out-to-right": {
+      "--reno-exit-translate-x": "100%"
+    }
+  }
+}

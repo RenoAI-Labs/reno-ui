@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+/*
+ * The docs site consumes the registry the same way a real project does: it
+ * imports the shipped theme-base stylesheet rather than redeclaring tokens.
+ * If base.css is wrong, this site breaks first — which is the point.
+ */
+@import "../registry/reno/themes/base.css";
+
+/* Docs-site only: [data-preset] scopes so the theming page can switch presets. */
+@import "./theme-presets.generated.css";
+
+/*
+ * Dark mode is driven by a `dark` class on <html>, matching what shadcn writes
+ * into a consuming project. Declared here because Tailwind v4 has no config file.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-size: var(--density-font-size);
+    line-height: var(--density-line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "use-mobile",
+  "type": "registry:hook",
+  "title": "useIsMobile",
+  "description": "Hook đọc breakpoint 768px qua matchMedia; dùng để chuyển Sidebar giữa chế độ mobile (Sheet) và desktop (cột cố định).",
+  "dependencies": [],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    { "path": "registry/reno/hooks/use-mobile.ts", "type": "registry:hook" }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn use-mobile hook; unchanged logic",
+    "added": "2026-09-01",
+    "group": "Core"
+  }
+}

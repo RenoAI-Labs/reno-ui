@@ -1,0 +1,21 @@
+{
+  "name": "separator",
+  "type": "registry:ui",
+  "title": "Separator",
+  "description": "Đường phân cách ngang hoặc dọc, dùng bg-border.",
+  "dependencies": ["@radix-ui/react-separator"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/separator.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn separator, new-york style; unchanged",
+    "added": "2026-09-01",
+    "group": "Layout"
+  }
+}

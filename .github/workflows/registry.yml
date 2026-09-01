@@ -1,0 +1,166 @@
+name: registry
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: registry-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20.19"
+
+jobs:
+  verify:
+    name: Lint, types, gates, tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+
+      # Generated artefacts must match their sources. Catches a preset edited
+      # in the CSS instead of the config, or a demo added without regenerating.
+      - name: Generated files are in sync
+        run: npm run check:all
+
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run registry:build
+      - run: npx next build
+
+      - name: Upload registry output
+        uses: actions/upload-artifact@v4
+        with:
+          name: registry-json
+          path: public/r/
+          retention-days: 7
+
+  install-smoke:
+    name: Install into a blank project
+    runs-on: ubuntu-latest
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run registry:build
+
+      # Building the registry is not the same as it being installable. The most
+      # common defect in a self-hosted registry is a missing registryDependency
+      # or npm dependency, which only shows up when something actually installs
+      # from it. So: serve the built registry and install from a blank project.
+      - name: Serve registry
+        run: |
+          npx --yes serve@14 public -l 4321 &
+          npx --yes wait-on http://127.0.0.1:4321/r/registry.json --timeout 60000
+
+      - name: Scaffold a blank consumer
+        run: |
+          npx --yes create-next-app@16.3.4 /tmp/consumer \
+            --ts --tailwind --app --no-src-dir --eslint --use-npm --yes --skip-install
+          cd /tmp/consumer
+          node -e '
+            const fs = require("fs");
+            const cfg = {
+              "$schema": "https://ui.shadcn.com/schema.json",
+              style: "new-york", rsc: true, tsx: true,
+              tailwind: { config: "", css: "app/globals.css", baseColor: "neutral", cssVariables: true, prefix: "" },
+              iconLibrary: "lucide",
+              aliases: { components: "@/components", utils: "@/lib/utils", ui: "@/components/ui", lib: "@/lib", hooks: "@/hooks" },
+              registries: { "@reno": "http://127.0.0.1:4321/r/{name}.json" },
+            };
+            fs.writeFileSync("components.json", JSON.stringify(cfg, null, 2));
+          '
+          npm install --no-audit --no-fund
+
+      - name: Install every registry item
+        run: |
+          node -e '
+            const { items } = require(process.env.GITHUB_WORKSPACE + "/registry.json");
+            console.log(items.map((i) => "@reno/" + i.name).join(" "));
+          ' > /tmp/items.txt
+          cd /tmp/consumer
+          npx shadcn@4.19.1 add $(cat /tmp/items.txt) --yes
+
+      - name: Every installed component must compile
+        run: |
+          cd /tmp/consumer
+          # Importing each module forces it into the compile graph. Installing
+          # cleanly is not the same as building — a missing file in an item's
+          # `files[]` only surfaces here.
+          node -e '
+            const fs = require("fs");
+            const files = fs.readdirSync("components/ui").filter((f) => f.endsWith(".tsx"));
+            const name = (f) => f.replace(/\.tsx$/, "").replace(/-(.)/g, (_, c) => c.toUpperCase()).replace(/^./, (c) => c.toUpperCase()) + "Mod";
+            const imports = files.map((f) => `import * as ${name(f)} from "@/components/ui/${f.replace(/\.tsx$/, "")}";`);
+            fs.writeFileSync("app/page.tsx", `"use client";\n${imports.join("\n")}\nconst all = [${files.map(name).join(", ")}];\nexport default function Home() { return <main>{all.length}</main>; }\n`);
+          '
+          npm run build
+
+      - name: Theme must have merged into globals.css
+        run: |
+          cd /tmp/consumer
+          # Proves the registry:theme + cssVars mechanism actually re-themes a
+          # project, rather than just dropping a file next to it.
+          grep -q -- "--density-row-height" app/globals.css
+          grep -q -- "--color-primary" app/globals.css
+
+      - name: A table-only project must not pull TanStack
+        run: |
+          # The bundle split is the reason `table` and `data-grid` are separate
+          # items; without this check it can regress silently.
+          rm -rf /tmp/light && mkdir -p /tmp/light
+          cp /tmp/consumer/components.json /tmp/light/
+          cd /tmp/light
+          npm init -y >/dev/null
+          npm pkg set dependencies.react=19.2.8 dependencies.react-dom=19.2.8 >/dev/null
+          mkdir -p app components lib
+          npx shadcn@4.19.1 add @reno/table @reno/theme-cms --yes
+          node -e '
+            const deps = Object.keys(require("/tmp/light/package.json").dependencies || {});
+            const leaked = deps.filter((d) => d.includes("tanstack"));
+            if (leaked.length) { console.error("TanStack leaked into a table-only project: " + leaked); process.exit(1); }
+            console.log("Bundle boundary holds: no TanStack in a table-only project.");
+          '
+
+  deploy:
+    name: Deploy to ui.reno.ai.vn
+    runs-on: ubuntu-latest
+    needs: [verify, install-smoke]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production
+      url: https://ui.reno.ai.vn
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run registry:build
+
+      - name: Deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          npx --yes vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+          npx --yes vercel@latest build --prod --token="$VERCEL_TOKEN"
+          npx --yes vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+
+      - name: Registry must be reachable in production
+        run: |
+          npx --yes wait-on https://ui.reno.ai.vn/r/registry.json --timeout 120000
+          npx shadcn@4.19.1 view https://ui.reno.ai.vn/r/button.json

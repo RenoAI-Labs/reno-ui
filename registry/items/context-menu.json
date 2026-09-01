@@ -1,0 +1,25 @@
+{
+  "name": "context-menu",
+  "type": "registry:ui",
+  "title": "Context Menu",
+  "description": "Menu ngữ cảnh khi chuột phải (item, checkbox, radio, submenu) từ Radix Context Menu; chiều cao mục đọc token mật độ.",
+  "dependencies": [
+    "@radix-ui/react-context-menu"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/context-menu.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn context-menu, new-york style; content z-index read from --z-dropdown, item min-height/padding read density tokens",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

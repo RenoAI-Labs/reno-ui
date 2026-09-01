@@ -1,0 +1,14 @@
+{
+  "name": "grid-query",
+  "type": "registry:lib",
+  "title": "Grid Query",
+  "description": "Contract truy vấn giữa DataGrid và backend: GridQuery, GridResponse, GridSelection và helper URL round-trip. Dùng chung cho mọi dự án reno.",
+  "files": [{ "path": "registry/reno/lib/grid-query.ts", "type": "registry:lib" }],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; spec ở docs/data-grid-server-contract.md",
+    "added": "2026-09-01",
+    "group": "Core"
+  }
+}

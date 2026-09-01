@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+build/
+.vercel/
+.env*
+!.env.example
+*.tsbuildinfo
+next-env.d.ts
+coverage/
+.DS_Store
+
+# `shadcn build` output — regenerated in CI on every deploy.
+public/r/
+
+# Internal planning, estimates and reviews. Kept out of the public repo — the
+# technical "why" that outside readers need lives in docs/ instead.
+plans/

@@ -1,0 +1,21 @@
+{
+  "name": "card",
+  "type": "registry:ui",
+  "title": "Card",
+  "description": "Bề mặt nội dung nổi có tiêu đề, hành động và chân trang; dùng bg-card/text-card-foreground.",
+  "dependencies": [],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/card.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn card, new-york style; no changes needed, padding already uses normal spacing",
+    "added": "2026-09-01",
+    "group": "Layout"
+  }
+}

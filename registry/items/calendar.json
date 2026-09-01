@@ -1,0 +1,16 @@
+{
+  "name": "calendar",
+  "type": "registry:ui",
+  "title": "Calendar",
+  "description": "Lịch chọn ngày dựa trên react-day-picker v10, mặc định locale tiếng Việt (date-fns/locale/vi). Nút điều hướng tái sử dụng buttonVariants.",
+  "dependencies": ["react-day-picker", "date-fns", "lucide-react"],
+  "registryDependencies": ["@reno/utils", "@reno/button"],
+  "files": [{ "path": "registry/reno/ui/calendar.tsx", "type": "registry:ui" }],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn calendar, new-york style, react-day-picker v10; sizing rewritten to read density tokens, locale defaulted to vi",
+    "added": "2026-09-01",
+    "group": "Data"
+  }
+}

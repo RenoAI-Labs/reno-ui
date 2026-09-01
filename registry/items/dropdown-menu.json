@@ -1,0 +1,25 @@
+{
+  "name": "dropdown-menu",
+  "type": "registry:ui",
+  "title": "Dropdown Menu",
+  "description": "Menu thả xuống đầy đủ (item, checkbox, radio, submenu) từ Radix Dropdown Menu; chiều cao mục đọc token mật độ.",
+  "dependencies": [
+    "@radix-ui/react-dropdown-menu"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/dropdown-menu.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn dropdown-menu, new-york style; content z-index read from --z-dropdown, item min-height/padding read density tokens",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

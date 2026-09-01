@@ -1,0 +1,21 @@
+{
+  "name": "resizable",
+  "type": "registry:ui",
+  "title": "Resizable",
+  "description": "Bố cục nhiều khung có thể kéo giãn, dựa trên react-resizable-panels v4 (Group/Panel/Separator).",
+  "dependencies": ["react-resizable-panels", "lucide-react"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/resizable.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn resizable, new-york style; ported to react-resizable-panels v4 exports (Group/Separator, orientation prop) since the shadcn docs still show the v2/v3 API",
+    "added": "2026-09-01",
+    "group": "Layout"
+  }
+}

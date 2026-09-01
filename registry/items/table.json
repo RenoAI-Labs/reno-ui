@@ -1,0 +1,16 @@
+{
+  "name": "table",
+  "type": "registry:ui",
+  "title": "Table",
+  "description": "Bảng dữ liệu tĩnh cho danh sách CMS/e-learning. Không dùng TanStack — tính năng lưới nặng thuộc @reno/data-grid; chiều cao dòng và đệm ô đọc token density.",
+  "dependencies": [],
+  "registryDependencies": ["@reno/utils"],
+  "files": [{ "path": "registry/reno/ui/table.tsx", "type": "registry:ui" }],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn table, new-york style; row/cell sizing rewritten to read density tokens",
+    "added": "2026-09-01",
+    "group": "Data"
+  }
+}

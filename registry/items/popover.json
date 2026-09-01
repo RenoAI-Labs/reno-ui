@@ -1,0 +1,25 @@
+{
+  "name": "popover",
+  "type": "registry:ui",
+  "title": "Popover",
+  "description": "Lớp phủ nổi neo theo trigger (Radix Popover) cho nội dung tương tác ngắn.",
+  "dependencies": [
+    "@radix-ui/react-popover"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/popover.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn popover, new-york style; content z-index read from --z-popover",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

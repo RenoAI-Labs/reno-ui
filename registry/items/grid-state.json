@@ -1,0 +1,25 @@
+{
+  "name": "grid-state",
+  "type": "registry:lib",
+  "title": "Grid State",
+  "description": "Kiểu state và column của DataGrid. Cho phép dự án khai báo state, URL sync, React Query key mà không cần import TanStack Table.",
+  "dependencies": [
+    "@tanstack/react-table"
+  ],
+  "registryDependencies": [
+    "@reno/grid-query"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/lib/grid-state.ts",
+      "type": "registry:lib"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; tên feature theo TanStack Table v9",
+    "added": "2026-09-01",
+    "group": "Core"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "utils",
+  "type": "registry:lib",
+  "title": "Utils",
+  "description": "cn() class-merging helper. Every reno component depends on it.",
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/lib/utils.ts",
+      "type": "registry:lib"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "cn helper, stable across shadcn releases",
+    "added": "2026-09-01",
+    "group": "Core"
+  }
+}

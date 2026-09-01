@@ -1,0 +1,21 @@
+{
+  "name": "aspect-ratio",
+  "type": "registry:ui",
+  "title": "Aspect Ratio",
+  "description": "Giữ tỉ lệ khung hình cố định cho nội dung con, dựa trên Radix Aspect Ratio.",
+  "dependencies": ["@radix-ui/react-aspect-ratio"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/aspect-ratio.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn aspect-ratio, new-york style; unchanged",
+    "added": "2026-09-01",
+    "group": "Layout"
+  }
+}

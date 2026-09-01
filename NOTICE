@@ -1,0 +1,23 @@
+reno-ui
+Copyright (c) 2026 RenoAI-Labs
+
+This product includes software derived from shadcn/ui.
+
+  shadcn/ui
+  https://github.com/shadcn-ui/ui
+  Copyright (c) 2023 shadcn
+  Licensed under the MIT License.
+
+Components under registry/reno/ui/ marked with source "shadcn/ui" in
+docs/ui-components.md are derived from that project. They have been modified —
+most substantially, sizing and spacing were rewritten to read reno design
+tokens so a single component can serve multiple product domains.
+
+Components marked "original" were written for this project.
+
+Per-item provenance is recorded in docs/ui-components.md and enforced in CI by
+scripts/check-provenance.mjs.
+
+reno-ui contains no code from zerostaticthemes/square-ui, which is distributed
+under the proprietary ln-dev UI License and may not be redistributed. See
+docs/ui-components.md for the full constraint.

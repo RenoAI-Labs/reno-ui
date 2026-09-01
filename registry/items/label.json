@@ -1,0 +1,18 @@
+{
+  "name": "label",
+  "type": "registry:ui",
+  "title": "Label",
+  "description": "Nhãn cho trường biểu mẫu dựa trên Radix Label, tự động làm mờ khi điều khiển liên kết bị vô hiệu hoá.",
+  "dependencies": ["@radix-ui/react-label"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    { "path": "registry/reno/ui/label.tsx", "type": "registry:ui" }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn label, new-york style; unchanged",
+    "added": "2026-09-01",
+    "group": "Form"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "alert",
+  "type": "registry:ui",
+  "title": "Alert",
+  "description": "Thông báo nổi bật với các biến thể default/destructive/success/warning/info dùng token trạng thái.",
+  "dependencies": [],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/alert.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn alert, new-york style; added success/warning/info variants on top of default/destructive",
+    "added": "2026-09-01",
+    "group": "Feedback"
+  }
+}

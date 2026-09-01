@@ -1,0 +1,25 @@
+{
+  "name": "dialog",
+  "type": "registry:ui",
+  "title": "Dialog",
+  "description": "Hộp thoại modal dùng Radix Dialog, với overlay và nội dung theo thang z-index modal của reno.",
+  "dependencies": [
+    "@radix-ui/react-dialog"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/dialog.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn dialog, new-york style; overlay/content z-index read from --z-overlay/--z-modal, close-button label overridable",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

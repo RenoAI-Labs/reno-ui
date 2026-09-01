@@ -1,0 +1,18 @@
+{
+  "name": "combobox",
+  "type": "registry:ui",
+  "title": "Combobox",
+  "description": "Ô chọn có tìm kiếm (Popover + Command + Button), generic theo kiểu giá trị, hỗ trợ xoá lựa chọn và tuỳ chọn bị vô hiệu hoá.",
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["@reno/utils", "@reno/button", "@reno/popover", "@reno/command"],
+  "files": [
+    { "path": "registry/reno/ui/combobox.tsx", "type": "registry:ui" }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "shadcn only documents this as a recipe combining Popover/Command/Button; written from scratch as a typed, reusable component",
+    "added": "2026-09-01",
+    "group": "Form"
+  }
+}

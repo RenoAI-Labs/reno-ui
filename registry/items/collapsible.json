@@ -1,0 +1,21 @@
+{
+  "name": "collapsible",
+  "type": "registry:ui",
+  "title": "Collapsible",
+  "description": "Vùng nội dung có thể ẩn/hiện đơn giản, không có phần trang trí riêng.",
+  "dependencies": ["@radix-ui/react-collapsible"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/collapsible.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn collapsible, new-york style; unchanged",
+    "added": "2026-09-01",
+    "group": "Layout"
+  }
+}

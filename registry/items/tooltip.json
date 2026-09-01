@@ -1,0 +1,25 @@
+{
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "Chú giải nổi khi di chuột/focus vào trigger (Radix Tooltip).",
+  "dependencies": [
+    "@radix-ui/react-tooltip"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/tooltip.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn tooltip, new-york style; content z-index read from --z-popover",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

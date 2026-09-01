@@ -1,0 +1,70 @@
+{
+  "name": "data-grid",
+  "type": "registry:ui",
+  "title": "DataGrid",
+  "description": "Grid ảo hoá cho admin/ERP: 10k+ dòng, server-side pagination/sort/filter, ghim/resize/ẩn cột, chọn dòng xuyên trang, empty/loading/error có sẵn. Chỉ cài khi cần — dự án nhẹ dùng @reno/table.",
+  "dependencies": [
+    "@tanstack/react-table",
+    "@tanstack/react-virtual",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button",
+    "@reno/select",
+    "@reno/dropdown-menu",
+    "@reno/skeleton",
+    "@reno/grid-state",
+    "@reno/grid-query",
+    "@reno/grid-labels"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/data-grid.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/data-grid/data-grid-context.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/data-grid/data-grid-header.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/data-grid/data-grid-body.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/data-grid/data-grid-row.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/data-grid/data-grid-pagination.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/data-grid/data-grid-states.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/data-grid/column-pinning.ts",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/data-grid/use-density-row-height.ts",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/hooks/use-data-grid.ts",
+      "type": "registry:hook"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno trên TanStack Table v9 + TanStack Virtual; shadcn/ui không có data grid",
+    "added": "2026-09-01",
+    "group": "Data"
+  }
+}

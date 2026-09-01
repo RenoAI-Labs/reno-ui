@@ -1,0 +1,21 @@
+{
+  "name": "sonner",
+  "type": "registry:ui",
+  "title": "Sonner",
+  "description": "Bọc Toaster của sonner, không phụ thuộc next-themes; màu sắc ánh xạ qua CSS variable API của sonner theo token reno.",
+  "dependencies": ["sonner"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/sonner.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn sonner, new-york style; next-themes swapped for an overridable theme prop (default \"system\") to stay framework-neutral",
+    "added": "2026-09-01",
+    "group": "Feedback"
+  }
+}

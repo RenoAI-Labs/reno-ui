@@ -1,0 +1,25 @@
+{
+  "name": "hover-card",
+  "type": "registry:ui",
+  "title": "Hover Card",
+  "description": "Thẻ xem trước hiện khi di chuột vào trigger (Radix Hover Card).",
+  "dependencies": [
+    "@radix-ui/react-hover-card"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/hover-card.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn hover-card, new-york style; content z-index read from --z-popover",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

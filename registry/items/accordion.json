@@ -1,0 +1,21 @@
+{
+  "name": "accordion",
+  "type": "registry:ui",
+  "title": "Accordion",
+  "description": "Danh sách mục có thể mở/thu gọn dựa trên Radix, kèm biểu tượng mũi tên xoay.",
+  "dependencies": ["@radix-ui/react-accordion", "lucide-react"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/accordion.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn accordion, new-york style; dropped tailwindcss-animate open/close keyframes since reno ships no animation plugin",
+    "added": "2026-09-01",
+    "group": "Layout"
+  }
+}

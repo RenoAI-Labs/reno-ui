@@ -1,0 +1,18 @@
+{
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "Vùng nhập văn bản nhiều dòng, tự co giãn theo nội dung và đọc token mật độ cho chiều cao tối thiểu.",
+  "dependencies": [],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    { "path": "registry/reno/ui/textarea.tsx", "type": "registry:ui" }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn textarea, new-york style; min-height rewritten as a multiple of the density control height",
+    "added": "2026-09-01",
+    "group": "Form"
+  }
+}

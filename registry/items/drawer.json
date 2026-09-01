@@ -1,0 +1,25 @@
+{
+  "name": "drawer",
+  "type": "registry:ui",
+  "title": "Drawer",
+  "description": "Bảng kéo lên từ dưới cho thao tác trên di động, bọc thư viện vaul.",
+  "dependencies": [
+    "vaul"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/drawer.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn drawer (vaul), new-york style; overlay/content z-index read from --z-overlay/--z-modal",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

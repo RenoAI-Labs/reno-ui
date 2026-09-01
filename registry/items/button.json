@@ -1,0 +1,26 @@
+{
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "Button and link-button. Sizes read the density tokens, so the same code renders compact in ERP and roomy in e-learning.",
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/button.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn button, new-york style; sizes rewritten to read density tokens",
+    "added": "2026-09-01",
+    "group": "Form"
+  }
+}

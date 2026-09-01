@@ -1,0 +1,26 @@
+{
+  "name": "command",
+  "type": "registry:ui",
+  "title": "Command",
+  "description": "Bảng lệnh tìm kiếm nhanh (bọc cmdk); CommandDialog kết hợp dialog để dùng như command palette.",
+  "dependencies": [
+    "cmdk"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/dialog"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/command.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn command (cmdk), new-york style; input/item heights read density tokens, CommandDialog composes the Dialog primitive",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

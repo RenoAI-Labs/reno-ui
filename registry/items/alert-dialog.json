@@ -1,0 +1,26 @@
+{
+  "name": "alert-dialog",
+  "type": "registry:ui",
+  "title": "Alert Dialog",
+  "description": "Hộp thoại xác nhận bắt buộc phản hồi (Radix Alert Dialog), nút hành động dùng lại buttonVariants.",
+  "dependencies": [
+    "@radix-ui/react-alert-dialog"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/alert-dialog.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn alert-dialog, new-york style; overlay/content z-index read from --z-overlay/--z-modal, action/cancel reuse buttonVariants",
+    "added": "2026-09-01",
+    "group": "Overlay"
+  }
+}

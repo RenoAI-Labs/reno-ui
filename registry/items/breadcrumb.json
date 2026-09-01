@@ -1,0 +1,16 @@
+{
+  "name": "breadcrumb",
+  "type": "registry:ui",
+  "title": "Breadcrumb",
+  "description": "Điều hướng breadcrumb không phụ thuộc router. BreadcrumbLink nhận asChild để gắn next/link hoặc thẻ <a> tuỳ dự án.",
+  "dependencies": ["@radix-ui/react-slot", "lucide-react"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [{ "path": "registry/reno/ui/breadcrumb.tsx", "type": "registry:ui" }],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn breadcrumb, new-york style; ellipsis size rewritten to read density tokens",
+    "added": "2026-09-01",
+    "group": "Nav"
+  }
+}

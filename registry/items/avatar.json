@@ -1,0 +1,16 @@
+{
+  "name": "avatar",
+  "type": "registry:ui",
+  "title": "Avatar",
+  "description": "Ảnh đại diện với ảnh, chữ viết tắt dự phòng và ba cỡ đọc token density, đồng bộ chiều cao với Button.",
+  "dependencies": ["@radix-ui/react-avatar", "class-variance-authority"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [{ "path": "registry/reno/ui/avatar.tsx", "type": "registry:ui" }],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn avatar, new-york style; size variants rewritten to read density tokens",
+    "added": "2026-09-01",
+    "group": "Data"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "use-data-grid-url-state",
+  "type": "registry:hook",
+  "title": "useDataGridUrlState",
+  "description": "Đồng bộ state grid vào URL để reload giữ nguyên bộ lọc và share được link. Không phụ thuộc router — dùng History API, chạy được ngoài Next.js.",
+  "registryDependencies": ["@reno/grid-query"],
+  "files": [
+    { "path": "registry/reno/hooks/use-data-grid-url-state.ts", "type": "registry:hook" }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno",
+    "added": "2026-09-01",
+    "group": "Core"
+  }
+}

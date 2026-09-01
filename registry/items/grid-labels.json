@@ -1,0 +1,14 @@
+{
+  "name": "grid-labels",
+  "type": "registry:lib",
+  "title": "Grid Labels",
+  "description": "Toàn bộ chuỗi hiển thị của DataGrid, mặc định tiếng Việt. Không phụ thuộc thư viện i18n nào.",
+  "files": [{ "path": "registry/reno/lib/grid-labels.ts", "type": "registry:lib" }],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno",
+    "added": "2026-09-01",
+    "group": "Core"
+  }
+}

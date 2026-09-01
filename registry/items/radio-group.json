@@ -1,0 +1,18 @@
+{
+  "name": "radio-group",
+  "type": "registry:ui",
+  "title": "Radio Group",
+  "description": "Nhóm nút chọn một dựa trên Radix Radio Group.",
+  "dependencies": ["@radix-ui/react-radio-group", "lucide-react"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    { "path": "registry/reno/ui/radio-group.tsx", "type": "registry:ui" }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn radio-group, new-york style; unchanged",
+    "added": "2026-09-01",
+    "group": "Form"
+  }
+}

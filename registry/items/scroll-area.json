@@ -1,0 +1,21 @@
+{
+  "name": "scroll-area",
+  "type": "registry:ui",
+  "title": "Scroll Area",
+  "description": "Vùng cuộn có thanh cuộn tuỳ biến, dựa trên Radix Scroll Area.",
+  "dependencies": ["@radix-ui/react-scroll-area"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/scroll-area.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn scroll-area, new-york style; unchanged",
+    "added": "2026-09-01",
+    "group": "Layout"
+  }
+}

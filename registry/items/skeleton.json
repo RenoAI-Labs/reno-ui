@@ -1,0 +1,21 @@
+{
+  "name": "skeleton",
+  "type": "registry:ui",
+  "title": "Skeleton",
+  "description": "Khối giữ chỗ khi đang tải, dùng bg-accent kết hợp hiệu ứng animate-pulse.",
+  "dependencies": [],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/skeleton.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn skeleton, new-york style; bg-muted swapped for bg-accent to match reno's token set",
+    "added": "2026-09-01",
+    "group": "Feedback"
+  }
+}

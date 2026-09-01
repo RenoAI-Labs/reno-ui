@@ -1,0 +1,21 @@
+{
+  "name": "spinner",
+  "type": "registry:ui",
+  "title": "Spinner",
+  "description": "Chỉ báo đang tải nhỏ gọn, role=status, kích thước đọc density token, màu theo currentColor.",
+  "dependencies": ["lucide-react", "class-variance-authority"],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/spinner.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "no shadcn equivalent; written for reno, sizes read density-control-height tokens",
+    "added": "2026-09-01",
+    "group": "Feedback"
+  }
+}

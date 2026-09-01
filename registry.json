@@ -1,0 +1,2526 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "reno",
+  "homepage": "https://ui.reno.ai.vn",
+  "items": [
+    {
+      "name": "grid-labels",
+      "type": "registry:lib",
+      "title": "Grid Labels",
+      "description": "Toàn bộ chuỗi hiển thị của DataGrid, mặc định tiếng Việt. Không phụ thuộc thư viện i18n nào.",
+      "files": [
+        {
+          "path": "registry/reno/lib/grid-labels.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno",
+        "added": "2026-09-01",
+        "group": "Core"
+      }
+    },
+    {
+      "name": "grid-query",
+      "type": "registry:lib",
+      "title": "Grid Query",
+      "description": "Contract truy vấn giữa DataGrid và backend: GridQuery, GridResponse, GridSelection và helper URL round-trip. Dùng chung cho mọi dự án reno.",
+      "files": [
+        {
+          "path": "registry/reno/lib/grid-query.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; spec ở docs/data-grid-server-contract.md",
+        "added": "2026-09-01",
+        "group": "Core"
+      }
+    },
+    {
+      "name": "grid-state",
+      "type": "registry:lib",
+      "title": "Grid State",
+      "description": "Kiểu state và column của DataGrid. Cho phép dự án khai báo state, URL sync, React Query key mà không cần import TanStack Table.",
+      "dependencies": [
+        "@tanstack/react-table"
+      ],
+      "registryDependencies": [
+        "@reno/grid-query"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/lib/grid-state.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; tên feature theo TanStack Table v9",
+        "added": "2026-09-01",
+        "group": "Core"
+      }
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "description": "cn() class-merging helper. Every reno component depends on it.",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "cn helper, stable across shadcn releases",
+        "added": "2026-09-01",
+        "group": "Core"
+      }
+    },
+    {
+      "name": "use-data-grid-url-state",
+      "type": "registry:hook",
+      "title": "useDataGridUrlState",
+      "description": "Đồng bộ state grid vào URL để reload giữ nguyên bộ lọc và share được link. Không phụ thuộc router — dùng History API, chạy được ngoài Next.js.",
+      "registryDependencies": [
+        "@reno/grid-query"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/hooks/use-data-grid-url-state.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno",
+        "added": "2026-09-01",
+        "group": "Core"
+      }
+    },
+    {
+      "name": "use-mobile",
+      "type": "registry:hook",
+      "title": "useIsMobile",
+      "description": "Hook đọc breakpoint 768px qua matchMedia; dùng để chuyển Sidebar giữa chế độ mobile (Sheet) và desktop (cột cố định).",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/hooks/use-mobile.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn use-mobile hook; unchanged logic",
+        "added": "2026-09-01",
+        "group": "Core"
+      }
+    },
+    {
+      "name": "theme-admin",
+      "type": "registry:theme",
+      "title": "Theme Admin",
+      "description": "Neutral blue, standard density. The safe default for back-office screens.",
+      "registryDependencies": [
+        "@reno/theme-base"
+      ],
+      "cssVars": {
+        "light": {
+          "reno-brand-50": "oklch(0.985 0.0073 250)",
+          "reno-brand-100": "oklch(0.967 0.0162 250)",
+          "reno-brand-200": "oklch(0.929 0.0354 250)",
+          "reno-brand-300": "oklch(0.871 0.0658 250)",
+          "reno-brand-400": "oklch(0.746 0.1105 250)",
+          "reno-brand-500": "oklch(0.637 0.13 250)",
+          "reno-brand-600": "oklch(0.577 0.13 250)",
+          "reno-brand-700": "oklch(0.505 0.1196 250)",
+          "reno-brand-800": "oklch(0.444 0.104 250)",
+          "reno-brand-900": "oklch(0.396 0.091 250)",
+          "reno-brand-950": "oklch(0.269 0.0715 250)",
+          "reno-neutral-50": "oklch(0.985 0 0)",
+          "reno-neutral-100": "oklch(0.967 0.0007 250)",
+          "reno-neutral-200": "oklch(0.929 0.0014 250)",
+          "reno-neutral-300": "oklch(0.871 0.0024 250)",
+          "reno-neutral-400": "oklch(0.746 0.0034 250)",
+          "reno-neutral-500": "oklch(0.637 0.004 250)",
+          "reno-neutral-600": "oklch(0.577 0.004 250)",
+          "reno-neutral-700": "oklch(0.505 0.0037 250)",
+          "reno-neutral-800": "oklch(0.444 0.0032 250)",
+          "reno-neutral-900": "oklch(0.396 0.0028 250)",
+          "reno-neutral-950": "oklch(0.269 0.0022 250)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.5rem",
+          "density-control-height-sm": "2rem",
+          "density-control-height": "2.25rem",
+          "density-control-height-lg": "2.5rem",
+          "density-control-px": "0.75rem",
+          "density-row-height": "2.75rem",
+          "density-cell-padding-x": "0.75rem",
+          "density-cell-padding-y": "0.5rem",
+          "density-gap": "0.75rem",
+          "density-font-size": "0.875rem",
+          "density-line-height": "1.45",
+          "background": "oklch(0.995 0.0016 250)",
+          "foreground": "oklch(0.21 0.012 250)",
+          "card": "oklch(1 0 0)",
+          "card-foreground": "oklch(0.21 0.012 250)",
+          "popover": "oklch(1 0 0)",
+          "popover-foreground": "oklch(0.21 0.012 250)",
+          "primary": "var(--reno-brand-700)",
+          "primary-foreground": "oklch(0.985 0.005 250)",
+          "secondary": "oklch(0.967 0.0048 250)",
+          "secondary-foreground": "oklch(0.21 0.012 250)",
+          "muted": "oklch(0.967 0.0048 250)",
+          "muted-foreground": "var(--reno-neutral-700)",
+          "accent": "oklch(0.967 0.0048 250)",
+          "accent-foreground": "oklch(0.21 0.012 250)",
+          "destructive": "var(--reno-destructive-700)",
+          "destructive-foreground": "oklch(0.985 0.005 27)",
+          "success": "var(--reno-success-700)",
+          "success-foreground": "oklch(0.985 0.005 150)",
+          "warning": "var(--reno-warning-700)",
+          "warning-foreground": "oklch(0.985 0.005 75)",
+          "info": "var(--reno-info-700)",
+          "info-foreground": "oklch(0.985 0.005 235)",
+          "border": "oklch(0.915 0.008 250)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-500)",
+          "overlay": "oklch(0 0 0 / 0.5)",
+          "chart-1": "oklch(0.6 0.1235 250)",
+          "chart-2": "oklch(0.6 0.1235 312)",
+          "chart-3": "oklch(0.6 0.1235 20)",
+          "chart-4": "oklch(0.6 0.1232 95)",
+          "chart-5": "oklch(0.6 0.1131 175)",
+          "sidebar": "oklch(0.978 0.0048 250)",
+          "sidebar-foreground": "oklch(0.21 0.012 250)",
+          "sidebar-primary": "var(--reno-brand-700)",
+          "sidebar-primary-foreground": "oklch(0.985 0.005 250)",
+          "sidebar-accent": "oklch(0.94 0.006 250)",
+          "sidebar-accent-foreground": "oklch(0.21 0.012 250)",
+          "sidebar-border": "oklch(0.915 0.008 250)",
+          "sidebar-ring": "var(--reno-brand-500)"
+        },
+        "dark": {
+          "reno-brand-50": "oklch(0.985 0.0073 250)",
+          "reno-brand-100": "oklch(0.967 0.0162 250)",
+          "reno-brand-200": "oklch(0.929 0.0354 250)",
+          "reno-brand-300": "oklch(0.871 0.0658 250)",
+          "reno-brand-400": "oklch(0.746 0.1105 250)",
+          "reno-brand-500": "oklch(0.637 0.13 250)",
+          "reno-brand-600": "oklch(0.577 0.13 250)",
+          "reno-brand-700": "oklch(0.505 0.1196 250)",
+          "reno-brand-800": "oklch(0.444 0.104 250)",
+          "reno-brand-900": "oklch(0.396 0.091 250)",
+          "reno-brand-950": "oklch(0.269 0.0715 250)",
+          "reno-neutral-50": "oklch(0.985 0 0)",
+          "reno-neutral-100": "oklch(0.967 0.0007 250)",
+          "reno-neutral-200": "oklch(0.929 0.0014 250)",
+          "reno-neutral-300": "oklch(0.871 0.0024 250)",
+          "reno-neutral-400": "oklch(0.746 0.0034 250)",
+          "reno-neutral-500": "oklch(0.637 0.004 250)",
+          "reno-neutral-600": "oklch(0.577 0.004 250)",
+          "reno-neutral-700": "oklch(0.505 0.0037 250)",
+          "reno-neutral-800": "oklch(0.444 0.0032 250)",
+          "reno-neutral-900": "oklch(0.396 0.0028 250)",
+          "reno-neutral-950": "oklch(0.269 0.0022 250)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.5rem",
+          "density-control-height-sm": "2rem",
+          "density-control-height": "2.25rem",
+          "density-control-height-lg": "2.5rem",
+          "density-control-px": "0.75rem",
+          "density-row-height": "2.75rem",
+          "density-cell-padding-x": "0.75rem",
+          "density-cell-padding-y": "0.5rem",
+          "density-gap": "0.75rem",
+          "density-font-size": "0.875rem",
+          "density-line-height": "1.45",
+          "background": "oklch(0.165 0.006 250)",
+          "foreground": "oklch(0.985 0.005 250)",
+          "card": "oklch(0.205 0.006 250)",
+          "card-foreground": "oklch(0.985 0.005 250)",
+          "popover": "oklch(0.205 0.006 250)",
+          "popover-foreground": "oklch(0.985 0.005 250)",
+          "primary": "var(--reno-brand-400)",
+          "primary-foreground": "oklch(0.21 0.012 250)",
+          "secondary": "oklch(0.255 0.006 250)",
+          "secondary-foreground": "oklch(0.985 0.005 250)",
+          "muted": "oklch(0.255 0.006 250)",
+          "muted-foreground": "var(--reno-neutral-400)",
+          "accent": "oklch(0.255 0.006 250)",
+          "accent-foreground": "oklch(0.985 0.005 250)",
+          "destructive": "var(--reno-destructive-500)",
+          "destructive-foreground": "oklch(0.21 0.012 27)",
+          "success": "var(--reno-success-500)",
+          "success-foreground": "oklch(0.21 0.012 150)",
+          "warning": "var(--reno-warning-500)",
+          "warning-foreground": "oklch(0.21 0.012 75)",
+          "info": "var(--reno-info-500)",
+          "info-foreground": "oklch(0.21 0.012 235)",
+          "border": "oklch(0.31 0.008 250)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-400)",
+          "overlay": "oklch(0 0 0 / 0.65)",
+          "chart-1": "oklch(0.68 0.1235 250)",
+          "chart-2": "oklch(0.68 0.1235 312)",
+          "chart-3": "oklch(0.68 0.1235 20)",
+          "chart-4": "oklch(0.68 0.1235 95)",
+          "chart-5": "oklch(0.68 0.1235 175)",
+          "sidebar": "oklch(0.195 0.006 250)",
+          "sidebar-foreground": "oklch(0.985 0.005 250)",
+          "sidebar-primary": "var(--reno-brand-400)",
+          "sidebar-primary-foreground": "oklch(0.21 0.012 250)",
+          "sidebar-accent": "oklch(0.265 0.006 250)",
+          "sidebar-accent-foreground": "oklch(0.985 0.005 250)",
+          "sidebar-border": "oklch(0.31 0.008 250)",
+          "sidebar-ring": "var(--reno-brand-400)"
+        }
+      },
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Generated by scripts/generate-scale.mjs",
+        "added": "2026-09-01",
+        "group": "Theme"
+      }
+    },
+    {
+      "name": "theme-base",
+      "type": "registry:theme",
+      "title": "Theme Base",
+      "description": "Neutral fallback theme. Declares every semantic token reno components read, plus the Tailwind mapping layer. Installed automatically by every preset.",
+      "cssVars": {
+        "theme": {
+          "color-background": "var(--background)",
+          "color-foreground": "var(--foreground)",
+          "color-card": "var(--card)",
+          "color-card-foreground": "var(--card-foreground)",
+          "color-popover": "var(--popover)",
+          "color-popover-foreground": "var(--popover-foreground)",
+          "color-primary": "var(--primary)",
+          "color-primary-foreground": "var(--primary-foreground)",
+          "color-secondary": "var(--secondary)",
+          "color-secondary-foreground": "var(--secondary-foreground)",
+          "color-muted": "var(--muted)",
+          "color-muted-foreground": "var(--muted-foreground)",
+          "color-accent": "var(--accent)",
+          "color-accent-foreground": "var(--accent-foreground)",
+          "color-destructive": "var(--destructive)",
+          "color-destructive-foreground": "var(--destructive-foreground)",
+          "color-success": "var(--success)",
+          "color-success-foreground": "var(--success-foreground)",
+          "color-warning": "var(--warning)",
+          "color-warning-foreground": "var(--warning-foreground)",
+          "color-info": "var(--info)",
+          "color-info-foreground": "var(--info-foreground)",
+          "color-border": "var(--border)",
+          "color-input": "var(--input)",
+          "color-ring": "var(--ring)",
+          "color-overlay": "var(--overlay)",
+          "color-chart-1": "var(--chart-1)",
+          "color-chart-2": "var(--chart-2)",
+          "color-chart-3": "var(--chart-3)",
+          "color-chart-4": "var(--chart-4)",
+          "color-chart-5": "var(--chart-5)",
+          "color-sidebar": "var(--sidebar)",
+          "color-sidebar-foreground": "var(--sidebar-foreground)",
+          "color-sidebar-primary": "var(--sidebar-primary)",
+          "color-sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+          "color-sidebar-accent": "var(--sidebar-accent)",
+          "color-sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+          "color-sidebar-border": "var(--sidebar-border)",
+          "color-sidebar-ring": "var(--sidebar-ring)",
+          "radius-sm": "calc(var(--radius) - 4px)",
+          "radius-md": "calc(var(--radius) - 2px)",
+          "radius-lg": "var(--radius)",
+          "radius-xl": "calc(var(--radius) + 4px)",
+          "font-sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+          "font-mono": "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace",
+          "shadow-xs": "0 1px 2px 0 oklch(0 0 0 / 0.05)",
+          "shadow-sm": "0 1px 3px 0 oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1)",
+          "shadow-md": "0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1)",
+          "shadow-lg": "0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1)",
+          "z-dropdown": "1000",
+          "z-sticky": "1100",
+          "z-overlay": "1200",
+          "z-modal": "1300",
+          "z-popover": "1400",
+          "z-toast": "1500",
+          "animate-in": "reno-enter 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+          "animate-out": "reno-exit 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+          "animate-accordion-down": "reno-accordion-down 200ms cubic-bezier(0.87, 0, 0.13, 1)",
+          "animate-accordion-up": "reno-accordion-up 200ms cubic-bezier(0.87, 0, 0.13, 1)",
+          "animate-caret-blink": "reno-caret-blink 1.25s ease-out infinite"
+        },
+        "light": {
+          "reno-brand-50": "oklch(0.985 0.0073 250)",
+          "reno-brand-100": "oklch(0.967 0.0162 250)",
+          "reno-brand-200": "oklch(0.929 0.0354 250)",
+          "reno-brand-300": "oklch(0.871 0.0658 250)",
+          "reno-brand-400": "oklch(0.746 0.1105 250)",
+          "reno-brand-500": "oklch(0.637 0.13 250)",
+          "reno-brand-600": "oklch(0.577 0.13 250)",
+          "reno-brand-700": "oklch(0.505 0.1196 250)",
+          "reno-brand-800": "oklch(0.444 0.104 250)",
+          "reno-brand-900": "oklch(0.396 0.091 250)",
+          "reno-brand-950": "oklch(0.269 0.0715 250)",
+          "reno-neutral-50": "oklch(0.985 0 0)",
+          "reno-neutral-100": "oklch(0.967 0.0007 250)",
+          "reno-neutral-200": "oklch(0.929 0.0014 250)",
+          "reno-neutral-300": "oklch(0.871 0.0024 250)",
+          "reno-neutral-400": "oklch(0.746 0.0034 250)",
+          "reno-neutral-500": "oklch(0.637 0.004 250)",
+          "reno-neutral-600": "oklch(0.577 0.004 250)",
+          "reno-neutral-700": "oklch(0.505 0.0037 250)",
+          "reno-neutral-800": "oklch(0.444 0.0032 250)",
+          "reno-neutral-900": "oklch(0.396 0.0028 250)",
+          "reno-neutral-950": "oklch(0.269 0.0022 250)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.5rem",
+          "density-control-height-sm": "2rem",
+          "density-control-height": "2.25rem",
+          "density-control-height-lg": "2.5rem",
+          "density-control-px": "0.75rem",
+          "density-row-height": "2.75rem",
+          "density-cell-padding-x": "0.75rem",
+          "density-cell-padding-y": "0.5rem",
+          "density-gap": "0.75rem",
+          "density-font-size": "0.875rem",
+          "density-line-height": "1.45",
+          "background": "oklch(0.995 0.0016 250)",
+          "foreground": "oklch(0.21 0.012 250)",
+          "card": "oklch(1 0 0)",
+          "card-foreground": "oklch(0.21 0.012 250)",
+          "popover": "oklch(1 0 0)",
+          "popover-foreground": "oklch(0.21 0.012 250)",
+          "primary": "var(--reno-brand-700)",
+          "primary-foreground": "oklch(0.985 0.005 250)",
+          "secondary": "oklch(0.967 0.0048 250)",
+          "secondary-foreground": "oklch(0.21 0.012 250)",
+          "muted": "oklch(0.967 0.0048 250)",
+          "muted-foreground": "var(--reno-neutral-700)",
+          "accent": "oklch(0.967 0.0048 250)",
+          "accent-foreground": "oklch(0.21 0.012 250)",
+          "destructive": "var(--reno-destructive-700)",
+          "destructive-foreground": "oklch(0.985 0.005 27)",
+          "success": "var(--reno-success-700)",
+          "success-foreground": "oklch(0.985 0.005 150)",
+          "warning": "var(--reno-warning-700)",
+          "warning-foreground": "oklch(0.985 0.005 75)",
+          "info": "var(--reno-info-700)",
+          "info-foreground": "oklch(0.985 0.005 235)",
+          "border": "oklch(0.915 0.008 250)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-500)",
+          "overlay": "oklch(0 0 0 / 0.5)",
+          "chart-1": "oklch(0.6 0.1235 250)",
+          "chart-2": "oklch(0.6 0.1235 312)",
+          "chart-3": "oklch(0.6 0.1235 20)",
+          "chart-4": "oklch(0.6 0.1232 95)",
+          "chart-5": "oklch(0.6 0.1131 175)",
+          "sidebar": "oklch(0.978 0.0048 250)",
+          "sidebar-foreground": "oklch(0.21 0.012 250)",
+          "sidebar-primary": "var(--reno-brand-700)",
+          "sidebar-primary-foreground": "oklch(0.985 0.005 250)",
+          "sidebar-accent": "oklch(0.94 0.006 250)",
+          "sidebar-accent-foreground": "oklch(0.21 0.012 250)",
+          "sidebar-border": "oklch(0.915 0.008 250)",
+          "sidebar-ring": "var(--reno-brand-500)"
+        },
+        "dark": {
+          "reno-brand-50": "oklch(0.985 0.0073 250)",
+          "reno-brand-100": "oklch(0.967 0.0162 250)",
+          "reno-brand-200": "oklch(0.929 0.0354 250)",
+          "reno-brand-300": "oklch(0.871 0.0658 250)",
+          "reno-brand-400": "oklch(0.746 0.1105 250)",
+          "reno-brand-500": "oklch(0.637 0.13 250)",
+          "reno-brand-600": "oklch(0.577 0.13 250)",
+          "reno-brand-700": "oklch(0.505 0.1196 250)",
+          "reno-brand-800": "oklch(0.444 0.104 250)",
+          "reno-brand-900": "oklch(0.396 0.091 250)",
+          "reno-brand-950": "oklch(0.269 0.0715 250)",
+          "reno-neutral-50": "oklch(0.985 0 0)",
+          "reno-neutral-100": "oklch(0.967 0.0007 250)",
+          "reno-neutral-200": "oklch(0.929 0.0014 250)",
+          "reno-neutral-300": "oklch(0.871 0.0024 250)",
+          "reno-neutral-400": "oklch(0.746 0.0034 250)",
+          "reno-neutral-500": "oklch(0.637 0.004 250)",
+          "reno-neutral-600": "oklch(0.577 0.004 250)",
+          "reno-neutral-700": "oklch(0.505 0.0037 250)",
+          "reno-neutral-800": "oklch(0.444 0.0032 250)",
+          "reno-neutral-900": "oklch(0.396 0.0028 250)",
+          "reno-neutral-950": "oklch(0.269 0.0022 250)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.5rem",
+          "density-control-height-sm": "2rem",
+          "density-control-height": "2.25rem",
+          "density-control-height-lg": "2.5rem",
+          "density-control-px": "0.75rem",
+          "density-row-height": "2.75rem",
+          "density-cell-padding-x": "0.75rem",
+          "density-cell-padding-y": "0.5rem",
+          "density-gap": "0.75rem",
+          "density-font-size": "0.875rem",
+          "density-line-height": "1.45",
+          "background": "oklch(0.165 0.006 250)",
+          "foreground": "oklch(0.985 0.005 250)",
+          "card": "oklch(0.205 0.006 250)",
+          "card-foreground": "oklch(0.985 0.005 250)",
+          "popover": "oklch(0.205 0.006 250)",
+          "popover-foreground": "oklch(0.985 0.005 250)",
+          "primary": "var(--reno-brand-400)",
+          "primary-foreground": "oklch(0.21 0.012 250)",
+          "secondary": "oklch(0.255 0.006 250)",
+          "secondary-foreground": "oklch(0.985 0.005 250)",
+          "muted": "oklch(0.255 0.006 250)",
+          "muted-foreground": "var(--reno-neutral-400)",
+          "accent": "oklch(0.255 0.006 250)",
+          "accent-foreground": "oklch(0.985 0.005 250)",
+          "destructive": "var(--reno-destructive-500)",
+          "destructive-foreground": "oklch(0.21 0.012 27)",
+          "success": "var(--reno-success-500)",
+          "success-foreground": "oklch(0.21 0.012 150)",
+          "warning": "var(--reno-warning-500)",
+          "warning-foreground": "oklch(0.21 0.012 75)",
+          "info": "var(--reno-info-500)",
+          "info-foreground": "oklch(0.21 0.012 235)",
+          "border": "oklch(0.31 0.008 250)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-400)",
+          "overlay": "oklch(0 0 0 / 0.65)",
+          "chart-1": "oklch(0.68 0.1235 250)",
+          "chart-2": "oklch(0.68 0.1235 312)",
+          "chart-3": "oklch(0.68 0.1235 20)",
+          "chart-4": "oklch(0.68 0.1235 95)",
+          "chart-5": "oklch(0.68 0.1235 175)",
+          "sidebar": "oklch(0.195 0.006 250)",
+          "sidebar-foreground": "oklch(0.985 0.005 250)",
+          "sidebar-primary": "var(--reno-brand-400)",
+          "sidebar-primary-foreground": "oklch(0.21 0.012 250)",
+          "sidebar-accent": "oklch(0.265 0.006 250)",
+          "sidebar-accent-foreground": "oklch(0.985 0.005 250)",
+          "sidebar-border": "oklch(0.31 0.008 250)",
+          "sidebar-ring": "var(--reno-brand-400)"
+        }
+      },
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Generated by scripts/generate-scale.mjs; token names follow shadcn",
+        "added": "2026-09-01",
+        "group": "Theme"
+      },
+      "css": {
+        "@keyframes reno-enter": {
+          "from": {
+            "opacity": "var(--reno-enter-opacity, 1)",
+            "transform": "translate3d(var(--reno-enter-translate-x, 0), var(--reno-enter-translate-y, 0), 0) scale3d(var(--reno-enter-scale, 1), var(--reno-enter-scale, 1), var(--reno-enter-scale, 1))"
+          }
+        },
+        "@keyframes reno-exit": {
+          "to": {
+            "opacity": "var(--reno-exit-opacity, 1)",
+            "transform": "translate3d(var(--reno-exit-translate-x, 0), var(--reno-exit-translate-y, 0), 0) scale3d(var(--reno-exit-scale, 1), var(--reno-exit-scale, 1), var(--reno-exit-scale, 1))"
+          }
+        },
+        "@keyframes reno-accordion-down": {
+          "from": {
+            "height": "0"
+          },
+          "to": {
+            "height": "var(--radix-accordion-content-height)"
+          }
+        },
+        "@keyframes reno-accordion-up": {
+          "from": {
+            "height": "var(--radix-accordion-content-height)"
+          },
+          "to": {
+            "height": "0"
+          }
+        },
+        "@keyframes reno-caret-blink": {
+          "0%,70%,100%": {
+            "opacity": "1"
+          },
+          "20%,50%": {
+            "opacity": "0"
+          }
+        },
+        "@utility fade-in-*": {
+          "--reno-enter-opacity": "calc(--value(integer) / 100)"
+        },
+        "@utility fade-out-*": {
+          "--reno-exit-opacity": "calc(--value(integer) / 100)"
+        },
+        "@utility zoom-in-*": {
+          "--reno-enter-scale": "calc(--value(integer) / 100)"
+        },
+        "@utility zoom-out-*": {
+          "--reno-exit-scale": "calc(--value(integer) / 100)"
+        },
+        "@utility slide-in-from-top-*": {
+          "--reno-enter-translate-y": "calc(--value(integer) * 1px)"
+        },
+        "@utility slide-out-to-top-*": {
+          "--reno-exit-translate-y": "calc(--value(integer) * 1px)"
+        },
+        "@utility slide-in-from-top": {
+          "--reno-enter-translate-y": "-100%"
+        },
+        "@utility slide-out-to-top": {
+          "--reno-exit-translate-y": "-100%"
+        },
+        "@utility slide-in-from-bottom-*": {
+          "--reno-enter-translate-y": "calc(--value(integer) * 1px)"
+        },
+        "@utility slide-out-to-bottom-*": {
+          "--reno-exit-translate-y": "calc(--value(integer) * 1px)"
+        },
+        "@utility slide-in-from-bottom": {
+          "--reno-enter-translate-y": "100%"
+        },
+        "@utility slide-out-to-bottom": {
+          "--reno-exit-translate-y": "100%"
+        },
+        "@utility slide-in-from-left-*": {
+          "--reno-enter-translate-x": "calc(--value(integer) * 1px)"
+        },
+        "@utility slide-out-to-left-*": {
+          "--reno-exit-translate-x": "calc(--value(integer) * 1px)"
+        },
+        "@utility slide-in-from-left": {
+          "--reno-enter-translate-x": "-100%"
+        },
+        "@utility slide-out-to-left": {
+          "--reno-exit-translate-x": "-100%"
+        },
+        "@utility slide-in-from-right-*": {
+          "--reno-enter-translate-x": "calc(--value(integer) * 1px)"
+        },
+        "@utility slide-out-to-right-*": {
+          "--reno-exit-translate-x": "calc(--value(integer) * 1px)"
+        },
+        "@utility slide-in-from-right": {
+          "--reno-enter-translate-x": "100%"
+        },
+        "@utility slide-out-to-right": {
+          "--reno-exit-translate-x": "100%"
+        }
+      }
+    },
+    {
+      "name": "theme-cms",
+      "type": "registry:theme",
+      "title": "Theme CMS",
+      "description": "Content-first preset. Violet accent, generous typography and spacing.",
+      "registryDependencies": [
+        "@reno/theme-base"
+      ],
+      "cssVars": {
+        "light": {
+          "reno-brand-50": "oklch(0.985 0.0087 305)",
+          "reno-brand-100": "oklch(0.967 0.0194 305)",
+          "reno-brand-200": "oklch(0.929 0.0424 305)",
+          "reno-brand-300": "oklch(0.871 0.078 305)",
+          "reno-brand-400": "oklch(0.746 0.1105 305)",
+          "reno-brand-500": "oklch(0.637 0.13 305)",
+          "reno-brand-600": "oklch(0.577 0.13 305)",
+          "reno-brand-700": "oklch(0.505 0.1196 305)",
+          "reno-brand-800": "oklch(0.444 0.104 305)",
+          "reno-brand-900": "oklch(0.396 0.091 305)",
+          "reno-brand-950": "oklch(0.269 0.0715 305)",
+          "reno-neutral-50": "oklch(0.985 0 0)",
+          "reno-neutral-100": "oklch(0.967 0.0007 300)",
+          "reno-neutral-200": "oklch(0.929 0.0014 300)",
+          "reno-neutral-300": "oklch(0.871 0.0024 300)",
+          "reno-neutral-400": "oklch(0.746 0.0034 300)",
+          "reno-neutral-500": "oklch(0.637 0.004 300)",
+          "reno-neutral-600": "oklch(0.577 0.004 300)",
+          "reno-neutral-700": "oklch(0.505 0.0037 300)",
+          "reno-neutral-800": "oklch(0.444 0.0032 300)",
+          "reno-neutral-900": "oklch(0.396 0.0028 300)",
+          "reno-neutral-950": "oklch(0.269 0.0022 300)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.5rem",
+          "density-control-height-sm": "2.25rem",
+          "density-control-height": "2.5rem",
+          "density-control-height-lg": "2.875rem",
+          "density-control-px": "0.875rem",
+          "density-row-height": "3rem",
+          "density-cell-padding-x": "0.875rem",
+          "density-cell-padding-y": "0.625rem",
+          "density-gap": "1rem",
+          "density-font-size": "0.9375rem",
+          "density-line-height": "1.55",
+          "background": "oklch(0.995 0.0016 300)",
+          "foreground": "oklch(0.21 0.012 300)",
+          "card": "oklch(1 0 0)",
+          "card-foreground": "oklch(0.21 0.012 300)",
+          "popover": "oklch(1 0 0)",
+          "popover-foreground": "oklch(0.21 0.012 300)",
+          "primary": "var(--reno-brand-700)",
+          "primary-foreground": "oklch(0.985 0.005 305)",
+          "secondary": "oklch(0.967 0.0048 300)",
+          "secondary-foreground": "oklch(0.21 0.012 300)",
+          "muted": "oklch(0.967 0.0048 300)",
+          "muted-foreground": "var(--reno-neutral-700)",
+          "accent": "oklch(0.967 0.0048 300)",
+          "accent-foreground": "oklch(0.21 0.012 300)",
+          "destructive": "var(--reno-destructive-700)",
+          "destructive-foreground": "oklch(0.985 0.005 27)",
+          "success": "var(--reno-success-700)",
+          "success-foreground": "oklch(0.985 0.005 150)",
+          "warning": "var(--reno-warning-700)",
+          "warning-foreground": "oklch(0.985 0.005 75)",
+          "info": "var(--reno-info-700)",
+          "info-foreground": "oklch(0.985 0.005 235)",
+          "border": "oklch(0.915 0.008 300)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-500)",
+          "overlay": "oklch(0 0 0 / 0.5)",
+          "chart-1": "oklch(0.6 0.1235 305)",
+          "chart-2": "oklch(0.6 0.1235 7)",
+          "chart-3": "oklch(0.6 0.1235 75)",
+          "chart-4": "oklch(0.6 0.1235 150)",
+          "chart-5": "oklch(0.6 0.1196 230)",
+          "sidebar": "oklch(0.978 0.0048 300)",
+          "sidebar-foreground": "oklch(0.21 0.012 300)",
+          "sidebar-primary": "var(--reno-brand-700)",
+          "sidebar-primary-foreground": "oklch(0.985 0.005 305)",
+          "sidebar-accent": "oklch(0.94 0.006 300)",
+          "sidebar-accent-foreground": "oklch(0.21 0.012 300)",
+          "sidebar-border": "oklch(0.915 0.008 300)",
+          "sidebar-ring": "var(--reno-brand-500)"
+        },
+        "dark": {
+          "reno-brand-50": "oklch(0.985 0.0087 305)",
+          "reno-brand-100": "oklch(0.967 0.0194 305)",
+          "reno-brand-200": "oklch(0.929 0.0424 305)",
+          "reno-brand-300": "oklch(0.871 0.078 305)",
+          "reno-brand-400": "oklch(0.746 0.1105 305)",
+          "reno-brand-500": "oklch(0.637 0.13 305)",
+          "reno-brand-600": "oklch(0.577 0.13 305)",
+          "reno-brand-700": "oklch(0.505 0.1196 305)",
+          "reno-brand-800": "oklch(0.444 0.104 305)",
+          "reno-brand-900": "oklch(0.396 0.091 305)",
+          "reno-brand-950": "oklch(0.269 0.0715 305)",
+          "reno-neutral-50": "oklch(0.985 0 0)",
+          "reno-neutral-100": "oklch(0.967 0.0007 300)",
+          "reno-neutral-200": "oklch(0.929 0.0014 300)",
+          "reno-neutral-300": "oklch(0.871 0.0024 300)",
+          "reno-neutral-400": "oklch(0.746 0.0034 300)",
+          "reno-neutral-500": "oklch(0.637 0.004 300)",
+          "reno-neutral-600": "oklch(0.577 0.004 300)",
+          "reno-neutral-700": "oklch(0.505 0.0037 300)",
+          "reno-neutral-800": "oklch(0.444 0.0032 300)",
+          "reno-neutral-900": "oklch(0.396 0.0028 300)",
+          "reno-neutral-950": "oklch(0.269 0.0022 300)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.5rem",
+          "density-control-height-sm": "2.25rem",
+          "density-control-height": "2.5rem",
+          "density-control-height-lg": "2.875rem",
+          "density-control-px": "0.875rem",
+          "density-row-height": "3rem",
+          "density-cell-padding-x": "0.875rem",
+          "density-cell-padding-y": "0.625rem",
+          "density-gap": "1rem",
+          "density-font-size": "0.9375rem",
+          "density-line-height": "1.55",
+          "background": "oklch(0.165 0.006 300)",
+          "foreground": "oklch(0.985 0.005 300)",
+          "card": "oklch(0.205 0.006 300)",
+          "card-foreground": "oklch(0.985 0.005 300)",
+          "popover": "oklch(0.205 0.006 300)",
+          "popover-foreground": "oklch(0.985 0.005 300)",
+          "primary": "var(--reno-brand-400)",
+          "primary-foreground": "oklch(0.21 0.012 305)",
+          "secondary": "oklch(0.255 0.006 300)",
+          "secondary-foreground": "oklch(0.985 0.005 300)",
+          "muted": "oklch(0.255 0.006 300)",
+          "muted-foreground": "var(--reno-neutral-400)",
+          "accent": "oklch(0.255 0.006 300)",
+          "accent-foreground": "oklch(0.985 0.005 300)",
+          "destructive": "var(--reno-destructive-500)",
+          "destructive-foreground": "oklch(0.21 0.012 27)",
+          "success": "var(--reno-success-500)",
+          "success-foreground": "oklch(0.21 0.012 150)",
+          "warning": "var(--reno-warning-500)",
+          "warning-foreground": "oklch(0.21 0.012 75)",
+          "info": "var(--reno-info-500)",
+          "info-foreground": "oklch(0.21 0.012 235)",
+          "border": "oklch(0.31 0.008 300)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-400)",
+          "overlay": "oklch(0 0 0 / 0.65)",
+          "chart-1": "oklch(0.68 0.1235 305)",
+          "chart-2": "oklch(0.68 0.1235 7)",
+          "chart-3": "oklch(0.68 0.1235 75)",
+          "chart-4": "oklch(0.68 0.1235 150)",
+          "chart-5": "oklch(0.68 0.1235 230)",
+          "sidebar": "oklch(0.195 0.006 300)",
+          "sidebar-foreground": "oklch(0.985 0.005 300)",
+          "sidebar-primary": "var(--reno-brand-400)",
+          "sidebar-primary-foreground": "oklch(0.21 0.012 305)",
+          "sidebar-accent": "oklch(0.265 0.006 300)",
+          "sidebar-accent-foreground": "oklch(0.985 0.005 300)",
+          "sidebar-border": "oklch(0.31 0.008 300)",
+          "sidebar-ring": "var(--reno-brand-400)"
+        }
+      },
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Generated by scripts/generate-scale.mjs",
+        "added": "2026-09-01",
+        "group": "Theme"
+      }
+    },
+    {
+      "name": "theme-elearning",
+      "type": "registry:theme",
+      "title": "Theme E-learning",
+      "description": "Warm palette, large radius and roomy density for long reading sessions.",
+      "registryDependencies": [
+        "@reno/theme-base"
+      ],
+      "cssVars": {
+        "light": {
+          "reno-brand-50": "oklch(0.985 0.0078 45)",
+          "reno-brand-100": "oklch(0.967 0.0175 45)",
+          "reno-brand-200": "oklch(0.929 0.0388 45)",
+          "reno-brand-300": "oklch(0.871 0.074 45)",
+          "reno-brand-400": "oklch(0.746 0.1232 45)",
+          "reno-brand-500": "oklch(0.637 0.145 45)",
+          "reno-brand-600": "oklch(0.577 0.145 45)",
+          "reno-brand-700": "oklch(0.505 0.1334 45)",
+          "reno-brand-800": "oklch(0.444 0.116 45)",
+          "reno-brand-900": "oklch(0.396 0.1015 45)",
+          "reno-brand-950": "oklch(0.269 0.0769 45)",
+          "reno-neutral-50": "oklch(0.985 0.0007 60)",
+          "reno-neutral-100": "oklch(0.967 0.0014 60)",
+          "reno-neutral-200": "oklch(0.929 0.0028 60)",
+          "reno-neutral-300": "oklch(0.871 0.0048 60)",
+          "reno-neutral-400": "oklch(0.746 0.0068 60)",
+          "reno-neutral-500": "oklch(0.637 0.008 60)",
+          "reno-neutral-600": "oklch(0.577 0.008 60)",
+          "reno-neutral-700": "oklch(0.505 0.0074 60)",
+          "reno-neutral-800": "oklch(0.444 0.0064 60)",
+          "reno-neutral-900": "oklch(0.396 0.0056 60)",
+          "reno-neutral-950": "oklch(0.269 0.0044 60)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.75rem",
+          "density-control-height-sm": "2.5rem",
+          "density-control-height": "2.75rem",
+          "density-control-height-lg": "3.25rem",
+          "density-control-px": "1rem",
+          "density-row-height": "3.25rem",
+          "density-cell-padding-x": "1rem",
+          "density-cell-padding-y": "0.75rem",
+          "density-gap": "1rem",
+          "density-font-size": "1rem",
+          "density-line-height": "1.6",
+          "background": "oklch(0.995 0.003 60)",
+          "foreground": "oklch(0.21 0.012 60)",
+          "card": "oklch(1 0 0)",
+          "card-foreground": "oklch(0.21 0.012 60)",
+          "popover": "oklch(1 0 0)",
+          "popover-foreground": "oklch(0.21 0.012 60)",
+          "primary": "var(--reno-brand-700)",
+          "primary-foreground": "oklch(0.985 0.005 45)",
+          "secondary": "oklch(0.967 0.0096 60)",
+          "secondary-foreground": "oklch(0.21 0.012 60)",
+          "muted": "oklch(0.967 0.0096 60)",
+          "muted-foreground": "var(--reno-neutral-700)",
+          "accent": "oklch(0.967 0.0096 60)",
+          "accent-foreground": "oklch(0.21 0.012 60)",
+          "destructive": "var(--reno-destructive-700)",
+          "destructive-foreground": "oklch(0.985 0.005 27)",
+          "success": "var(--reno-success-700)",
+          "success-foreground": "oklch(0.985 0.005 150)",
+          "warning": "var(--reno-warning-700)",
+          "warning-foreground": "oklch(0.985 0.005 75)",
+          "info": "var(--reno-info-700)",
+          "info-foreground": "oklch(0.985 0.005 235)",
+          "border": "oklch(0.915 0.016 60)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-500)",
+          "overlay": "oklch(0 0 0 / 0.5)",
+          "chart-1": "oklch(0.6 0.1377 45)",
+          "chart-2": "oklch(0.6 0.1286 107)",
+          "chart-3": "oklch(0.6 0.1131 175)",
+          "chart-4": "oklch(0.6 0.1377 250)",
+          "chart-5": "oklch(0.6 0.1377 330)",
+          "sidebar": "oklch(0.978 0.0096 60)",
+          "sidebar-foreground": "oklch(0.21 0.012 60)",
+          "sidebar-primary": "var(--reno-brand-700)",
+          "sidebar-primary-foreground": "oklch(0.985 0.005 45)",
+          "sidebar-accent": "oklch(0.94 0.012 60)",
+          "sidebar-accent-foreground": "oklch(0.21 0.012 60)",
+          "sidebar-border": "oklch(0.915 0.016 60)",
+          "sidebar-ring": "var(--reno-brand-500)"
+        },
+        "dark": {
+          "reno-brand-50": "oklch(0.985 0.0078 45)",
+          "reno-brand-100": "oklch(0.967 0.0175 45)",
+          "reno-brand-200": "oklch(0.929 0.0388 45)",
+          "reno-brand-300": "oklch(0.871 0.074 45)",
+          "reno-brand-400": "oklch(0.746 0.1232 45)",
+          "reno-brand-500": "oklch(0.637 0.145 45)",
+          "reno-brand-600": "oklch(0.577 0.145 45)",
+          "reno-brand-700": "oklch(0.505 0.1334 45)",
+          "reno-brand-800": "oklch(0.444 0.116 45)",
+          "reno-brand-900": "oklch(0.396 0.1015 45)",
+          "reno-brand-950": "oklch(0.269 0.0769 45)",
+          "reno-neutral-50": "oklch(0.985 0.0007 60)",
+          "reno-neutral-100": "oklch(0.967 0.0014 60)",
+          "reno-neutral-200": "oklch(0.929 0.0028 60)",
+          "reno-neutral-300": "oklch(0.871 0.0048 60)",
+          "reno-neutral-400": "oklch(0.746 0.0068 60)",
+          "reno-neutral-500": "oklch(0.637 0.008 60)",
+          "reno-neutral-600": "oklch(0.577 0.008 60)",
+          "reno-neutral-700": "oklch(0.505 0.0074 60)",
+          "reno-neutral-800": "oklch(0.444 0.0064 60)",
+          "reno-neutral-900": "oklch(0.396 0.0056 60)",
+          "reno-neutral-950": "oklch(0.269 0.0044 60)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.75rem",
+          "density-control-height-sm": "2.5rem",
+          "density-control-height": "2.75rem",
+          "density-control-height-lg": "3.25rem",
+          "density-control-px": "1rem",
+          "density-row-height": "3.25rem",
+          "density-cell-padding-x": "1rem",
+          "density-cell-padding-y": "0.75rem",
+          "density-gap": "1rem",
+          "density-font-size": "1rem",
+          "density-line-height": "1.6",
+          "background": "oklch(0.165 0.012 60)",
+          "foreground": "oklch(0.985 0.005 60)",
+          "card": "oklch(0.205 0.012 60)",
+          "card-foreground": "oklch(0.985 0.005 60)",
+          "popover": "oklch(0.205 0.012 60)",
+          "popover-foreground": "oklch(0.985 0.005 60)",
+          "primary": "var(--reno-brand-400)",
+          "primary-foreground": "oklch(0.21 0.012 45)",
+          "secondary": "oklch(0.255 0.012 60)",
+          "secondary-foreground": "oklch(0.985 0.005 60)",
+          "muted": "oklch(0.255 0.012 60)",
+          "muted-foreground": "var(--reno-neutral-400)",
+          "accent": "oklch(0.255 0.012 60)",
+          "accent-foreground": "oklch(0.985 0.005 60)",
+          "destructive": "var(--reno-destructive-500)",
+          "destructive-foreground": "oklch(0.21 0.012 27)",
+          "success": "var(--reno-success-500)",
+          "success-foreground": "oklch(0.21 0.012 150)",
+          "warning": "var(--reno-warning-500)",
+          "warning-foreground": "oklch(0.21 0.012 75)",
+          "info": "var(--reno-info-500)",
+          "info-foreground": "oklch(0.21 0.012 235)",
+          "border": "oklch(0.31 0.016 60)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-400)",
+          "overlay": "oklch(0 0 0 / 0.65)",
+          "chart-1": "oklch(0.68 0.1377 45)",
+          "chart-2": "oklch(0.68 0.1377 107)",
+          "chart-3": "oklch(0.68 0.1282 175)",
+          "chart-4": "oklch(0.68 0.1377 250)",
+          "chart-5": "oklch(0.68 0.1377 330)",
+          "sidebar": "oklch(0.195 0.012 60)",
+          "sidebar-foreground": "oklch(0.985 0.005 60)",
+          "sidebar-primary": "var(--reno-brand-400)",
+          "sidebar-primary-foreground": "oklch(0.21 0.012 45)",
+          "sidebar-accent": "oklch(0.265 0.012 60)",
+          "sidebar-accent-foreground": "oklch(0.985 0.005 60)",
+          "sidebar-border": "oklch(0.31 0.016 60)",
+          "sidebar-ring": "var(--reno-brand-400)"
+        }
+      },
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Generated by scripts/generate-scale.mjs",
+        "added": "2026-09-01",
+        "group": "Theme"
+      }
+    },
+    {
+      "name": "theme-erp",
+      "type": "registry:theme",
+      "title": "Theme ERP",
+      "description": "High-density preset for data-heavy ERP screens. Small radius, tight spacing, short grid rows.",
+      "registryDependencies": [
+        "@reno/theme-base"
+      ],
+      "cssVars": {
+        "light": {
+          "reno-brand-50": "oklch(0.985 0.0104 165)",
+          "reno-brand-100": "oklch(0.967 0.0207 165)",
+          "reno-brand-200": "oklch(0.929 0.0403 165)",
+          "reno-brand-300": "oklch(0.871 0.069 165)",
+          "reno-brand-400": "oklch(0.746 0.0978 165)",
+          "reno-brand-500": "oklch(0.637 0.115 165)",
+          "reno-brand-600": "oklch(0.577 0.115 165)",
+          "reno-brand-700": "oklch(0.505 0.1058 165)",
+          "reno-brand-800": "oklch(0.444 0.092 165)",
+          "reno-brand-900": "oklch(0.396 0.0805 165)",
+          "reno-brand-950": "oklch(0.269 0.0565 165)",
+          "reno-neutral-50": "oklch(0.985 0 0)",
+          "reno-neutral-100": "oklch(0.967 0.0005 200)",
+          "reno-neutral-200": "oklch(0.929 0.0011 200)",
+          "reno-neutral-300": "oklch(0.871 0.0018 200)",
+          "reno-neutral-400": "oklch(0.746 0.0026 200)",
+          "reno-neutral-500": "oklch(0.637 0.003 200)",
+          "reno-neutral-600": "oklch(0.577 0.003 200)",
+          "reno-neutral-700": "oklch(0.505 0.0028 200)",
+          "reno-neutral-800": "oklch(0.444 0.0024 200)",
+          "reno-neutral-900": "oklch(0.396 0.0021 200)",
+          "reno-neutral-950": "oklch(0.269 0.0017 200)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.25rem",
+          "density-control-height-sm": "1.5rem",
+          "density-control-height": "1.75rem",
+          "density-control-height-lg": "2rem",
+          "density-control-px": "0.5rem",
+          "density-row-height": "2rem",
+          "density-cell-padding-x": "0.5rem",
+          "density-cell-padding-y": "0.25rem",
+          "density-gap": "0.5rem",
+          "density-font-size": "0.8125rem",
+          "density-line-height": "1.35",
+          "background": "oklch(0.995 0.0012 200)",
+          "foreground": "oklch(0.21 0.012 200)",
+          "card": "oklch(1 0 0)",
+          "card-foreground": "oklch(0.21 0.012 200)",
+          "popover": "oklch(1 0 0)",
+          "popover-foreground": "oklch(0.21 0.012 200)",
+          "primary": "var(--reno-brand-700)",
+          "primary-foreground": "oklch(0.985 0.005 165)",
+          "secondary": "oklch(0.967 0.0036 200)",
+          "secondary-foreground": "oklch(0.21 0.012 200)",
+          "muted": "oklch(0.967 0.0036 200)",
+          "muted-foreground": "var(--reno-neutral-700)",
+          "accent": "oklch(0.967 0.0036 200)",
+          "accent-foreground": "oklch(0.21 0.012 200)",
+          "destructive": "var(--reno-destructive-700)",
+          "destructive-foreground": "oklch(0.985 0.005 27)",
+          "success": "var(--reno-success-700)",
+          "success-foreground": "oklch(0.985 0.005 150)",
+          "warning": "var(--reno-warning-700)",
+          "warning-foreground": "oklch(0.985 0.005 75)",
+          "info": "var(--reno-info-700)",
+          "info-foreground": "oklch(0.985 0.005 235)",
+          "border": "oklch(0.915 0.006 200)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-500)",
+          "overlay": "oklch(0 0 0 / 0.5)",
+          "chart-1": "oklch(0.6 0.1093 165)",
+          "chart-2": "oklch(0.6 0.1093 227)",
+          "chart-3": "oklch(0.6 0.1093 295)",
+          "chart-4": "oklch(0.6 0.1093 10)",
+          "chart-5": "oklch(0.6 0.1093 90)",
+          "sidebar": "oklch(0.978 0.0036 200)",
+          "sidebar-foreground": "oklch(0.21 0.012 200)",
+          "sidebar-primary": "var(--reno-brand-700)",
+          "sidebar-primary-foreground": "oklch(0.985 0.005 165)",
+          "sidebar-accent": "oklch(0.94 0.0045 200)",
+          "sidebar-accent-foreground": "oklch(0.21 0.012 200)",
+          "sidebar-border": "oklch(0.915 0.006 200)",
+          "sidebar-ring": "var(--reno-brand-500)"
+        },
+        "dark": {
+          "reno-brand-50": "oklch(0.985 0.0104 165)",
+          "reno-brand-100": "oklch(0.967 0.0207 165)",
+          "reno-brand-200": "oklch(0.929 0.0403 165)",
+          "reno-brand-300": "oklch(0.871 0.069 165)",
+          "reno-brand-400": "oklch(0.746 0.0978 165)",
+          "reno-brand-500": "oklch(0.637 0.115 165)",
+          "reno-brand-600": "oklch(0.577 0.115 165)",
+          "reno-brand-700": "oklch(0.505 0.1058 165)",
+          "reno-brand-800": "oklch(0.444 0.092 165)",
+          "reno-brand-900": "oklch(0.396 0.0805 165)",
+          "reno-brand-950": "oklch(0.269 0.0565 165)",
+          "reno-neutral-50": "oklch(0.985 0 0)",
+          "reno-neutral-100": "oklch(0.967 0.0005 200)",
+          "reno-neutral-200": "oklch(0.929 0.0011 200)",
+          "reno-neutral-300": "oklch(0.871 0.0018 200)",
+          "reno-neutral-400": "oklch(0.746 0.0026 200)",
+          "reno-neutral-500": "oklch(0.637 0.003 200)",
+          "reno-neutral-600": "oklch(0.577 0.003 200)",
+          "reno-neutral-700": "oklch(0.505 0.0028 200)",
+          "reno-neutral-800": "oklch(0.444 0.0024 200)",
+          "reno-neutral-900": "oklch(0.396 0.0021 200)",
+          "reno-neutral-950": "oklch(0.269 0.0017 200)",
+          "reno-destructive-100": "oklch(0.967 0.0162 27)",
+          "reno-destructive-500": "oklch(0.637 0.19 27)",
+          "reno-destructive-700": "oklch(0.505 0.1748 27)",
+          "reno-success-100": "oklch(0.967 0.0252 150)",
+          "reno-success-500": "oklch(0.637 0.14 150)",
+          "reno-success-700": "oklch(0.505 0.1288 150)",
+          "reno-warning-100": "oklch(0.967 0.0265 75)",
+          "reno-warning-500": "oklch(0.637 0.1344 75)",
+          "reno-warning-700": "oklch(0.505 0.1065 75)",
+          "reno-info-100": "oklch(0.967 0.0184 235)",
+          "reno-info-500": "oklch(0.637 0.1351 235)",
+          "reno-info-700": "oklch(0.505 0.1071 235)",
+          "radius": "0.25rem",
+          "density-control-height-sm": "1.5rem",
+          "density-control-height": "1.75rem",
+          "density-control-height-lg": "2rem",
+          "density-control-px": "0.5rem",
+          "density-row-height": "2rem",
+          "density-cell-padding-x": "0.5rem",
+          "density-cell-padding-y": "0.25rem",
+          "density-gap": "0.5rem",
+          "density-font-size": "0.8125rem",
+          "density-line-height": "1.35",
+          "background": "oklch(0.165 0.0045 200)",
+          "foreground": "oklch(0.985 0.005 200)",
+          "card": "oklch(0.205 0.0045 200)",
+          "card-foreground": "oklch(0.985 0.005 200)",
+          "popover": "oklch(0.205 0.0045 200)",
+          "popover-foreground": "oklch(0.985 0.005 200)",
+          "primary": "var(--reno-brand-400)",
+          "primary-foreground": "oklch(0.21 0.012 165)",
+          "secondary": "oklch(0.255 0.0045 200)",
+          "secondary-foreground": "oklch(0.985 0.005 200)",
+          "muted": "oklch(0.255 0.0045 200)",
+          "muted-foreground": "var(--reno-neutral-400)",
+          "accent": "oklch(0.255 0.0045 200)",
+          "accent-foreground": "oklch(0.985 0.005 200)",
+          "destructive": "var(--reno-destructive-500)",
+          "destructive-foreground": "oklch(0.21 0.012 27)",
+          "success": "var(--reno-success-500)",
+          "success-foreground": "oklch(0.21 0.012 150)",
+          "warning": "var(--reno-warning-500)",
+          "warning-foreground": "oklch(0.21 0.012 75)",
+          "info": "var(--reno-info-500)",
+          "info-foreground": "oklch(0.21 0.012 235)",
+          "border": "oklch(0.31 0.006 200)",
+          "input": "var(--reno-neutral-500)",
+          "ring": "var(--reno-brand-400)",
+          "overlay": "oklch(0 0 0 / 0.65)",
+          "chart-1": "oklch(0.68 0.1093 165)",
+          "chart-2": "oklch(0.68 0.1093 227)",
+          "chart-3": "oklch(0.68 0.1093 295)",
+          "chart-4": "oklch(0.68 0.1093 10)",
+          "chart-5": "oklch(0.68 0.1093 90)",
+          "sidebar": "oklch(0.195 0.0045 200)",
+          "sidebar-foreground": "oklch(0.985 0.005 200)",
+          "sidebar-primary": "var(--reno-brand-400)",
+          "sidebar-primary-foreground": "oklch(0.21 0.012 165)",
+          "sidebar-accent": "oklch(0.265 0.0045 200)",
+          "sidebar-accent-foreground": "oklch(0.985 0.005 200)",
+          "sidebar-border": "oklch(0.31 0.006 200)",
+          "sidebar-ring": "var(--reno-brand-400)"
+        }
+      },
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Generated by scripts/generate-scale.mjs",
+        "added": "2026-09-01",
+        "group": "Theme"
+      }
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Danh sách mục có thể mở/thu gọn dựa trên Radix, kèm biểu tượng mũi tên xoay.",
+      "dependencies": [
+        "@radix-ui/react-accordion",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn accordion, new-york style; dropped tailwindcss-animate open/close keyframes since reno ships no animation plugin",
+        "added": "2026-09-01",
+        "group": "Layout"
+      }
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Thông báo nổi bật với các biến thể default/destructive/success/warning/info dùng token trạng thái.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn alert, new-york style; added success/warning/info variants on top of default/destructive",
+        "added": "2026-09-01",
+        "group": "Feedback"
+      }
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "Hộp thoại xác nhận bắt buộc phản hồi (Radix Alert Dialog), nút hành động dùng lại buttonVariants.",
+      "dependencies": [
+        "@radix-ui/react-alert-dialog"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn alert-dialog, new-york style; overlay/content z-index read from --z-overlay/--z-modal, action/cancel reuse buttonVariants",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "title": "Aspect Ratio",
+      "description": "Giữ tỉ lệ khung hình cố định cho nội dung con, dựa trên Radix Aspect Ratio.",
+      "dependencies": [
+        "@radix-ui/react-aspect-ratio"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/aspect-ratio.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn aspect-ratio, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Layout"
+      }
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Ảnh đại diện với ảnh, chữ viết tắt dự phòng và ba cỡ đọc token density, đồng bộ chiều cao với Button.",
+      "dependencies": [
+        "@radix-ui/react-avatar",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn avatar, new-york style; size variants rewritten to read density tokens",
+        "added": "2026-09-01",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Nhãn nhỏ với các biến thể default/secondary/destructive/outline/success/warning/info, hỗ trợ asChild.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn badge, new-york style; added success/warning/info variants",
+        "added": "2026-09-01",
+        "group": "Feedback"
+      }
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Điều hướng breadcrumb không phụ thuộc router. BreadcrumbLink nhận asChild để gắn next/link hoặc thẻ <a> tuỳ dự án.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn breadcrumb, new-york style; ellipsis size rewritten to read density tokens",
+        "added": "2026-09-01",
+        "group": "Nav"
+      }
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Button and link-button. Sizes read the density tokens, so the same code renders compact in ERP and roomy in e-learning.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn button, new-york style; sizes rewritten to read density tokens",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "Lịch chọn ngày dựa trên react-day-picker v10, mặc định locale tiếng Việt (date-fns/locale/vi). Nút điều hướng tái sử dụng buttonVariants.",
+      "dependencies": [
+        "react-day-picker",
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn calendar, new-york style, react-day-picker v10; sizing rewritten to read density tokens, locale defaulted to vi",
+        "added": "2026-09-01",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Bề mặt nội dung nổi có tiêu đề, hành động và chân trang; dùng bg-card/text-card-foreground.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn card, new-york style; no changes needed, padding already uses normal spacing",
+        "added": "2026-09-01",
+        "group": "Layout"
+      }
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Hộp kiểm dựa trên Radix Checkbox với trạng thái đã chọn, chưa chọn và không xác định.",
+      "dependencies": [
+        "@radix-ui/react-checkbox",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn checkbox, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "Vùng nội dung có thể ẩn/hiện đơn giản, không có phần trang trí riêng.",
+      "dependencies": [
+        "@radix-ui/react-collapsible"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn collapsible, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Layout"
+      }
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "Ô chọn có tìm kiếm (Popover + Command + Button), generic theo kiểu giá trị, hỗ trợ xoá lựa chọn và tuỳ chọn bị vô hiệu hoá.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button",
+        "@reno/popover",
+        "@reno/command"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "shadcn only documents this as a recipe combining Popover/Command/Button; written from scratch as a typed, reusable component",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Bảng lệnh tìm kiếm nhanh (bọc cmdk); CommandDialog kết hợp dialog để dùng như command palette.",
+      "dependencies": [
+        "cmdk"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/dialog"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn command (cmdk), new-york style; input/item heights read density tokens, CommandDialog composes the Dialog primitive",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "Menu ngữ cảnh khi chuột phải (item, checkbox, radio, submenu) từ Radix Context Menu; chiều cao mục đọc token mật độ.",
+      "dependencies": [
+        "@radix-ui/react-context-menu"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn context-menu, new-york style; content z-index read from --z-dropdown, item min-height/padding read density tokens",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    },
+    {
+      "name": "data-grid",
+      "type": "registry:ui",
+      "title": "DataGrid",
+      "description": "Grid ảo hoá cho admin/ERP: 10k+ dòng, server-side pagination/sort/filter, ghim/resize/ẩn cột, chọn dòng xuyên trang, empty/loading/error có sẵn. Chỉ cài khi cần — dự án nhẹ dùng @reno/table.",
+      "dependencies": [
+        "@tanstack/react-table",
+        "@tanstack/react-virtual",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button",
+        "@reno/select",
+        "@reno/dropdown-menu",
+        "@reno/skeleton",
+        "@reno/grid-state",
+        "@reno/grid-query",
+        "@reno/grid-labels"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/data-grid.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/data-grid/data-grid-context.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/data-grid/data-grid-header.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/data-grid/data-grid-body.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/data-grid/data-grid-row.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/data-grid/data-grid-pagination.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/data-grid/data-grid-states.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/data-grid/column-pinning.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/data-grid/use-density-row-height.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/hooks/use-data-grid.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno trên TanStack Table v9 + TanStack Virtual; shadcn/ui không có data grid",
+        "added": "2026-09-01",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "data-grid-toolbar",
+      "type": "registry:ui",
+      "title": "DataGrid Toolbar",
+      "description": "Thanh công cụ cho DataGrid: tìm kiếm có debounce, chip bộ lọc đang bật, ẩn/hiện cột, xuất dữ liệu. Item riêng để màn hình không cần thì không phải cài.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button",
+        "@reno/input",
+        "@reno/badge",
+        "@reno/dropdown-menu",
+        "@reno/grid-state",
+        "@reno/grid-labels"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/data-grid-toolbar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno",
+        "added": "2026-09-01",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "DatePicker (một ngày) và DateRangePicker (khoảng ngày), ghép từ Popover + Calendar + Button, định dạng và locale mặc định tiếng Việt.",
+      "dependencies": [
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button",
+        "@reno/popover",
+        "@reno/calendar"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/date-picker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "shadcn only documents this as a recipe combining Popover/Calendar/Button; written from scratch, formatDate/labels overridable, locale defaulted to vi",
+        "added": "2026-09-01",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Hộp thoại modal dùng Radix Dialog, với overlay và nội dung theo thang z-index modal của reno.",
+      "dependencies": [
+        "@radix-ui/react-dialog"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn dialog, new-york style; overlay/content z-index read from --z-overlay/--z-modal, close-button label overridable",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "Bảng kéo lên từ dưới cho thao tác trên di động, bọc thư viện vaul.",
+      "dependencies": [
+        "vaul"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn drawer (vaul), new-york style; overlay/content z-index read from --z-overlay/--z-modal",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Menu thả xuống đầy đủ (item, checkbox, radio, submenu) từ Radix Dropdown Menu; chiều cao mục đọc token mật độ.",
+      "dependencies": [
+        "@radix-ui/react-dropdown-menu"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn dropdown-menu, new-york style; content z-index read from --z-dropdown, item min-height/padding read density tokens",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "title": "Form",
+      "description": "Bộ khung biểu mẫu kết hợp react-hook-form và zod, cung cấp Form/FormField/FormItem/FormLabel/FormControl/FormDescription/FormMessage và hook useFormField với liên kết ARIA tự động.",
+      "dependencies": [
+        "react-hook-form",
+        "zod",
+        "@hookform/resolvers",
+        "@radix-ui/react-slot",
+        "@radix-ui/react-label"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/label"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/form.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn form, new-york style; unchanged logic, restyled label error state via data-error",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "Thẻ xem trước hiện khi di chuột vào trigger (Radix Hover Card).",
+      "dependencies": [
+        "@radix-ui/react-hover-card"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn hover-card, new-york style; content z-index read from --z-popover",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Trường nhập liệu văn bản; chiều cao và khoảng đệm đọc từ token mật độ, hỗ trợ trạng thái lỗi qua aria-invalid.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn input, new-york style; height/padding rewritten to read density tokens",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "Input OTP",
+      "description": "Trường nhập mã OTP nhiều ô dựa trên thư viện input-otp, kích thước ô đọc từ token mật độ.",
+      "dependencies": [
+        "input-otp",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/input-otp.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn input-otp, new-york style; slot size rewritten to read the density control height, fake caret uses animate-pulse instead of a custom keyframe",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Nhãn cho trường biểu mẫu dựa trên Radix Label, tự động làm mờ khi điều khiển liên kết bị vô hiệu hoá.",
+      "dependencies": [
+        "@radix-ui/react-label"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn label, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "Thanh menu kiểu ứng dụng desktop, đầy đủ menu con, checkbox và radio item của Radix. Lớp nổi dùng z-index token --z-dropdown.",
+      "dependencies": [
+        "@radix-ui/react-menubar",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/menubar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn menubar, new-york style; height and z-index rewritten to read tokens",
+        "added": "2026-09-01",
+        "group": "Nav"
+      }
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "Menu điều hướng cấp cao với viewport và indicator của Radix. Lớp nổi dùng z-index token --z-dropdown.",
+      "dependencies": [
+        "@radix-ui/react-navigation-menu",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/navigation-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn navigation-menu, new-york style; control height and z-index rewritten to read tokens",
+        "added": "2026-09-01",
+        "group": "Nav"
+      }
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Phân trang không phụ thuộc next/link, tái sử dụng buttonVariants. Nhãn Trước/Sau và mô tả trợ năng có tiếng Việt mặc định, ghi đè được qua props.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn pagination, new-york style; dropped next/link, added overridable Vietnamese labels",
+        "added": "2026-09-01",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Lớp phủ nổi neo theo trigger (Radix Popover) cho nội dung tương tác ngắn.",
+      "dependencies": [
+        "@radix-ui/react-popover"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn popover, new-york style; content z-index read from --z-popover",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "Thanh tiến trình dựa trên Radix Progress, phần chỉ báo dùng bg-primary.",
+      "dependencies": [
+        "@radix-ui/react-progress"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn progress, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Feedback"
+      }
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Nhóm nút chọn một dựa trên Radix Radio Group.",
+      "dependencies": [
+        "@radix-ui/react-radio-group",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn radio-group, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Bố cục nhiều khung có thể kéo giãn, dựa trên react-resizable-panels v4 (Group/Panel/Separator).",
+      "dependencies": [
+        "react-resizable-panels",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/resizable.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn resizable, new-york style; ported to react-resizable-panels v4 exports (Group/Separator, orientation prop) since the shadcn docs still show the v2/v3 API",
+        "added": "2026-09-01",
+        "group": "Layout"
+      }
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "Vùng cuộn có thanh cuộn tuỳ biến, dựa trên Radix Scroll Area.",
+      "dependencies": [
+        "@radix-ui/react-scroll-area"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn scroll-area, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Layout"
+      }
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Hộp chọn dựa trên Radix Select, hỗ trợ hai kích thước và đọc token mật độ cho chiều cao trigger.",
+      "dependencies": [
+        "@radix-ui/react-select",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn select, new-york style; trigger height rewritten to read density tokens, content z-index rewritten to --z-dropdown",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Đường phân cách ngang hoặc dọc, dùng bg-border.",
+      "dependencies": [
+        "@radix-ui/react-separator"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn separator, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Layout"
+      }
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Bảng trượt vào từ cạnh màn hình (Radix Dialog), hỗ trợ bốn hướng top/right/bottom/left.",
+      "dependencies": [
+        "@radix-ui/react-dialog",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn sheet, new-york style; content/overlay z-index read from --z-modal/--z-overlay",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "Thanh điều hướng ứng dụng đầy đủ tính năng: thu/phóng, chế độ icon, sheet trên mobile, tooltip khi thu gọn, lưu trạng thái qua cookie. Menu item dùng asChild thay vì gắn cứng router.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button",
+        "@reno/sheet",
+        "@reno/separator",
+        "@reno/tooltip",
+        "@reno/input",
+        "@reno/skeleton",
+        "@reno/use-mobile"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/sidebar/context.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/sidebar/sidebar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/sidebar/sidebar-controls.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/sidebar/sidebar-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/sidebar/sidebar-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/sidebar/sidebar-menu-sub.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/sidebar/index.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn sidebar, new-york style; restyled to --sidebar* tokens, control heights read density tokens, split into a sidebar/ directory to keep each file under the 200-line ceiling, no next/link import (menu buttons take asChild)",
+        "added": "2026-09-01",
+        "group": "Nav"
+      }
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Khối giữ chỗ khi đang tải, dùng bg-accent kết hợp hiệu ứng animate-pulse.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn skeleton, new-york style; bg-muted swapped for bg-accent to match reno's token set",
+        "added": "2026-09-01",
+        "group": "Feedback"
+      }
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Thanh trượt chọn giá trị dựa trên Radix Slider, hỗ trợ nhiều điểm kéo.",
+      "dependencies": [
+        "@radix-ui/react-slider"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/slider.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn slider, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "title": "Sonner",
+      "description": "Bọc Toaster của sonner, không phụ thuộc next-themes; màu sắc ánh xạ qua CSS variable API của sonner theo token reno.",
+      "dependencies": [
+        "sonner"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/sonner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn sonner, new-york style; next-themes swapped for an overridable theme prop (default \"system\") to stay framework-neutral",
+        "added": "2026-09-01",
+        "group": "Feedback"
+      }
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Chỉ báo đang tải nhỏ gọn, role=status, kích thước đọc density token, màu theo currentColor.",
+      "dependencies": [
+        "lucide-react",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "no shadcn equivalent; written for reno, sizes read density-control-height tokens",
+        "added": "2026-09-01",
+        "group": "Feedback"
+      }
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "Công tắc bật/tắt dựa trên Radix Switch.",
+      "dependencies": [
+        "@radix-ui/react-switch"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn switch, new-york style; unchanged",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Bảng dữ liệu tĩnh cho danh sách CMS/e-learning. Không dùng TanStack — tính năng lưới nặng thuộc @reno/data-grid; chiều cao dòng và đệm ô đọc token density.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn table, new-york style; row/cell sizing rewritten to read density tokens",
+        "added": "2026-09-01",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Điều hướng dạng thẻ tab dựa trên Radix; chiều cao TabsList đọc density-control-height.",
+      "dependencies": [
+        "@radix-ui/react-tabs"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn tabs, new-york style; TabsList height rewritten to read density-control-height",
+        "added": "2026-09-01",
+        "group": "Layout"
+      }
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Vùng nhập văn bản nhiều dòng, tự co giãn theo nội dung và đọc token mật độ cho chiều cao tối thiểu.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn textarea, new-york style; min-height rewritten as a multiple of the density control height",
+        "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Chú giải nổi khi di chuột/focus vào trigger (Radix Tooltip).",
+      "dependencies": [
+        "@radix-ui/react-tooltip"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn tooltip, new-york style; content z-index read from --z-popover",
+        "added": "2026-09-01",
+        "group": "Overlay"
+      }
+    }
+  ]
+}

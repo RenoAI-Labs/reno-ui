@@ -1,0 +1,26 @@
+{
+  "name": "badge",
+  "type": "registry:ui",
+  "title": "Badge",
+  "description": "Nhãn nhỏ với các biến thể default/secondary/destructive/outline/success/warning/info, hỗ trợ asChild.",
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/badge.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn badge, new-york style; added success/warning/info variants",
+    "added": "2026-09-01",
+    "group": "Feedback"
+  }
+}

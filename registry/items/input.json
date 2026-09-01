@@ -1,0 +1,18 @@
+{
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "Trường nhập liệu văn bản; chiều cao và khoảng đệm đọc từ token mật độ, hỗ trợ trạng thái lỗi qua aria-invalid.",
+  "dependencies": [],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    { "path": "registry/reno/ui/input.tsx", "type": "registry:ui" }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn input, new-york style; height/padding rewritten to read density tokens",
+    "added": "2026-09-01",
+    "group": "Form"
+  }
+}
