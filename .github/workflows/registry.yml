@@ -139,13 +139,13 @@ jobs:
           '
 
   deploy:
-    name: Deploy to ui.reno.ai.vn
+    name: Deploy to Vercel
     runs-on: ubuntu-latest
     needs: [verify, install-smoke]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     environment:
       name: production
-      url: https://ui.reno.ai.vn
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -156,6 +156,7 @@ jobs:
       - run: npm run registry:build
 
       - name: Deploy
+        id: deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -163,9 +164,38 @@ jobs:
         run: |
           npx --yes vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
           npx --yes vercel@latest build --prod --token="$VERCEL_TOKEN"
-          npx --yes vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+          # `deploy` prints the deployment URL on stdout. Capturing it means the
+          # check below tests what was actually just deployed, rather than a
+          # hostname hardcoded here — correct before the custom domain is
+          # attached, and still correct afterwards.
+          url="$(npx --yes vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN")"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Deployed to $url"
 
-      - name: Registry must be reachable in production
+      - name: Registry must be reachable and installable
         run: |
-          npx --yes wait-on https://ui.reno.ai.vn/r/registry.json --timeout 120000
-          npx shadcn@4.19.1 view https://ui.reno.ai.vn/r/button.json
+          url="${{ steps.deploy.outputs.url }}"
+          npx --yes wait-on "$url/r/registry.json" --timeout 120000
+
+          # Serving the file is not the same as serving a valid registry.
+          curl -fsSL "$url/r/registry.json" -o /tmp/registry.json
+          node -e '
+            const r = require("/tmp/registry.json");
+            if (r.name !== "reno") throw new Error("unexpected registry name: " + r.name);
+            if (!Array.isArray(r.items) || r.items.length === 0) throw new Error("registry has no items");
+            console.log(`Registry live: ${r.items.length} items`);
+          '
+
+          # And prove the CLI can actually resolve an item from it.
+          npx shadcn@4.19.1 view "$url/r/button.json"
+
+      - name: Check the custom domain, once it is attached
+        continue-on-error: true
+        run: |
+          # Not fatal: ui.reno.ai.vn needs a DNS record and a domain added to the
+          # Vercel project. Until then this reports rather than blocks the deploy.
+          if curl -fsSL --max-time 20 https://ui.reno.ai.vn/r/registry.json >/dev/null; then
+            echo "ui.reno.ai.vn is live."
+          else
+            echo "::warning::ui.reno.ai.vn not serving the registry yet — add the domain in Vercel and point DNS at it."
+          fi
