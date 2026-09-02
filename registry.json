@@ -90,6 +90,27 @@
       }
     },
     {
+      "name": "video-source",
+      "type": "registry:lib",
+      "title": "Video Source",
+      "description": "Kiểu công khai của trình phát video: nguồn, ladder chất lượng, nhãn, tiến trình. Cho phép dự án khai báo state và lưu tiến độ mà không cần import hls.js.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/reno/lib/video-source.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; cố tình không import hls.js để bản nâng major của gói đó không thành breaking change của dự án tiêu thụ",
+        "added": "2026-09-02",
+        "group": "Core"
+      }
+    },
+    {
       "name": "use-data-grid-url-state",
       "type": "registry:hook",
       "title": "useDataGridUrlState",
@@ -2733,6 +2754,50 @@
         "upstream": "shadcn tooltip, new-york style; content z-index read from --z-popover",
         "added": "2026-09-01",
         "group": "Overlay"
+      }
+    },
+    {
+      "name": "video-player",
+      "type": "registry:ui",
+      "title": "VideoPlayer",
+      "description": "Trình phát HLS kèm thanh điều khiển dựng sẵn: seek, âm lượng, tốc độ, chọn chất lượng, toàn màn hình, 5 phím tắt. Không lưu tiến độ — phát onProgress/onEnded để dự án tự lưu. Chỉ cài khi cần — hls.js không lọt vào dự án không dùng.",
+      "dependencies": [
+        "hls.js@^1.7.1",
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button",
+        "@reno/slider",
+        "@reno/dropdown-menu",
+        "@reno/spinner",
+        "@reno/error-state",
+        "@reno/video-source"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/video-player.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/video-player/control-bar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/video-player/quality-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/hooks/use-hls.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno quanh hls.js; shadcn/ui không có video player. Rút từ lib/hls-player.ts của elearning (96 dòng) nhưng chỉ phần primitive — playlist/tiến độ học/ghi chú thuộc block course-player",
+        "added": "2026-09-02",
+        "group": "Data"
       }
     }
   ]

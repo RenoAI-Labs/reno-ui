@@ -43,17 +43,34 @@ function splitSpec(spec) {
   return { name: spec.slice(0, at), range: spec.slice(at + 1) };
 }
 
+/**
+ * Strip a range operator off a version this repository declares.
+ *
+ * reno-ui pins its own dependencies exactly, so for a long time every value
+ * read here was a bare version and prefixing `^` was safe. `npm install`
+ * disagrees: it writes `^1.7.1` unless told otherwise, and one dependency
+ * landing that way produced `hls.js@^^1.7.1` in an item — which installs
+ * nowhere. npm rejects it with `EINVALIDTAGNAME`, and the only place that
+ * surfaced was a real `shadcn add` into a real project.
+ *
+ * `>=`, `<=` and `<` are matched before `>` and `~`, so the two-character forms
+ * are not left half-stripped.
+ */
+function bareVersion(declared) {
+  return declared.replace(/^(?:\^|~|>=|<=|>|<|=)/, "").trim();
+}
+
 function pin(spec, itemName, errors) {
   const { name } = splitSpec(spec);
-  const version = known[name];
-  if (!version) {
+  const declared = known[name];
+  if (!declared) {
     errors.push(
       `${itemName}: dependency "${name}" is not in reno-ui's own package.json. ` +
         `Add it there first — the registry may only ship versions this repository builds and tests against.`,
     );
     return spec;
   }
-  return `${name}@^${version}`;
+  return `${name}@^${bareVersion(declared)}`;
 }
 
 function main() {

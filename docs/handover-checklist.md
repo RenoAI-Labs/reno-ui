@@ -81,6 +81,16 @@ and npm projects all work.
 
       Run it *for* them if procurement is asking; it takes a minute and it is
       the number their legal side will actually accept.
+- [ ] **If any Apache-2.0 package reached their `package.json`, copy `NOTICE`
+      into their repository too** — and, if they redistribute the product,
+      into whatever they ship. Apache-2.0 is permissive and compatible with MIT,
+      but unlike MIT it requires attribution notices to travel with the work.
+      Check the "Dependency licenses" table for the Apache-2.0 rows: today that
+      is `class-variance-authority`, which arrives with most primitives, and
+      `hls.js`, which arrives with `@reno/video-player`. reno-ui's own `NOTICE`
+      carries the copyright lines, read from each package's LICENSE rather than
+      guessed at, including the second holder `hls.js` names for the files it
+      derives from video.js.
 - [ ] Optional — if they want to extend the kit themselves, copy `registry/` and
       `registry.json` too. Tell them explicitly whether you are doing this; it is
       the difference between "you own these components" and "you own the factory".

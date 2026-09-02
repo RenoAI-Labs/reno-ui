@@ -63,6 +63,7 @@ export const DEMOS: Record<string, ComponentType> = {
   "toggle": dynamic(() => import("@/registry/reno/examples/toggle-demo")),
   "toggle-group": dynamic(() => import("@/registry/reno/examples/toggle-group-demo")),
   "tooltip": dynamic(() => import("@/registry/reno/examples/tooltip-demo")),
+  "video-player": dynamic(() => import("@/registry/reno/examples/video-player-demo")),
 };
 
 export const DEMO_SLUGS = Object.keys(DEMOS);

@@ -58,6 +58,50 @@ describe("registry items are safe to install into an existing project", () => {
     expect(unversioned).toEqual([]);
   });
 
+  it("pins a range npm can actually install", () => {
+    /*
+      `hls.js@^^1.7.1` reached an item and got as far as a real `shadcn add`,
+      where npm refused it outright: `EINVALIDTAGNAME`. The pinner prefixed `^`
+      onto whatever this repository's package.json declared, which had always
+      been a bare version — until `npm install` wrote `^1.7.1` for one
+      dependency and nobody noticed, because a doubled caret still looks like a
+      range.
+
+      Every gate in the repository passed on that item: it is not unversioned,
+      the name is right, the number is right. Only installing it fails.
+    */
+    const invalid: string[] = [];
+    for (const { file, json } of items()) {
+      for (const field of ["dependencies", "devDependencies"] as const) {
+        for (const spec of (json[field] ?? []) as string[]) {
+          const range = rangeOf(spec);
+          // One optional operator, then a plain semver version.
+          if (range && !/^(?:\^|~|>=|<=|>|<|=)?\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(range)) {
+            invalid.push(`${file}: ${spec}`);
+          }
+        }
+      }
+    }
+
+    expect(invalid).toEqual([]);
+  });
+
+  it("declares its own dependencies as exact versions", () => {
+    // The other half of the same defect. Ranges in this repository's
+    // package.json are what made a doubled caret possible, and they also mean
+    // the version reno-ui tests against is not the version it claims to
+    // support.
+    const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8"));
+    const ranged = Object.entries({
+      ...(pkg.dependencies ?? {}),
+      ...(pkg.devDependencies ?? {}),
+    })
+      .filter(([, version]) => /^[\^~><=]/.test(version as string))
+      .map(([name, version]) => `${name}: ${version}`);
+
+    expect(ranged).toEqual([]);
+  });
+
   it("keeps @reno/data-grid on the TanStack major it is written against", () => {
     const grid = items().find((i) => i.json.name === "data-grid");
     expect(grid).toBeDefined();
@@ -400,8 +444,12 @@ describe("attribution obligations reach NOTICE", () => {
   });
 
   it("fails when an Apache-2.0 package is missing from NOTICE", () => {
+    // A name that is deliberately fictional. This fixture used to say `hls.js`,
+    // which stopped proving anything the day the video player shipped and
+    // `hls.js` got a real NOTICE entry — the assertion inverted from "the gate
+    // catches a missing entry" to "the gate is broken" without a word changing.
     const missing = verifyNoticeMentions(
-      { "hls.js": { license: "Apache-2.0", version: "1.7.1", notice: true } },
+      { "some-apache-widget": { license: "Apache-2.0", version: "1.0.0", notice: true } },
       notice,
     );
     expect(missing).toHaveLength(1);
@@ -462,5 +510,40 @@ describe("the one place a wrapper leaks its upstream is written down", () => {
     const doc = readFileSync(join(ROOT, "docs/code-editor.md"), "utf8");
     expect(doc).toContain("unknown[]");
     expect(doc).toContain("extensions");
+  });
+});
+
+describe("the boundary between the video primitive and a course block is written down", () => {
+  /**
+   * Phase 6's third unlock condition. The plan's own P5 backlog carries a
+   * `course-player` block whose scope overlaps this component's, and building
+   * the primitive without settling the line first was called out as near-certain
+   * rework.
+   *
+   * The line is: the player attaches HLS and draws controls; playlist, chapters,
+   * lesson progress, notes and quizzes belong to the block. It is checked here
+   * rather than trusted, because the failure mode is gradual — a playlist prop,
+   * then a "next lesson" callback, and the primitive is a block wearing a
+   * primitive's name.
+   */
+  it("keeps course vocabulary out of the player's props", () => {
+    const source = readFileSync(join(ROOT, "registry/reno/ui/video-player.tsx"), "utf8");
+    const props = source.slice(
+      source.indexOf("export type VideoPlayerProps"),
+      source.indexOf("};", source.indexOf("export type VideoPlayerProps")),
+    );
+    expect(props.length).toBeGreaterThan(0);
+
+    const courseWords = ["playlist", "lesson", "chapter", "course", "quiz", "note"];
+    const found = courseWords.filter((word) => new RegExp(word, "i").test(props));
+    expect(found).toEqual([]);
+  });
+
+  it("states the boundary where someone extending the player will read it", () => {
+    const doc = readFileSync(join(ROOT, "docs/video-player.md"), "utf8");
+    expect(doc).toContain("course-player");
+    // And the licence obligation that arrives with it, since hls.js is the
+    // registry's first non-MIT dependency.
+    expect(doc).toContain("NOTICE");
   });
 });

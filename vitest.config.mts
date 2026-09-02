@@ -20,6 +20,18 @@ export default defineConfig({
     // Mirrors tsconfig paths: registry sources import the way a consuming
     // project will, and these aliases make that resolve inside this repo.
     alias: {
+      /*
+        hls.js never runs in these tests, and could not: it needs Media Source
+        Extensions, which jsdom has none of, so `Hls.isSupported()` answers
+        false and the player renders an unsupported-format error and nothing
+        else. The stub is aliased here rather than mocked per test file because
+        the player loads the package with a dynamic `import()` inside an effect
+        — on purpose, so a project pays 150 kB only where a video plays — and a
+        `vi.mock` registered in a test file does not reach an `import()`
+        evaluated from React's scheduler. An alias is applied when Vite
+        transforms the file, so it has no such blind spot.
+      */
+      "hls.js": resolve(import.meta.dirname, "tests/fixtures/hls-stub.ts"),
       "@/lib": resolve(import.meta.dirname, "registry/reno/lib"),
       "@/hooks": resolve(import.meta.dirname, "registry/reno/hooks"),
       "@/components/ui": resolve(import.meta.dirname, "registry/reno/ui"),

@@ -100,6 +100,18 @@ const PAGES = [
     label: "CodeEditor docs",
     requireSelector: ".cm-content",
   },
+  /*
+    The player attaches hls.js in an effect, after a dynamic import, and jsdom
+    cannot run hls.js at all — so this page is the only place the real thing is
+    exercised. `.cm-content`'s counterpart here is the `<video>` element with a
+    source actually attached: a failed manifest leaves the element there with no
+    `src`, which is the failure worth catching.
+  */
+  {
+    path: "/components/video-player",
+    label: "VideoPlayer docs (local HLS fixture)",
+    requireSelector: "[data-slot=video-player] video",
+  },
   { path: "/perf/data-grid", label: "perf harness (10k rows, virtualized)", minRows: 1 },
   { path: "/theming", label: "theming" },
   { path: "/showcase/all-components", label: "kitchen sink" },

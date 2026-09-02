@@ -64,6 +64,18 @@ const RULES = [
       "`code-editor` is a separate registry item so a project with no source field never installs CodeMirror. Same split, same reason, as `chart`/recharts, `carousel`/Embla and `table`/TanStack: one primitive reaching for it makes every consumer pay.",
   },
   {
+    /*
+      `registry/reno`, not `registry/reno/ui`: the one file allowed to touch
+      hls.js is a hook, and a rule scoped to `ui/` would have let the player,
+      the public types or any other hook import it freely.
+    */
+    dir: "registry/reno",
+    forbid: [{ pattern: /^hls\.js(\/|$)/, why: "hls.js belongs to use-hls.ts alone" }],
+    except: ["registry/reno/hooks/use-hls.ts"],
+    reason:
+      "`use-hls.ts` is the only file that may know hls.js exists. Two things depend on that: a project with no player installs no hls.js (the split `chart`/recharts and `table`/TanStack also make), and an hls.js major bump stays a change in one file instead of a breaking change on the props of every consuming project — which is why `video-source.ts` may not import it even as a type.",
+  },
+  {
     dir: "registry/reno/ui/data-grid",
     forbid: [/\bnext-intl\b/, /\bi18next\b/, /react-i18next/, /\@lingui\//],
     reason:

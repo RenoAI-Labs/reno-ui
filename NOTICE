@@ -26,6 +26,17 @@ such package is currently reachable this way:
   Licensed under the Apache License, Version 2.0.
   Ships no NOTICE file of its own.
 
+  hls.js
+  https://github.com/video-dev/hls.js
+  Copyright (c) 2017 Dailymotion (http://www.dailymotion.com)
+  Licensed under the Apache License, Version 2.0.
+  Ships no NOTICE file of its own.
+  Its own LICENSE names a second holder, for the two files it derives from
+  the HLS library for video.js:
+    Copyright (c) 2013-2015 Brightcove
+  Both lines are reproduced here because both are in that LICENSE. Neither is
+  in the package's package.json, which is why this entry is written by hand.
+
 Per-item provenance is recorded in docs/ui-components.md, the license of every
 npm package an item installs is recorded in registry/dependency-licenses.json,
 and both are enforced in CI by scripts/check-provenance.mjs.
