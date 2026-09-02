@@ -1,0 +1,3 @@
+Phase 5 fills this directory. It is tracked while empty so a clone matches a
+working copy — an untracked empty directory exists locally and not in CI, which
+is how a gate can pass on a laptop and fail on a clean checkout.

@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
@@ -61,6 +61,10 @@ describe("registry items are safe to install into an existing project", () => {
     const offenders: string[] = [];
 
     function walk(dir: string) {
+      // `registry/reno/blocks` is empty until Phase 5, and git does not track
+      // empty directories — so it exists locally and not on a fresh clone.
+      // Skipping a missing directory is what scripts/check-boundaries.mjs does.
+      if (!existsSync(join(ROOT, dir))) return;
       for (const entry of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
         const rel = `${dir}/${entry.name}`;
         if (entry.isDirectory()) walk(rel);
@@ -134,6 +138,7 @@ describe("the v3 escape hatch stays honest", () => {
   ];
 
   function sources(dir: string, out: string[] = []): string[] {
+    if (!existsSync(join(ROOT, dir))) return out;
     for (const entry of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
       const rel = `${dir}/${entry.name}`;
       if (entry.isDirectory()) sources(rel, out);
