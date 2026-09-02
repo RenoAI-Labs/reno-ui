@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -117,7 +117,7 @@ export function DataGridPagination({
             disabled={pageIndex === 0}
             onClick={() => onPageChange(0)}
           >
-            <ChevronsLeft />
+            <ChevronsLeftIcon />
           </Button>
           <Button
             variant="outline"
@@ -126,7 +126,7 @@ export function DataGridPagination({
             disabled={pageIndex === 0}
             onClick={() => onPageChange(pageIndex - 1)}
           >
-            <ChevronLeft />
+            <ChevronLeftIcon />
           </Button>
           <Button
             variant="outline"
@@ -135,7 +135,7 @@ export function DataGridPagination({
             disabled={page >= totalPages}
             onClick={() => onPageChange(pageIndex + 1)}
           >
-            <ChevronRight />
+            <ChevronRightIcon />
           </Button>
           <Button
             variant="outline"
@@ -144,7 +144,7 @@ export function DataGridPagination({
             disabled={page >= totalPages}
             onClick={() => onPageChange(totalPages - 1)}
           >
-            <ChevronsRight />
+            <ChevronsRightIcon />
           </Button>
         </div>
       </div>

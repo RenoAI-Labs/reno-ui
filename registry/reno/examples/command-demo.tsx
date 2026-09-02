@@ -1,6 +1,11 @@
 "use client";
 
-import { CalendarIcon, SettingsIcon, SmileIcon, UserIcon } from "lucide-react";
+import {
+  CalendarIcon,
+  FaceSlightlySmilingIcon,
+  SettingsIcon,
+  UserIcon,
+} from "lucide-react";
 
 import {
   Command,
@@ -25,7 +30,7 @@ export default function CommandDemo() {
             Lịch làm việc
           </CommandItem>
           <CommandItem>
-            <SmileIcon />
+            <FaceSlightlySmilingIcon />
             Danh bạ
           </CommandItem>
         </CommandGroup>

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Download, Search, SlidersHorizontal, X } from "lucide-react";
+import { DownloadIcon, SearchIcon, SlidersHorizontalIcon, XIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -109,7 +109,7 @@ export function DataGridToolbar({
       className={cn("flex flex-wrap items-center gap-[var(--density-gap)]", className)}
     >
       <div className="relative">
-        <Search
+        <SearchIcon
           className="pointer-events-none absolute inset-y-0 start-2 my-auto size-4 text-muted-foreground"
           aria-hidden
         />
@@ -131,7 +131,7 @@ export function DataGridToolbar({
             aria-label={`${labels.clearFilter}: ${filter.id}`}
             className="rounded-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
           >
-            <X className="size-3" aria-hidden />
+            <XIcon className="size-3" aria-hidden />
           </button>
         </Badge>
       ))}
@@ -139,7 +139,7 @@ export function DataGridToolbar({
       {hasActive ? (
         <Button variant="ghost" size="sm" onClick={reset}>
           {labels.reset}
-          <X />
+          <XIcon />
         </Button>
       ) : null}
 
@@ -150,7 +150,7 @@ export function DataGridToolbar({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
-                <SlidersHorizontal />
+                <SlidersHorizontalIcon />
                 {labels.columns}
               </Button>
             </DropdownMenuTrigger>
@@ -176,7 +176,7 @@ export function DataGridToolbar({
 
         {onExport ? (
           <Button variant="outline" size="sm" onClick={onExport}>
-            <Download />
+            <DownloadIcon />
             {labels.export}
           </Button>
         ) : null}

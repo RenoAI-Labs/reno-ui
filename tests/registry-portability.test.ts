@@ -158,3 +158,100 @@ describe("the v3 escape hatch stays honest", () => {
     expect(undocumented).toEqual([]);
   });
 });
+
+describe("icons follow one naming convention", () => {
+  /**
+   * Ported components arrived from two eras of shadcn: the older one imported
+   * `Check`, the current one imports `CheckIcon`. Both spellings lived in
+   * registry/reno at once, so a reader could not tell which was intended and
+   * every new port picked whichever neighbour it copied.
+   *
+   * The `*Icon` suffix is the one that survives: it matches shadcn today, so
+   * future ports stop introducing drift, and it keeps single-word icons
+   * (`X`, `Circle`, `Search`) from colliding with ordinary local identifiers.
+   * See docs/icons.md.
+   */
+  function iconSources(dir: string, out: Array<{ rel: string; src: string }> = []) {
+    if (!existsSync(join(ROOT, dir))) return out;
+    for (const entry of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
+      const rel = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) iconSources(rel, out);
+      else if (/\.tsx?$/.test(entry.name)) out.push({ rel, src: readFileSync(join(ROOT, rel), "utf8") });
+    }
+    return out;
+  }
+
+  /**
+   * Every `import ... from "lucide-react"` in registry/reno, whatever its shape.
+   *
+   * Matching only the braced double-quoted form would leave the convention
+   * enforced by Prettier as much as by these tests: a single-quoted or namespace
+   * import would sail past. `clause` is the raw text between `import` and
+   * `from`, so the tests below can reject the shapes that carry no names as well
+   * as check the ones that do.
+   */
+  function lucideImports() {
+    const found: Array<{ rel: string; clause: string; names: string[] }> = [];
+    for (const { rel, src } of iconSources("registry/reno")) {
+      for (const m of src.matchAll(/import\s+([^;]*?)\s+from\s+["']lucide-react["']/g)) {
+        const clause = m[1].trim();
+        const braced = clause.match(/\{([^}]*)\}/);
+        const names = braced ? braced[1].split(",").map((n) => n.trim()).filter(Boolean) : [];
+        found.push({ rel, clause, names });
+      }
+    }
+    return found;
+  }
+
+  it("imports icons by name, never as a namespace or default", () => {
+    // `import * as Icons from "lucide-react"` compiles and renders, and costs a
+    // consuming project the whole 6,000-icon module — the per-icon tree-shaking
+    // docs/icons.md promises is a property of named imports only.
+    const offenders = lucideImports()
+      .filter(({ clause }) => !clause.startsWith("{"))
+      .map(({ rel, clause }) => `${rel}: import ${clause}`);
+
+    expect(offenders).toEqual([]);
+  });
+
+  it("uses each glyph's canonical name, not a deprecated alias", async () => {
+    // The suffix rule alone does not stop the drift it was written for: lucide
+    // keeps old names as aliases forever, so `AlertCircleIcon` and
+    // `CircleAlertIcon` are the same glyph under two spellings and both satisfy
+    // "*Icon". Every alias resolves to a component whose `displayName` is the
+    // canonical name, which is what this compares against — so the rule needs no
+    // hand-maintained list and cannot go stale when lucide renames something.
+    const lucide = (await import("lucide-react")) as unknown as Record<
+      string,
+      { displayName?: string } | undefined
+    >;
+    const offenders: string[] = [];
+
+    for (const { rel, names } of lucideImports()) {
+      for (const spec of names) {
+        const imported = spec.split(/\s+as\s+/)[0]?.trim();
+        if (!imported) continue;
+        const canonical = lucide[imported]?.displayName;
+        if (canonical && imported !== `${canonical}Icon`) {
+          offenders.push(`${rel}: ${imported} -> ${canonical}Icon`);
+        }
+      }
+    }
+
+    expect(offenders).toEqual([]);
+  });
+
+  it("suffixes every lucide-react import with Icon", () => {
+    const offenders: string[] = [];
+
+    for (const { rel, names } of lucideImports()) {
+      for (const spec of names) {
+        // "Check as CheckIcon" -> the local binding is what the file uses.
+        const local = spec.split(/\s+as\s+/).pop()?.trim();
+        if (local && !local.endsWith("Icon")) offenders.push(`${rel}: ${local}`);
+      }
+    }
+
+    expect(offenders).toEqual([]);
+  });
+});

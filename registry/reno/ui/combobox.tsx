@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, ChevronsUpDown, X } from "lucide-react";
+import { CheckIcon, ChevronsUpDownIcon, XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -86,13 +86,13 @@ function Combobox<TValue extends string | number = string>({
           <span className="truncate">{selected ? selected.label : placeholder}</span>
           <span className="flex items-center gap-1">
             {clearable && selected ? (
-              <X
+              <XIcon
                 data-slot="combobox-clear"
                 className="size-4 shrink-0 opacity-50 hover:opacity-100"
                 onClick={handleClear}
               />
             ) : null}
-            <ChevronsUpDown className="size-4 shrink-0 opacity-50" />
+            <ChevronsUpDownIcon className="size-4 shrink-0 opacity-50" />
           </span>
         </Button>
       </PopoverTrigger>
@@ -109,7 +109,7 @@ function Combobox<TValue extends string | number = string>({
                   disabled={option.disabled}
                   onSelect={() => handleSelect(option)}
                 >
-                  <Check
+                  <CheckIcon
                     className={cn("size-4", option.value === value ? "opacity-100" : "opacity-0")}
                   />
                   {option.label}

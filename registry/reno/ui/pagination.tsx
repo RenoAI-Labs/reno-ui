@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, EllipsisIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -76,7 +76,7 @@ function PaginationPrevious({
       className={cn("gap-1 px-[calc(var(--density-control-px)*0.75)]", className)}
       {...props}
     >
-      <ChevronLeft />
+      <ChevronLeftIcon />
       <span className="hidden sm:block">{text}</span>
     </PaginationLink>
   );
@@ -96,7 +96,7 @@ function PaginationNext({
       {...props}
     >
       <span className="hidden sm:block">{text}</span>
-      <ChevronRight />
+      <ChevronRightIcon />
     </PaginationLink>
   );
 }
@@ -113,7 +113,7 @@ function PaginationEllipsis({
       className={cn("flex size-[var(--density-control-height)] items-center justify-center", className)}
       {...props}
     >
-      <MoreHorizontal className="size-4" />
+      <EllipsisIcon className="size-4" />
       <span className="sr-only">{label}</span>
     </span>
   );

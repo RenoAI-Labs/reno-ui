@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Loader2Icon } from "lucide-react";
+import { LoaderCircleIcon } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
@@ -43,7 +43,7 @@ function Spinner({
       className={cn(spinnerVariants({ size }), className)}
       {...props}
     >
-      <Loader2Icon className="size-full" aria-hidden="true" />
+      <LoaderCircleIcon className="size-full" aria-hidden="true" />
     </span>
   );
 }

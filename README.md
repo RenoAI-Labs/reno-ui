@@ -40,7 +40,7 @@ Three layers, each unaware of the one above it.
 Tokens       theme-base + 4 presets (elearning, admin, erp, cms)
              OKLCH scales, radius, density, typography, dark mode
      ↑
-Primitives   47 components derived from shadcn/ui, plus a virtualized DataGrid
+Primitives   52 components, most derived from shadcn/ui, plus a virtualized DataGrid
      ↑
 Blocks       dashboard-shell, crud-page, auth-pages   (not built yet)
 ```
@@ -55,7 +55,9 @@ what lets a single `<Button>` render compact in an ERP screen and roomy in an
 e-learning one, and it is enforced by lint (`reno-tokens/no-raw-color`) rather
 than by convention.
 
-See [docs/design-tokens.md](./docs/design-tokens.md) for the token contract and
+See [docs/design-tokens.md](./docs/design-tokens.md) for the token contract,
+[docs/icons.md](./docs/icons.md) for the icon library, naming convention and why
+brand logos stay out, and
 [docs/data-grid-server-contract.md](./docs/data-grid-server-contract.md) for what
 the DataGrid sends a backend.
 

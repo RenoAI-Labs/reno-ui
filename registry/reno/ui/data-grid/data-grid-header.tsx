@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowUp, ChevronsUpDown, Pin, PinOff } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon, PinIcon, PinOffIcon } from "lucide-react";
 import { flexRender, type Header, type RowData } from "@tanstack/react-table";
 
 import {
@@ -25,9 +25,9 @@ import { pinnedEdgeClass, pinnedStyle } from "./column-pinning";
  */
 
 function SortIcon({ sorted }: { sorted: false | "asc" | "desc" }) {
-  if (sorted === "asc") return <ArrowUp className="size-3.5" aria-hidden />;
-  if (sorted === "desc") return <ArrowDown className="size-3.5" aria-hidden />;
-  return <ChevronsUpDown className="size-3.5 opacity-50" aria-hidden />;
+  if (sorted === "asc") return <ArrowUpIcon className="size-3.5" aria-hidden />;
+  if (sorted === "desc") return <ArrowDownIcon className="size-3.5" aria-hidden />;
+  return <ChevronsUpDownIcon className="size-3.5 opacity-50" aria-hidden />;
 }
 
 export function DataGridHeaderCell<TData extends RowData>({
@@ -95,9 +95,9 @@ export function DataGridHeaderCell<TData extends RowData>({
                 aria-label={labels.columns}
               >
                 {pinned === false ? (
-                  <Pin className="size-3.5" aria-hidden />
+                  <PinIcon className="size-3.5" aria-hidden />
                 ) : (
-                  <PinOff className="size-3.5" aria-hidden />
+                  <PinOffIcon className="size-3.5" aria-hidden />
                 )}
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">

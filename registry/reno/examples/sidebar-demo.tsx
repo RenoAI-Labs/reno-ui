@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Inbox, Search, Settings } from "lucide-react";
+import { HouseIcon, InboxIcon, SearchIcon, SettingsIcon } from "lucide-react";
 
 import {
   Sidebar,
@@ -18,10 +18,10 @@ import {
 } from "@/components/ui/sidebar";
 
 const items = [
-  { title: "Trang chủ", icon: Home },
-  { title: "Hộp thư", icon: Inbox },
-  { title: "Tìm kiếm", icon: Search },
-  { title: "Cài đặt", icon: Settings },
+  { title: "Trang chủ", icon: HouseIcon },
+  { title: "Hộp thư", icon: InboxIcon },
+  { title: "Tìm kiếm", icon: SearchIcon },
+  { title: "Cài đặt", icon: SettingsIcon },
 ];
 
 export default function SidebarDemo() {

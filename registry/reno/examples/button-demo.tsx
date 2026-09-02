@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Trash2 } from "lucide-react";
+import { ArrowRightIcon, Trash2Icon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -14,7 +14,7 @@ export default function ButtonDemo() {
         <Button variant="ghost">Trong suốt</Button>
         <Button variant="link">Liên kết</Button>
         <Button variant="destructive">
-          <Trash2 />
+          <Trash2Icon />
           Xoá
         </Button>
       </div>
@@ -24,7 +24,7 @@ export default function ButtonDemo() {
         <Button>Mặc định</Button>
         <Button size="lg">Lớn</Button>
         <Button size="icon" aria-label="Tiếp tục">
-          <ArrowRight />
+          <ArrowRightIcon />
         </Button>
         <Button disabled>Vô hiệu hoá</Button>
       </div>
