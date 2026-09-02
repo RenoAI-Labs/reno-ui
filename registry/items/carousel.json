@@ -1,0 +1,27 @@
+{
+  "name": "carousel",
+  "type": "registry:ui",
+  "title": "Carousel",
+  "description": "Slider dựng trên Embla: ngang/dọc, điều khiển bằng bàn phím, nút Trước/Sau đổi nhãn qua prop. Chỉ cài khi cần — Embla không lọt vào dự án không dùng.",
+  "dependencies": [
+    "embla-carousel-react@^8.6.0",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/carousel.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn carousel, new-york style; fixed -ml-4/pl-4 spacing rewritten to --density-gap and the arrows' fixed size-8 dropped so they follow Button's density-driven icon size, the hardcoded English sr-only strings replaced with Vietnamese aria-label props, and the scroll state read via useSyncExternalStore instead of being mirrored into useState from an effect",
+    "added": "2026-09-02",
+    "group": "Layout"
+  }
+}

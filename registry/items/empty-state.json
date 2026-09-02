@@ -1,0 +1,23 @@
+{
+  "name": "empty-state",
+  "type": "registry:ui",
+  "title": "EmptyState",
+  "description": "Trạng thái rỗng dùng chung: icon, tiêu đề, mô tả, hành động. Không có chuỗi mặc định — mỗi màn hình tự đặt câu của mình. DataGrid dùng chính component này.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/empty-state.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này",
+    "added": "2026-09-02",
+    "group": "Feedback"
+  }
+}

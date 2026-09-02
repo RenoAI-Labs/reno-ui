@@ -66,6 +66,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `button` | ui | Form | shadcn/ui | MIT | shadcn button, new-york style; sizes rewritten to read density tokens | 2026-09-01 |
 | `calendar` | ui | Data | shadcn/ui | MIT | shadcn calendar, new-york style, react-day-picker v10; sizing rewritten to read density tokens, locale defaulted to vi | 2026-09-01 |
 | `card` | ui | Layout | shadcn/ui | MIT | shadcn card, new-york style; no changes needed, padding already uses normal spacing | 2026-09-01 |
+| `carousel` | ui | Layout | shadcn/ui | MIT | shadcn carousel, new-york style; fixed -ml-4/pl-4 spacing rewritten to --density-gap and the arrows' fixed size-8 dropped so they follow Button's density-driven icon size, the hardcoded English sr-only strings replaced with Vietnamese aria-label props, and the scroll state read via useSyncExternalStore instead of being mirrored into useState from an effect | 2026-09-02 |
 | `chart` | ui | Data | original | original | Viết cho reno trên recharts 3; shadcn/ui có chart nhưng theo hướng compose children của recharts, reno chọn API khai báo để giữ ranh giới thư viện như DataGrid | 2026-09-01 |
 | `checkbox` | ui | Form | shadcn/ui | MIT | shadcn checkbox, new-york style; unchanged | 2026-09-01 |
 | `collapsible` | ui | Layout | shadcn/ui | MIT | shadcn collapsible, new-york style; unchanged | 2026-09-01 |
@@ -78,6 +79,8 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `dialog` | ui | Overlay | shadcn/ui | MIT | shadcn dialog, new-york style; overlay/content z-index read from --z-overlay/--z-modal, close-button label overridable | 2026-09-01 |
 | `drawer` | ui | Overlay | shadcn/ui | MIT | shadcn drawer (vaul), new-york style; overlay/content z-index read from --z-overlay/--z-modal | 2026-09-01 |
 | `dropdown-menu` | ui | Overlay | shadcn/ui | MIT | shadcn dropdown-menu, new-york style; content z-index read from --z-dropdown, item min-height/padding read density tokens | 2026-09-01 |
+| `empty-state` | ui | Feedback | original | original | Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này | 2026-09-02 |
+| `error-state` | ui | Feedback | original | original | Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này | 2026-09-02 |
 | `form` | ui | Form | shadcn/ui | MIT | shadcn form, new-york style; unchanged logic, restyled label error state via data-error | 2026-09-01 |
 | `hover-card` | ui | Overlay | shadcn/ui | MIT | shadcn hover-card, new-york style; content z-index read from --z-popover | 2026-09-01 |
 | `input` | ui | Form | shadcn/ui | MIT | shadcn input, new-york style; height/padding rewritten to read density tokens | 2026-09-01 |
@@ -103,6 +106,8 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `table` | ui | Data | shadcn/ui | MIT | shadcn table, new-york style; row/cell sizing rewritten to read density tokens | 2026-09-01 |
 | `tabs` | ui | Layout | shadcn/ui | MIT | shadcn tabs, new-york style; TabsList height rewritten to read density-control-height | 2026-09-01 |
 | `textarea` | ui | Form | shadcn/ui | MIT | shadcn textarea, new-york style; min-height rewritten as a multiple of the density control height | 2026-09-01 |
+| `toggle` | ui | Form | shadcn/ui | MIT | shadcn toggle, new-york style; fixed heights h-8/h-9/h-10 rewritten to read --density-control-height*, and horizontal padding to --density-control-px | 2026-09-02 |
+| `toggle-group` | ui | Form | shadcn/ui | MIT | shadcn toggle-group, new-york style; item padding reads --density-control-px, and the consumer's `style` is merged into the gap variable instead of overwriting it | 2026-09-02 |
 | `tooltip` | ui | Overlay | shadcn/ui | MIT | shadcn tooltip, new-york style; content z-index read from --z-popover | 2026-09-01 |
 
 <!-- END GENERATED INVENTORY -->

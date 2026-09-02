@@ -1,0 +1,24 @@
+{
+  "name": "toggle",
+  "type": "registry:ui",
+  "title": "Toggle",
+  "description": "Nút hai trạng thái bật/tắt, có biến thể default và outline, ba cỡ đọc từ token mật độ.",
+  "dependencies": [
+    "@radix-ui/react-toggle@^1.1.18",
+    "class-variance-authority@^0.7.1"
+  ],
+  "registryDependencies": ["@reno/utils"],
+  "files": [
+    {
+      "path": "registry/reno/ui/toggle.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn toggle, new-york style; fixed heights h-8/h-9/h-10 rewritten to read --density-control-height*, and horizontal padding to --density-control-px",
+    "added": "2026-09-02",
+    "group": "Form"
+  }
+}

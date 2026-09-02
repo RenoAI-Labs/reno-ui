@@ -1,0 +1,23 @@
+{
+  "name": "error-state",
+  "type": "registry:ui",
+  "title": "ErrorState",
+  "description": "Trạng thái lỗi dùng chung: icon, tiêu đề, mô tả, và nút thử lại (nhãn tiếng Việt, đổi được qua prop). DataGrid dùng chính component này.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": ["@reno/utils", "@reno/button"],
+  "files": [
+    {
+      "path": "registry/reno/ui/error-state.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này",
+    "added": "2026-09-02",
+    "group": "Feedback"
+  }
+}

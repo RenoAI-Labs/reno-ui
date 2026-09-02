@@ -1,0 +1,27 @@
+{
+  "name": "toggle-group",
+  "type": "registry:ui",
+  "title": "ToggleGroup",
+  "description": "Nhóm toggle chọn một hoặc nhiều. spacing=0 cho segmented control liền khối, spacing>0 tách rời — thay được cả segmented, seg-toggle lẫn alignment-toggle mà dự án hay tự viết.",
+  "dependencies": [
+    "@radix-ui/react-toggle-group@^1.1.19",
+    "class-variance-authority@^0.7.1"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/toggle"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/toggle-group.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "shadcn/ui",
+    "license": "MIT",
+    "upstream": "shadcn toggle-group, new-york style; item padding reads --density-control-px, and the consumer's `style` is merged into the gap variable instead of overwriting it",
+    "added": "2026-09-02",
+    "group": "Form"
+  }
+}

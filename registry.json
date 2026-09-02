@@ -1497,6 +1497,33 @@
       }
     },
     {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "Slider dựng trên Embla: ngang/dọc, điều khiển bằng bàn phím, nút Trước/Sau đổi nhãn qua prop. Chỉ cài khi cần — Embla không lọt vào dự án không dùng.",
+      "dependencies": [
+        "embla-carousel-react@^8.6.0",
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/carousel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn carousel, new-york style; fixed -ml-4/pl-4 spacing rewritten to --density-gap and the arrows' fixed size-8 dropped so they follow Button's density-driven icon size, the hardcoded English sr-only strings replaced with Vietnamese aria-label props, and the scroll state read via useSyncExternalStore instead of being mirrored into useState from an effect",
+        "added": "2026-09-02",
+        "group": "Layout"
+      }
+    },
+    {
       "name": "chart",
       "type": "registry:ui",
       "title": "Chart",
@@ -1684,6 +1711,8 @@
         "@reno/dropdown-menu",
         "@reno/checkbox",
         "@reno/skeleton",
+        "@reno/empty-state",
+        "@reno/error-state",
         "@reno/grid-state",
         "@reno/grid-query",
         "@reno/grid-labels"
@@ -1875,6 +1904,57 @@
         "upstream": "shadcn dropdown-menu, new-york style; content z-index read from --z-dropdown, item min-height/padding read density tokens",
         "added": "2026-09-01",
         "group": "Overlay"
+      }
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "EmptyState",
+      "description": "Trạng thái rỗng dùng chung: icon, tiêu đề, mô tả, hành động. Không có chuỗi mặc định — mỗi màn hình tự đặt câu của mình. DataGrid dùng chính component này.",
+      "dependencies": [
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/empty-state.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này",
+        "added": "2026-09-02",
+        "group": "Feedback"
+      }
+    },
+    {
+      "name": "error-state",
+      "type": "registry:ui",
+      "title": "ErrorState",
+      "description": "Trạng thái lỗi dùng chung: icon, tiêu đề, mô tả, và nút thử lại (nhãn tiếng Việt, đổi được qua prop). DataGrid dùng chính component này.",
+      "dependencies": [
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/error-state.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này",
+        "added": "2026-09-02",
+        "group": "Feedback"
       }
     },
     {
@@ -2540,6 +2620,59 @@
         "license": "MIT",
         "upstream": "shadcn textarea, new-york style; min-height rewritten as a multiple of the density control height",
         "added": "2026-09-01",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "Nút hai trạng thái bật/tắt, có biến thể default và outline, ba cỡ đọc từ token mật độ.",
+      "dependencies": [
+        "@radix-ui/react-toggle@^1.1.18",
+        "class-variance-authority@^0.7.1"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn toggle, new-york style; fixed heights h-8/h-9/h-10 rewritten to read --density-control-height*, and horizontal padding to --density-control-px",
+        "added": "2026-09-02",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "ToggleGroup",
+      "description": "Nhóm toggle chọn một hoặc nhiều. spacing=0 cho segmented control liền khối, spacing>0 tách rời — thay được cả segmented, seg-toggle lẫn alignment-toggle mà dự án hay tự viết.",
+      "dependencies": [
+        "@radix-ui/react-toggle-group@^1.1.19",
+        "class-variance-authority@^0.7.1"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/toggle"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "shadcn/ui",
+        "license": "MIT",
+        "upstream": "shadcn toggle-group, new-york style; item padding reads --density-control-px, and the consumer's `style` is merged into the gap variable instead of overwriting it",
+        "added": "2026-09-02",
         "group": "Form"
       }
     },

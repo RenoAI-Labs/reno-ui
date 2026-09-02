@@ -125,10 +125,13 @@ jobs:
           grep -q -- "--density-row-height" app/globals.css
           grep -q -- "--color-primary" app/globals.css
 
-      - name: A table-only project must not pull TanStack
+      - name: A light project must not pull the heavy upstreams
         run: |
           # The bundle split is the reason `table` and `data-grid` are separate
-          # items; without this check it can regress silently.
+          # items, and the reason `empty-state` was lifted out of the grid rather
+          # than copied: a project that wants an empty state should not inherit a
+          # virtualization library to get one. Same for Embla and `carousel`.
+          # Without this check either split regresses silently.
           #
           # Scaffolded with create-next-app rather than `npm init -y`: the shadcn
           # CLI reads tsconfig.json to resolve path aliases and refuses to run
@@ -137,15 +140,18 @@ jobs:
             --ts --tailwind --app --no-src-dir --eslint --use-npm --yes --skip-install
           cp /tmp/consumer/components.json /tmp/light/components.json
           cd /tmp/light
-          npx shadcn@4.19.1 add @reno/table @reno/theme-cms --yes
+          npx shadcn@4.19.1 add @reno/table @reno/empty-state @reno/error-state @reno/toggle-group @reno/theme-cms --yes
           node -e '
             const deps = Object.keys(require("/tmp/light/package.json").dependencies || {});
-            const leaked = deps.filter((d) => d.includes("tanstack"));
+            const banned = { tanstack: "@reno/data-grid", embla: "@reno/carousel" };
+            const leaked = Object.entries(banned).flatMap(([needle, owner]) =>
+              deps.filter((d) => d.includes(needle)).map((d) => `${d} (belongs to ${owner})`),
+            );
             if (leaked.length) {
-              console.error("TanStack leaked into a table-only project: " + leaked.join(", "));
+              console.error("Heavy upstream leaked into a light project: " + leaked.join(", "));
               process.exit(1);
             }
-            console.log("Bundle boundary holds: no TanStack in a table-only project.");
+            console.log("Bundle boundary holds: no TanStack and no Embla in a light project.");
           '
 
   deploy:

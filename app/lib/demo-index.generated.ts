@@ -19,6 +19,7 @@ export const DEMOS: Record<string, ComponentType> = {
   "button": dynamic(() => import("@/registry/reno/examples/button-demo")),
   "calendar": dynamic(() => import("@/registry/reno/examples/calendar-demo")),
   "card": dynamic(() => import("@/registry/reno/examples/card-demo")),
+  "carousel": dynamic(() => import("@/registry/reno/examples/carousel-demo")),
   "chart": dynamic(() => import("@/registry/reno/examples/chart-demo")),
   "checkbox": dynamic(() => import("@/registry/reno/examples/checkbox-demo")),
   "collapsible": dynamic(() => import("@/registry/reno/examples/collapsible-demo")),
@@ -31,6 +32,8 @@ export const DEMOS: Record<string, ComponentType> = {
   "dialog": dynamic(() => import("@/registry/reno/examples/dialog-demo")),
   "drawer": dynamic(() => import("@/registry/reno/examples/drawer-demo")),
   "dropdown-menu": dynamic(() => import("@/registry/reno/examples/dropdown-menu-demo")),
+  "empty-state": dynamic(() => import("@/registry/reno/examples/empty-state-demo")),
+  "error-state": dynamic(() => import("@/registry/reno/examples/error-state-demo")),
   "form": dynamic(() => import("@/registry/reno/examples/form-demo")),
   "hover-card": dynamic(() => import("@/registry/reno/examples/hover-card-demo")),
   "input": dynamic(() => import("@/registry/reno/examples/input-demo")),
@@ -56,6 +59,8 @@ export const DEMOS: Record<string, ComponentType> = {
   "table": dynamic(() => import("@/registry/reno/examples/table-demo")),
   "tabs": dynamic(() => import("@/registry/reno/examples/tabs-demo")),
   "textarea": dynamic(() => import("@/registry/reno/examples/textarea-demo")),
+  "toggle": dynamic(() => import("@/registry/reno/examples/toggle-demo")),
+  "toggle-group": dynamic(() => import("@/registry/reno/examples/toggle-group-demo")),
   "tooltip": dynamic(() => import("@/registry/reno/examples/tooltip-demo")),
 };
 

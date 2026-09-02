@@ -46,6 +46,13 @@ const RULES = [
       "`chart` is a separate registry item so a project that draws no charts never installs recharts. The moment another primitive imports it, that split is gone and every consumer pays for it — the same reason `table` may not import TanStack.",
   },
   {
+    dir: "registry/reno/ui",
+    forbid: [{ pattern: /^embla-carousel/, why: "Embla belongs to the carousel item alone" }],
+    except: ["registry/reno/ui/carousel.tsx"],
+    reason:
+      "`carousel` is a separate registry item so a project with no slider never installs Embla. Same split, same reason, as `chart`/recharts and `table`/TanStack: one primitive reaching for it makes every consumer pay.",
+  },
+  {
     dir: "registry/reno/ui/data-grid",
     forbid: [/\bnext-intl\b/, /\bi18next\b/, /react-i18next/, /\@lingui\//],
     reason:

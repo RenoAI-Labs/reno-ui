@@ -1,10 +1,8 @@
 "use client";
 
-import { AlertCircle, Inbox } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorState } from "@/components/ui/error-state";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
 import type { DataGridLabels } from "@/lib/grid-labels";
 
 /**
@@ -14,26 +12,12 @@ import type { DataGridLabels } from "@/lib/grid-labels";
  * they are the states everyone forgets, so every project ends up inventing its
  * own half-finished version. Shipping them means a grid is never blank and
  * unexplained.
+ *
+ * The empty and error shells themselves are not grid-specific and are no longer
+ * written here — `EmptyState` and `ErrorState` own them, and this file only
+ * supplies the grid's labels. Two copies of a state component is how the two
+ * drift apart.
  */
-
-function StateShell({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div
-      className={cn(
-        "flex flex-col items-center justify-center gap-2 px-6 py-12 text-center",
-        className,
-      )}
-    >
-      {children}
-    </div>
-  );
-}
 
 export function DataGridEmpty({
   labels,
@@ -43,13 +27,7 @@ export function DataGridEmpty({
   /** Optional call to action — "create the first record", say. */
   children?: React.ReactNode;
 }) {
-  return (
-    <StateShell>
-      <Inbox className="size-8 text-muted-foreground" aria-hidden />
-      <p className="text-sm text-muted-foreground">{labels.empty}</p>
-      {children}
-    </StateShell>
-  );
+  return <EmptyState body={labels.empty} action={children} />;
 }
 
 export function DataGridError({
@@ -59,17 +37,7 @@ export function DataGridError({
   labels: DataGridLabels;
   onRetry?: () => void;
 }) {
-  return (
-    <StateShell>
-      <AlertCircle className="size-8 text-destructive" aria-hidden />
-      <p className="text-sm text-muted-foreground">{labels.error}</p>
-      {onRetry ? (
-        <Button variant="outline" size="sm" onClick={onRetry}>
-          {labels.retry}
-        </Button>
-      ) : null}
-    </StateShell>
-  );
+  return <ErrorState body={labels.error} onRetry={onRetry} retryLabel={labels.retry} />;
 }
 
 /**
