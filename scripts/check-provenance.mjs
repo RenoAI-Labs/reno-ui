@@ -16,8 +16,12 @@
  * so it cannot be forgotten when adding a component and it travels with the
  * component into the customer's repository.
  *
+ * The npm packages an item pulls in are a separate question, answered by
+ * `registry/dependency-licenses.json` and checked here too — see
+ * `scripts/lib/dependency-licenses.mjs` for why the two are not merged.
+ *
  * Usage:
- *   node scripts/check-provenance.mjs           # verify + refresh the doc table
+ *   node scripts/check-provenance.mjs           # verify + refresh the doc tables
  *   node scripts/check-provenance.mjs --check   # verify only; fail if stale
  */
 
@@ -26,12 +30,32 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { loadItems } from "./build-registry-json.mjs";
+import {
+  NOTICE_PATH,
+  collectDependencies,
+  loadTable,
+  verifyClosureLicenses,
+  verifyDependencies,
+  verifyNoticeMentions,
+} from "./lib/dependency-licenses.mjs";
+import { renderClosureSection, renderDependencySection } from "./lib/license-doc-sections.mjs";
+import { collectRuntimeClosure, loadLockfile } from "./lib/transitive-dependencies.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DOC_PATH = join(ROOT, "docs/ui-components.md");
 
-const BEGIN = "<!-- BEGIN GENERATED INVENTORY -->";
-const END = "<!-- END GENERATED INVENTORY -->";
+const INVENTORY = {
+  begin: "<!-- BEGIN GENERATED INVENTORY -->",
+  end: "<!-- END GENERATED INVENTORY -->",
+};
+const DEPENDENCIES = {
+  begin: "<!-- BEGIN GENERATED DEPENDENCY LICENSES -->",
+  end: "<!-- END GENERATED DEPENDENCY LICENSES -->",
+};
+const CLOSURE = {
+  begin: "<!-- BEGIN GENERATED TRANSITIVE LICENSES -->",
+  end: "<!-- END GENERATED TRANSITIVE LICENSES -->",
+};
 
 /** Licenses we are allowed to redistribute under MIT. */
 const ALLOWED_LICENSES = new Set(["MIT", "original"]);
@@ -85,7 +109,7 @@ function verify(items) {
   return errors;
 }
 
-function renderTable(items) {
+function renderInventory(items) {
   const rows = items.map((item) => {
     const m = item.meta ?? {};
     const type = item.type.replace("registry:", "");
@@ -93,23 +117,38 @@ function renderTable(items) {
   });
 
   return [
-    BEGIN,
-    "",
     `_Generated from \`registry/items/*.json\` by \`scripts/check-provenance.mjs\`. Do not edit by hand — edit the item's \`meta\` block and run \`npm run check:provenance\`._`,
     "",
     "| Item | Type | Group | Source | License | Upstream ref | Added |",
     "|---|---|---|---|---|---|---|",
     ...rows,
-    "",
-    END,
   ].join("\n");
+}
+
+/** Replace the text between a block's markers, keeping the markers themselves. */
+function spliceBlock(doc, block, body) {
+  const start = doc.indexOf(block.begin);
+  const end = doc.indexOf(block.end);
+  if (start === -1 || end === -1) {
+    console.error(`docs/ui-components.md is missing the ${block.begin} / ${block.end} markers.`);
+    process.exit(1);
+  }
+  return `${doc.slice(0, start + block.begin.length)}\n\n${body}\n\n${doc.slice(end)}`;
 }
 
 function main() {
   const check = process.argv.includes("--check");
   const items = loadItems();
+  const deps = collectDependencies(items);
+  const table = loadTable();
+  const closure = collectRuntimeClosure(loadLockfile(), deps.map((d) => d.name));
 
-  const errors = verify(items);
+  const errors = [
+    ...verify(items),
+    ...verifyDependencies(deps, table),
+    ...verifyClosureLicenses(closure),
+    ...verifyNoticeMentions(table, readFileSync(NOTICE_PATH, "utf8")),
+  ];
   if (errors.length) {
     console.error(`Provenance check failed (${errors.length} issue(s)):`);
     for (const e of errors) console.error(`  - ${e}`);
@@ -117,24 +156,21 @@ function main() {
   }
 
   const doc = readFileSync(DOC_PATH, "utf8");
-  const start = doc.indexOf(BEGIN);
-  const end = doc.indexOf(END);
-  if (start === -1 || end === -1) {
-    console.error(`docs/ui-components.md is missing the ${BEGIN} / ${END} markers.`);
-    process.exit(1);
-  }
+  let next = spliceBlock(doc, INVENTORY, renderInventory(items));
+  next = spliceBlock(next, DEPENDENCIES, renderDependencySection(deps, table));
+  next = spliceBlock(next, CLOSURE, renderClosureSection(deps, closure));
 
-  const next = doc.slice(0, start) + renderTable(items) + doc.slice(end + END.length);
+  const summary = `${items.length} items, ${deps.length} npm dependencies (${closure.packages.length} with their tree), all sourced and licensed`;
   if (next === doc) {
-    console.log(`Provenance OK — ${items.length} items, all sourced and licensed.`);
+    console.log(`Provenance OK — ${summary}.`);
     return;
   }
   if (check) {
-    console.error("docs/ui-components.md inventory is stale. Run `npm run check:provenance`.");
+    console.error("docs/ui-components.md is stale. Run `npm run check:provenance`.");
     process.exit(1);
   }
   writeFileSync(DOC_PATH, next);
-  console.log(`Provenance OK — ${items.length} items; refreshed the inventory table.`);
+  console.log(`Provenance OK — ${summary}; refreshed the generated tables.`);
 }
 
 main();

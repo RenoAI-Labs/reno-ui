@@ -15,8 +15,20 @@ tokens so a single component can serve multiple product domains.
 
 Components marked "original" were written for this project.
 
-Per-item provenance is recorded in docs/ui-components.md and enforced in CI by
-scripts/check-provenance.mjs.
+reno-ui redistributes no third-party npm package. Installing an item makes the
+consuming project fetch the package from npm itself, so Apache-2.0 attribution
+travels with that project's own release rather than with this repository. One
+such package is currently reachable this way:
+
+  class-variance-authority
+  https://github.com/joe-bell/cva
+  Copyright 2022 Joe Bell
+  Licensed under the Apache License, Version 2.0.
+  Ships no NOTICE file of its own.
+
+Per-item provenance is recorded in docs/ui-components.md, the license of every
+npm package an item installs is recorded in registry/dependency-licenses.json,
+and both are enforced in CI by scripts/check-provenance.mjs.
 
 reno-ui contains no code from zerostaticthemes/square-ui, which is distributed
 under the proprietary ln-dev UI License and may not be redistributed. See

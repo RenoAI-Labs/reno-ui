@@ -3,6 +3,18 @@ import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
+import {
+  ALLOWED_DEP_LICENSES,
+  collectDependencies,
+  verifyClosureLicenses,
+  verifyCoverage,
+  verifyDependencies,
+  verifyLicenses,
+  verifyNoticeMentions,
+} from "../scripts/lib/dependency-licenses.mjs";
+import { isAllowedLicense } from "../scripts/lib/spdx-license-expression.mjs";
+import { collectRuntimeClosure, loadLockfile } from "../scripts/lib/transitive-dependencies.mjs";
+
 /**
  * Regressions from the first time reno-ui was installed into a real, existing
  * project (P6a gate, 2026-09-01). Both failures below were invisible in every
@@ -253,5 +265,146 @@ describe("icons follow one naming convention", () => {
     }
 
     expect(offenders).toEqual([]);
+  });
+});
+
+describe("every npm package a customer receives has its license on record", () => {
+  /**
+   * `docs/ui-components.md` is handed to the customer as their record of what
+   * they now own. Until this gate existed it recorded the provenance of the
+   * source files and said nothing about the npm packages installed alongside
+   * them — including that `class-variance-authority`, which arrives with most
+   * primitives, is Apache-2.0 rather than MIT, and that `lucide-react` is ISC.
+   *
+   * The table is checked against the registry rather than against npm, so the
+   * gate stays offline and needs no `node_modules`. `npm run licenses:sync` is
+   * what reads the installed packages.
+   */
+  const table = JSON.parse(
+    readFileSync(join(ROOT, "registry/dependency-licenses.json"), "utf8"),
+  ).packages as Record<string, { license: string; version: string; notice: boolean }>;
+
+  const deps = collectDependencies(items().map((i) => i.json));
+
+  it("covers every dependency declared by a registry item, and nothing else", () => {
+    expect(verifyCoverage(deps, table)).toEqual([]);
+  });
+
+  it("carries only permissive licenses", () => {
+    // Widening ALLOWED_DEP_LICENSES is allowed; doing it silently is not. reno
+    // components ship into closed-source client products, so a copyleft package
+    // arriving through a dependency bump has to stop the build.
+    expect(verifyLicenses(deps, table)).toEqual([]);
+  });
+
+  it("rejects a copyleft package and an unrecorded one", () => {
+    // The gate is only worth its runtime if it fails on the thing it is for.
+    const copyleft = verifyDependencies(
+      [{ name: "some-widget", ranges: new Set(["^1.0.0"]), items: ["video-player"] }],
+      { "some-widget": { license: "GPL-3.0", version: "1.0.0", notice: false } },
+    );
+    expect(copyleft).toHaveLength(1);
+    expect(copyleft[0]).toContain("ALLOWED_DEP_LICENSES does not permit");
+
+    const unrecorded = verifyDependencies(
+      [{ name: "some-widget", ranges: new Set(["^1.0.0"]), items: ["video-player"] }],
+      {},
+    );
+    expect(unrecorded).toHaveLength(1);
+    expect(unrecorded[0]).toContain("missing from registry/dependency-licenses.json");
+  });
+});
+
+describe("license expressions are read as expressions, not as strings", () => {
+  /**
+   * `victory-vendor`, which arrives underneath `recharts`, declares
+   * "MIT AND ISC". Comparing the raw string against the allowed set rejects it
+   * even though both halves are permissive — a false failure on a correct
+   * dependency, which is how people learn to work around a gate.
+   */
+  const allowed = ALLOWED_DEP_LICENSES;
+
+  it("accepts a conjunction only when every part is allowed", () => {
+    expect(isAllowedLicense("MIT AND ISC", allowed)).toBe(true);
+    expect(isAllowedLicense("MIT AND GPL-3.0", allowed)).toBe(false);
+  });
+
+  it("accepts a disjunction when either part is allowed", () => {
+    // `OR` is a choice offered to us, so one acceptable branch is enough.
+    expect(isAllowedLicense("(MIT OR GPL-3.0)", allowed)).toBe(true);
+    expect(isAllowedLicense("GPL-3.0 OR AGPL-3.0", allowed)).toBe(false);
+  });
+
+  it("decides a WITH exception on the base license", () => {
+    // An exception can only widen a license, never rescue a rejected one, and
+    // reading it is a judgement call rather than a lookup.
+    expect(isAllowedLicense("Apache-2.0 WITH LLVM-exception", allowed)).toBe(true);
+    expect(isAllowedLicense("GPL-2.0 WITH Classpath-exception-2.0", allowed)).toBe(false);
+  });
+
+  it("refuses anything it cannot parse rather than guessing", () => {
+    for (const unreadable of ["SEE LICENSE IN LICENSE.txt", "UNLICENSED", "Apache-2.0+", "MIT AND", "(MIT", ""]) {
+      expect(isAllowedLicense(unreadable, allowed)).toBe(false);
+    }
+    expect(isAllowedLicense(null as unknown as string, allowed)).toBe(false);
+  });
+});
+
+describe("the packages underneath the declared ones are licensed too", () => {
+  /**
+   * The declared list is 44 packages; they pull in 127. Checking only what an
+   * item names leaves two thirds of what reaches a customer's bundle unread,
+   * so a copyleft package could arrive as a dependency of a dependency.
+   *
+   * Resolved from the committed lockfile, which records a license on every
+   * entry from v3 onward — no network, no installed tree.
+   */
+  const closure = collectRuntimeClosure(
+    loadLockfile(),
+    collectDependencies(items().map((i) => i.json)).map((d) => d.name),
+  );
+
+  it("resolves the whole graph", () => {
+    expect(closure.unresolved).toEqual([]);
+    expect(closure.packages.length).toBeGreaterThan(100);
+  });
+
+  it("finds nothing outside the permissive set", () => {
+    expect(verifyClosureLicenses(closure)).toEqual([]);
+  });
+
+  it("reports a copyleft package it cannot attribute to any item", () => {
+    const injected = verifyClosureLicenses({
+      packages: [{ name: "some-parser", license: "AGPL-3.0" }],
+      unresolved: [],
+    });
+    expect(injected).toHaveLength(1);
+    expect(injected[0]).toContain("npm ls some-parser");
+  });
+});
+
+describe("attribution obligations reach NOTICE", () => {
+  /**
+   * `class-variance-authority` is Apache-2.0 and arrives with most primitives.
+   * The NOTICE prose is written by hand — a generated entry would have to
+   * invent the copyright line, which is not in package.json — so this checks
+   * that somebody wrote it, not what they wrote.
+   */
+  const notice = readFileSync(join(ROOT, "NOTICE"), "utf8");
+  const table = JSON.parse(
+    readFileSync(join(ROOT, "registry/dependency-licenses.json"), "utf8"),
+  ).packages;
+
+  it("names every package carrying one", () => {
+    expect(verifyNoticeMentions(table, notice)).toEqual([]);
+  });
+
+  it("fails when an Apache-2.0 package is missing from NOTICE", () => {
+    const missing = verifyNoticeMentions(
+      { "hls.js": { license: "Apache-2.0", version: "1.7.1", notice: true } },
+      notice,
+    );
+    expect(missing).toHaveLength(1);
+    expect(missing[0]).toContain("taken from the package's own LICENSE file");
   });
 });

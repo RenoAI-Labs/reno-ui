@@ -25,6 +25,7 @@
     "theme:sync:check": "node scripts/sync-theme-vars.mjs --check",
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:provenance": "node scripts/check-provenance.mjs",
+    "licenses:sync": "node scripts/sync-dependency-licenses.mjs",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "check:render": "node scripts/check-render.mjs",
     "bench:data-grid": "node scripts/bench-data-grid.mjs",

@@ -65,7 +65,22 @@ and npm projects all work.
 ### 4. Hand over the paperwork
 
 - [ ] Copy `docs/ui-components.md` into the customer repository. It is their
-      record of every component they now own, its origin, and its license.
+      record of every component they now own, its origin, and its license — and,
+      in the "Dependency licenses" section, the license of every npm package
+      those components pulled into their `package.json`. Their legal or
+      procurement side will ask for the second table; hand it over unprompted.
+- [ ] Say out loud what that second table is and is not. It resolves the full
+      runtime tree, but from **our** lockfile — they installed a subset of the
+      items, possibly at different versions inside the same caret ranges. It is
+      an upper bound, not their bill of materials. Theirs comes from their own
+      lockfile, after eject, once:
+
+      ```bash
+      npx license-checker --production --summary
+      ```
+
+      Run it *for* them if procurement is asking; it takes a minute and it is
+      the number their legal side will actually accept.
 - [ ] Optional — if they want to extend the kit themselves, copy `registry/` and
       `registry.json` too. Tell them explicitly whether you are doing this; it is
       the difference between "you own these components" and "you own the factory".
