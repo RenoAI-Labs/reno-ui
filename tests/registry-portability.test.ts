@@ -106,3 +106,50 @@ describe("the handover scripts work outside a single-package npm project", () =>
     expect(script).toContain("--include=components.json");
   });
 });
+
+describe("the v3 escape hatch stays honest", () => {
+  /**
+   * Utilities and variants that exist only in Tailwind v4. On v3 they emit
+   * nothing at all — no error, no warning, just a missing declaration.
+   *
+   * reno-ui is v4-only by decision, but docs/tailwind-v4-requirement.md tells a
+   * project still on v3 exactly what it loses by running the primitives anyway.
+   * That promise is worth only as much as its accuracy, so a primitive picking
+   * up a v4-only utility the page does not name has to fail here rather than
+   * surface as an unexplained visual gap in someone's product.
+   */
+  const V4_ONLY = [
+    { name: "outline-hidden", re: /\boutline-hidden\b/g },
+    { name: "shadow-xs", re: /\bshadow-xs\b/g },
+    { name: "rounded-xs", re: /\brounded-xs\b/g },
+    { name: "field-sizing-*", re: /\bfield-sizing-[a-z]+/g },
+    { name: "`**:`", re: /\*\*:/g },
+    // Not used today. Listed so adoption is caught the first time it happens.
+    { name: "bg-linear-*", re: /\bbg-(linear|conic|radial)-/g },
+    { name: "text-shadow-*", re: /\btext-shadow-/g },
+    { name: "inset-shadow-*", re: /\binset-shadow-/g },
+    { name: "container queries", re: /\B@(container|sm:|md:|lg:|xl:)/g },
+    { name: "not-* variant", re: /\bnot-\[/g },
+    { name: "starting:", re: /\bstarting:/g },
+  ];
+
+  function sources(dir: string, out: string[] = []): string[] {
+    for (const entry of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
+      const rel = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) sources(rel, out);
+      else if (/\.tsx?$/.test(entry.name)) out.push(readFileSync(join(ROOT, rel), "utf8"));
+    }
+    return out;
+  }
+
+  it("names every v4-only utility the primitives actually use", () => {
+    const doc = readFileSync(join(ROOT, "docs/tailwind-v4-requirement.md"), "utf8");
+    const code = [...sources("registry/reno/ui"), ...sources("registry/reno/blocks")];
+
+    const undocumented = V4_ONLY.filter(
+      ({ name, re }) => code.some((src) => new RegExp(re.source, "g").test(src)) && !doc.includes(name.replace(/`/g, "")),
+    ).map(({ name }) => name);
+
+    expect(undocumented).toEqual([]);
+  });
+});

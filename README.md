@@ -100,7 +100,15 @@ reno-ui targets modern browsers only, because Tailwind v4 and OKLCH colours do:
 
 Confirm this floor with a client before starting a project on reno-ui.
 
-Runtime: React 19, Tailwind CSS v4. Node 20.19+ to work on this repository.
+Runtime: React 19, **Tailwind CSS v4**. Node 20.19+ to work on this repository.
+
+Tailwind v4 is a hard requirement and there will be no v3 compatibility mode —
+supporting both would mean shipping every token twice, in two colour spaces that
+do not agree. A project on v3 upgrades before adopting reno-ui;
+[docs/tailwind-v4-requirement.md](./docs/tailwind-v4-requirement.md) covers what
+that costs (measured on a real 433-file app), the `@theme inline` mapping that
+lets a project keep its own palette, and an unsupported shim for getting value
+out of the primitives in the meantime.
 
 ## Handover
 

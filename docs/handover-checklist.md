@@ -85,10 +85,11 @@ Check these at kickoff; each one is far more expensive to discover later.
 
 | Check | Why it matters |
 |---|---|
-| **Tailwind v4?** | reno themes ship `--primary: oklch(…)` — a complete colour value. A Tailwind v3 project typically stores HSL triplets and reads them as `hsl(var(--primary))`. Installing a reno theme there yields `hsl(oklch(…))`, which is invalid, and the whole palette dies. There is no shim; v3 means the token layer is unavailable. |
+| **Tailwind v4?** | A hard requirement — see [tailwind-v4-requirement.md](./tailwind-v4-requirement.md), which also measures what the upgrade costs. A v3 project can still run most primitives through the shim documented there, but gets no theme presets and no support. Either way, do not install `@reno/theme-*` into a project that has its own design system: it overwrites `--primary` with an `oklch(…)` value, and every remaining `hsl(var(--primary))` reference then resolves to nothing. Map their tokens with `@theme inline` instead. |
 | **Does `src/components/ui/` already exist?** | reno writes there by default and will overwrite same-named files. Point `aliases.ui` at a separate directory in `components.json` (e.g. `@/components/reno/ui`) before installing anything. |
 | **Conflicting versions of a shared dependency?** | Registry items pin version ranges, so a conflict now surfaces at install time. Check `@tanstack/react-table` in particular: `@reno/data-grid` needs v9, and v9 removed `useReactTable` and `get*RowModel`, so it cannot coexist with v8 code under one specifier. Either migrate that code or alias one version (`"@tanstack/react-table-v9": "npm:@tanstack/react-table@9"`). |
 | **Which colour utilities does their Tailwind config define?** | reno components use `bg-success`, `bg-warning`, `bg-info` and `bg-overlay`. A config without those keys emits no CSS at all for them — the element renders transparent, silently. |
+| **Do they have the `--density-*` scale?** | Every reno control reads its height and padding from ten `--density-*` custom properties rather than a fixed `h-10`. A project that does not declare them gets `height: var(--density-control-height)` with nothing behind it, which collapses to `auto`. Values and the copy-paste block are in [tailwind-v4-requirement.md](./tailwind-v4-requirement.md). |
 | **Their ESLint setup** | Installed files are linted by *their* config. Report anything in shipped source that assumes a plugin they do not have. |
 
 ## After delivery
