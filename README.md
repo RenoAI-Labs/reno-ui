@@ -32,6 +32,27 @@ npx shadcn@latest add @reno/button
 
 The registry is public. There is no token and no authentication.
 
+### If the project already has `src/components/ui/`
+
+Point `aliases.ui` somewhere else first. That is every project that is already
+running, not an edge case, and `shadcn add` overwrites a same-named file without
+asking — installing `@reno/data-grid` alone pulls in `button` and `checkbox`,
+so two of the project's own components go with it.
+
+```json
+{
+  "aliases": { "ui": "@/components/reno/ui" },
+  "registries": { "@reno": "https://ui.reno.ai.vn/r/{name}.json" }
+}
+```
+
+reno components then live beside the project's own instead of on top of them,
+and the two sets can be reconciled a screen at a time. Measured on a real
+project, 11 of 60 existing components shared a name with a reno item.
+
+[docs/handover-checklist.md](./docs/handover-checklist.md) carries the rest of
+the questions worth asking before the first install.
+
 ## Architecture
 
 Three layers, each unaware of the one above it.

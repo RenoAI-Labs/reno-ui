@@ -15,19 +15,28 @@ import { pinnedEdgeClass, pinnedStyle } from "./column-pinning";
  */
 export function DataGridRow<TData extends RowData>({
   row,
+  rowIndex,
   onRowClick,
   style,
 }: {
   row: Row<GridFeatures, TData>;
+  /** 1-based position among all the grid's rows, header rows included. */
+  rowIndex: number;
   onRowClick?: (rowId: string) => void;
   /** Absolute positioning supplied by the virtualizer, absent when not virtualized. */
   style?: React.CSSProperties;
 }) {
-  const { layout, enableColumnPinning } = useDataGridContext();
+  const { layout, enableColumnPinning, enableRowSelection } = useDataGridContext();
 
   return (
     <tr
       data-slot="data-grid-row"
+      // A flex container is not a table row to a browser, so the role is
+      // written out. `data-state` styles the selected row and is invisible to
+      // assistive tech; `aria-selected` is what announces it.
+      role="row"
+      aria-rowindex={rowIndex}
+      aria-selected={enableRowSelection ? row.getIsSelected() : undefined}
       data-state={row.getIsSelected() ? "selected" : undefined}
       onClick={onRowClick ? () => onRowClick(row.id) : undefined}
       style={{ display: "flex", width: "100%", ...style }}
@@ -47,6 +56,7 @@ export function DataGridRow<TData extends RowData>({
           <td
             key={cell.id}
             data-slot="data-grid-cell"
+            role="gridcell"
             style={{
               display: "flex",
               alignItems: "center",

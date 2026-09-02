@@ -31,6 +31,12 @@ export type DataGridContextValue = {
   isLoading: boolean;
   enableColumnResizing: boolean;
   enableColumnPinning: boolean;
+  /**
+   * Whether selection state exists at all. A row reports `aria-selected` only
+   * when it does: on a grid nobody can select, the attribute would announce
+   * every row as "not selected" and invent an affordance that is not there.
+   */
+  enableRowSelection: boolean;
 };
 
 const DataGridContext = React.createContext<DataGridContextValue | null>(null);

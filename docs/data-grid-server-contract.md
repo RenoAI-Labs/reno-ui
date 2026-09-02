@@ -113,6 +113,28 @@ never silently discards the user's column layout.
 This is the part that is usually got wrong, so it is specified rather than left
 to each project.
 
+### The checkbox column is not automatic
+
+`enableRowSelection` defaults to `true`, and on its own it renders nothing.
+It turns the selection *state* on; a column still has to draw the control.
+
+```tsx
+import { DataGrid, selectionColumn } from "@/components/ui/data-grid";
+
+const columns = [selectionColumn<Order>(), ...orderColumns];
+```
+
+Without that first column the grid looks like selection is broken rather than
+absent: no checkboxes, no bulk bar, and no error to explain why. `selectionColumn()`
+is exported from `data-grid` itself, takes the same optional `labels` override as
+the grid, and is worth using rather than hand-rolling — a hand-rolled copy tends
+to lose the indeterminate header state, the `selectAll` / `selectRow` labels, and
+the guard that stops ticking a box from also firing `onRowClick`.
+
+Pass `enableRowSelection={false}` when a screen has no bulk actions. That also
+drops `aria-selected` from every row, so assistive tech stops announcing a
+selection the screen does not offer.
+
 ```ts
 type GridSelection =
   | { mode: "include"; ids: string[] }   // user picked these rows
@@ -141,6 +163,33 @@ result set, not the page they were looking at.
 
 Guard rails worth having: return the affected count for confirmation before
 committing, and cap or queue very large `exclude` operations.
+
+## Accessibility, and where it stops
+
+The grid writes out `role="grid"`, `rowgroup`, `row`, `columnheader` and
+`gridcell` rather than relying on the elements it is built from. It has to: the
+table elements carry `display: grid` and `display: flex` so that pinned columns,
+a sticky header and a virtualized body can share one layout, and a browser drops
+the implicit table semantics of an element whose `display` is not the table value
+it was born with. Measured in Chrome's accessibility tree on the docs demo, the
+grid exposed **no** rows, columns or cells at all before those roles were
+written; it now exposes 26 rows, 5 column headers and 125 cells. `aria-sort` on
+the header only means something once the header is a `columnheader`, so it was
+inert until then too.
+
+Rows carry `aria-rowindex` and the grid `aria-rowcount`, because above the
+virtualize threshold most rows are not in the DOM and position in the markup says
+nothing about position in the page. The count is the current page plus its header
+row — not the server total, which would announce "row 12 of 50,000" on a grid
+whose indices stop at the page size.
+
+**Not implemented: cell-level keyboard navigation.** The ARIA grid pattern expects
+arrow keys to move a focus point between cells with a roving `tabindex`. This grid
+has none — interactive controls inside it (sort buttons, checkboxes, the pin menu)
+are reached by `Tab` in DOM order, and rows are read with a screen reader's own
+table commands. That is enough to perceive and operate the grid, and it is not the
+full pattern. A project under a WCAG 2.1 AA commitment should treat grid keyboard
+navigation as work it still has to scope.
 
 ## Implementation checklist
 

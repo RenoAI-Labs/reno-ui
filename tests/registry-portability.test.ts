@@ -408,3 +408,41 @@ describe("attribution obligations reach NOTICE", () => {
     expect(missing[0]).toContain("taken from the package's own LICENSE file");
   });
 });
+
+describe("the docs name the two things a real install trips over", () => {
+  /**
+   * Both of these cost an afternoon each on the P6a install, and neither was a
+   * code defect — the code did what it says. What was missing was any sentence
+   * telling the person installing what to do, at the moment they were reading.
+   *
+   * Pinned here because prose has no other gate: a rename in the source would
+   * leave the docs quietly describing an API that no longer exists.
+   */
+
+  it("points at selectionColumn wherever it explains row selection", () => {
+    // `enableRowSelection` defaults to true and renders no checkbox on its own.
+    // The first grid anyone builds therefore comes up with selection apparently
+    // broken, and nothing in the UI, the props or the console says why.
+    const grid = readFileSync(join(ROOT, "registry/reno/ui/data-grid.tsx"), "utf8");
+    const exportsIt = /export\s*\{\s*selectionColumn\s*\}/.test(grid);
+    const defaultsOn = /enableRowSelection\s*=\s*true/.test(grid);
+    expect([exportsIt, defaultsOn]).toEqual([true, true]);
+
+    const contract = readFileSync(join(ROOT, "docs/data-grid-server-contract.md"), "utf8");
+    expect(contract).toContain("selectionColumn");
+  });
+
+  it("warns in the README about a project that already has its own ui directory", () => {
+    // The README is what gets read at kickoff; the handover checklist is read at
+    // delivery, which is months too late to choose an install path. Every
+    // project that is already running needs this, and the default install
+    // overwrites same-named files without asking.
+    const installsIntoTheUiAlias = items().some(({ json }) =>
+      (json.files ?? []).some((f: { path: string }) => f.path.startsWith("registry/reno/ui/")),
+    );
+    expect(installsIntoTheUiAlias).toBe(true);
+
+    const readme = readFileSync(join(ROOT, "README.md"), "utf8");
+    expect(readme).toContain("aliases.ui");
+  });
+});

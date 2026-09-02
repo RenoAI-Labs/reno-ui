@@ -56,6 +56,9 @@ export function DataGridHeaderCell<TData extends RowData>({
   return (
     <th
       data-slot="data-grid-header-cell"
+      // Explicit because the header row is a flex container, which costs the
+      // `<th>` its implicit role — and with it the `aria-sort` below.
+      role="columnheader"
       scope="col"
       colSpan={header.colSpan}
       // `aria-sort` is what makes multi-column sort perceivable to a screen

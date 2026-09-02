@@ -173,7 +173,14 @@ export function DataGrid<TData extends RowData>({
 
   return (
     <DataGridProvider
-      value={{ labels, layout, isLoading, enableColumnPinning, enableColumnResizing }}
+      value={{
+        labels,
+        layout,
+        isLoading,
+        enableColumnPinning,
+        enableColumnResizing,
+        enableRowSelection,
+      }}
     >
       <div
         data-slot="data-grid"
@@ -184,16 +191,42 @@ export function DataGrid<TData extends RowData>({
           className="relative overflow-auto"
           style={{ height }}
         >
+          {/*
+            Every table role is written out, and that is not belt-and-braces.
+            The grid lays itself out with `display: grid` / `flex` on the table
+            elements — the only way pinned columns and a virtualized body can
+            share one sticky header — and a browser drops the implicit table
+            semantics of any element whose `display` is not the table value it
+            was born with. So `<table>` becomes a plain group, `<tr>` stops
+            being a row, and `aria-sort` on the header lands on nothing that can
+            carry it. A screen reader then reads the grid as a heap of text with
+            no rows, no columns and no header association.
+          */}
           <table
+            role="grid"
+            /*
+              Rows in the DOM are a window, not the page: above the virtualize
+              threshold most of them do not exist. This is the page, header rows
+              included — not the server total, which would leave a reader hearing
+              "row 12 of 50,000" on a grid whose row indices stop at the page
+              size.
+            */
+            aria-rowcount={headerGroups.length + rows.length}
             className="w-full border-separate border-spacing-0 text-sm"
             style={{ minWidth: totalWidth, display: "grid" }}
           >
             <thead
+              role="rowgroup"
               className="sticky top-0 z-[var(--z-sticky)]"
               style={{ display: "grid" }}
             >
-              {headerGroups.map((headerGroup) => (
-                <tr key={headerGroup.id} style={{ display: "flex", width: "100%" }}>
+              {headerGroups.map((headerGroup, index) => (
+                <tr
+                  key={headerGroup.id}
+                  role="row"
+                  aria-rowindex={index + 1}
+                  style={{ display: "flex", width: "100%" }}
+                >
                   {headerGroup.headers.map((header) => (
                     <DataGridHeaderCell key={header.id} header={header} />
                   ))}
@@ -207,6 +240,9 @@ export function DataGrid<TData extends RowData>({
                 onRowClick={onRowClick}
                 estimatedRowHeight={rowHeight}
                 scrollElement={scrollElement}
+                // Header rows are numbered first, so the body continues the
+                // sequence rather than restarting it.
+                rowIndexOffset={headerGroups.length}
               />
             ) : null}
           </table>

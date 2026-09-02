@@ -48,6 +48,12 @@ type BodyProps<TData extends RowData> = {
    */
   scrollElement: HTMLElement | null;
   virtualizeThreshold?: number;
+  /**
+   * How many rows precede the first data row — the header rows. `aria-rowindex`
+   * counts every row in the grid, header included, so the body cannot start
+   * at 1.
+   */
+  rowIndexOffset: number;
 };
 
 export function DataGridBody<TData extends RowData>({
@@ -55,15 +61,17 @@ export function DataGridBody<TData extends RowData>({
   onRowClick,
   estimatedRowHeight,
   scrollElement,
+  rowIndexOffset,
   virtualizeThreshold = DEFAULT_VIRTUALIZE_THRESHOLD,
 }: BodyProps<TData>) {
   if (rows.length <= virtualizeThreshold) {
     return (
-      <tbody data-slot="data-grid-body" style={{ display: "block" }}>
-        {rows.map((row) => (
+      <tbody role="rowgroup" data-slot="data-grid-body" style={{ display: "block" }}>
+        {rows.map((row, index) => (
           <DataGridRow
             key={row.id}
             row={row}
+            rowIndex={rowIndexOffset + index + 1}
             onRowClick={onRowClick}
             style={{ height: estimatedRowHeight }}
           />
@@ -78,6 +86,7 @@ export function DataGridBody<TData extends RowData>({
       onRowClick={onRowClick}
       estimatedRowHeight={estimatedRowHeight}
       scrollElement={scrollElement}
+      rowIndexOffset={rowIndexOffset}
     />
   );
 }
@@ -87,6 +96,7 @@ function VirtualizedBody<TData extends RowData>({
   onRowClick,
   estimatedRowHeight,
   scrollElement,
+  rowIndexOffset,
 }: Omit<BodyProps<TData>, "virtualizeThreshold">) {
   // TanStack Virtual keeps its window in a mutable instance and signals updates
   // by forcing a re-render; the values it returns are not derived from props or
@@ -116,6 +126,7 @@ function VirtualizedBody<TData extends RowData>({
 
   return (
     <tbody
+      role="rowgroup"
       data-slot="data-grid-body"
       style={{
         display: "block",
@@ -130,6 +141,10 @@ function VirtualizedBody<TData extends RowData>({
           <DataGridRow
             key={row.id}
             row={row}
+            // The virtualizer's own index, not the position in the DOM: only a
+            // window of rows is mounted, and they are absolutely positioned, so
+            // nothing else tells a reader that this is row 4,312.
+            rowIndex={rowIndexOffset + virtualRow.index + 1}
             onRowClick={onRowClick}
             style={{
               position: "absolute",
