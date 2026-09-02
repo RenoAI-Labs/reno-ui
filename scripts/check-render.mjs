@@ -92,6 +92,14 @@ const PAGES = [
   { path: "/components", label: "component index" },
   { path: "/components/data-grid", label: "DataGrid docs (server mode)", minRows: 1 },
   { path: "/components/chart", label: "Chart docs", requireSelector: ".recharts-surface" },
+  // CodeMirror builds its text box in an effect and measures the document to do
+  // it. A wrapper that renders on the server and never mounts leaves an empty
+  // bordered box, which no test in jsdom can tell apart from a working one.
+  {
+    path: "/components/code-editor",
+    label: "CodeEditor docs",
+    requireSelector: ".cm-content",
+  },
   { path: "/perf/data-grid", label: "perf harness (10k rows, virtualized)", minRows: 1 },
   { path: "/theming", label: "theming" },
   { path: "/showcase/all-components", label: "kitchen sink" },

@@ -22,6 +22,7 @@ export const DEMOS: Record<string, ComponentType> = {
   "carousel": dynamic(() => import("@/registry/reno/examples/carousel-demo")),
   "chart": dynamic(() => import("@/registry/reno/examples/chart-demo")),
   "checkbox": dynamic(() => import("@/registry/reno/examples/checkbox-demo")),
+  "code-editor": dynamic(() => import("@/registry/reno/examples/code-editor-demo")),
   "collapsible": dynamic(() => import("@/registry/reno/examples/collapsible-demo")),
   "combobox": dynamic(() => import("@/registry/reno/examples/combobox-demo")),
   "command": dynamic(() => import("@/registry/reno/examples/command-demo")),

@@ -2,9 +2,34 @@
   "$generatedBy": "scripts/sync-dependency-licenses.mjs — run `npm run licenses:sync`, do not edit by hand",
   "$note": "License of each npm package a registry item installs into a customer project. A record of what the licenses say, not a legal opinion.",
   "packages": {
+    "@codemirror/lang-html": {
+      "license": "MIT",
+      "version": "6.4.12",
+      "notice": false
+    },
+    "@codemirror/language": {
+      "license": "MIT",
+      "version": "6.12.4",
+      "notice": false
+    },
+    "@codemirror/state": {
+      "license": "MIT",
+      "version": "6.7.2",
+      "notice": false
+    },
+    "@codemirror/view": {
+      "license": "MIT",
+      "version": "6.43.10",
+      "notice": false
+    },
     "@hookform/resolvers": {
       "license": "MIT",
       "version": "5.9.1",
+      "notice": false
+    },
+    "@lezer/highlight": {
+      "license": "MIT",
+      "version": "1.2.3",
       "notice": false
     },
     "@radix-ui/react-accordion": {
@@ -145,6 +170,11 @@
     "@tanstack/react-virtual": {
       "license": "MIT",
       "version": "3.14.10",
+      "notice": false
+    },
+    "@uiw/react-codemirror": {
+      "license": "MIT",
+      "version": "4.25.11",
       "notice": false
     },
     "class-variance-authority": {

@@ -446,3 +446,21 @@ describe("the docs name the two things a real install trips over", () => {
     expect(readme).toContain("aliases.ui");
   });
 });
+
+describe("the one place a wrapper leaks its upstream is written down", () => {
+  /**
+   * `code-editor` takes `extensions?: unknown[]`, which every other heavy
+   * wrapper in reno deliberately refuses to do — no TanStack type reaches
+   * `DataGrid`'s props, no recharts element reaches `Chart`'s. The exception is
+   * intentional and narrow, and it is worth nothing to a reader who cannot tell
+   * it apart from an oversight.
+   */
+  it("explains the escape hatch while the escape hatch exists", () => {
+    const source = readFileSync(join(ROOT, "registry/reno/ui/code-editor.tsx"), "utf8");
+    expect(/extensions\?:\s*unknown\[\]/.test(source)).toBe(true);
+
+    const doc = readFileSync(join(ROOT, "docs/code-editor.md"), "utf8");
+    expect(doc).toContain("unknown[]");
+    expect(doc).toContain("extensions");
+  });
+});

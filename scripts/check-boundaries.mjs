@@ -53,6 +53,17 @@ const RULES = [
       "`carousel` is a separate registry item so a project with no slider never installs Embla. Same split, same reason, as `chart`/recharts and `table`/TanStack: one primitive reaching for it makes every consumer pay.",
   },
   {
+    dir: "registry/reno/ui",
+    forbid: [
+      { pattern: /^@uiw\/react-codemirror/, why: "CodeMirror belongs to the code-editor item alone" },
+      { pattern: /^@codemirror\//, why: "CodeMirror belongs to the code-editor item alone" },
+      { pattern: /^@lezer\//, why: "the Lezer highlighter arrives with CodeMirror, and stays with it" },
+    ],
+    except: ["registry/reno/ui/code-editor.tsx", "registry/reno/ui/code-editor"],
+    reason:
+      "`code-editor` is a separate registry item so a project with no source field never installs CodeMirror. Same split, same reason, as `chart`/recharts, `carousel`/Embla and `table`/TanStack: one primitive reaching for it makes every consumer pay.",
+  },
+  {
     dir: "registry/reno/ui/data-grid",
     forbid: [/\bnext-intl\b/, /\bi18next\b/, /react-i18next/, /\@lingui\//],
     reason:
