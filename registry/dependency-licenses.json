@@ -172,6 +172,41 @@
       "version": "3.14.10",
       "notice": false
     },
+    "@tiptap/core": {
+      "license": "MIT",
+      "version": "3.31.0",
+      "notice": false
+    },
+    "@tiptap/extension-image": {
+      "license": "MIT",
+      "version": "3.31.0",
+      "notice": false
+    },
+    "@tiptap/extension-text-align": {
+      "license": "MIT",
+      "version": "3.31.0",
+      "notice": false
+    },
+    "@tiptap/extension-youtube": {
+      "license": "MIT",
+      "version": "3.31.0",
+      "notice": false
+    },
+    "@tiptap/pm": {
+      "license": "MIT",
+      "version": "3.31.0",
+      "notice": false
+    },
+    "@tiptap/react": {
+      "license": "MIT",
+      "version": "3.31.0",
+      "notice": false
+    },
+    "@tiptap/starter-kit": {
+      "license": "MIT",
+      "version": "3.31.0",
+      "notice": false
+    },
     "@uiw/react-codemirror": {
       "license": "MIT",
       "version": "4.25.11",

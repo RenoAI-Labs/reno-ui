@@ -116,6 +116,8 @@ Check these at kickoff; each one is far more expensive to discover later.
 | **Which colour utilities does their Tailwind config define?** | reno components use `bg-success`, `bg-warning`, `bg-info` and `bg-overlay`. A config without those keys emits no CSS at all for them — the element renders transparent, silently. |
 | **Do they have the `--density-*` scale?** | Every reno control reads its height and padding from ten `--density-*` custom properties rather than a fixed `h-10`. A project that does not declare them gets `height: var(--density-control-height)` with nothing behind it, which collapses to `auto`. Values and the copy-paste block are in [tailwind-v4-requirement.md](./tailwind-v4-requirement.md). |
 | **Their ESLint setup** | Installed files are linted by *their* config. Report anything in shipped source that assumes a plugin they do not have. |
+| **Do they sanitize HTML on the server?** | Only if `@reno/rich-text` is in scope. What the editor returns is what the author typed, normalised by its schema and nothing more — `javascript:` hrefs included. The schema runs in the browser, so a crafted request skips it entirely. Ask where the sanitizer is *before* the first article is published, not after. See [rich-text-contract.md](./rich-text-contract.md). |
+| **Where do inline images go?** | Also only for `@reno/rich-text`. reno-ui owns no storage: with no `onImageUpload` handler the editor inserts images by URL only, which is a working answer but often not the one the client assumed. The bucket, the credentials, the signing and the quota are the project's, and they are cheaper to decide at kickoff than mid-build. |
 
 ## After delivery
 

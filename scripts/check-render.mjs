@@ -107,6 +107,17 @@ const PAGES = [
     source actually attached: a failed manifest leaves the element there with no
     `src`, which is the failure worth catching.
   */
+  /*
+    TipTap builds its contenteditable in an effect, after a dynamic import of
+    ProseMirror, and renders nothing on the server. A wrapper that fails to
+    mount therefore leaves an empty bordered box — indistinguishable, in jsdom,
+    from a working editor.
+  */
+  {
+    path: "/components/rich-text",
+    label: "RichText docs",
+    requireSelector: "[data-slot=rich-text] .ProseMirror",
+  },
   {
     path: "/components/video-player",
     label: "VideoPlayer docs (local HLS fixture)",

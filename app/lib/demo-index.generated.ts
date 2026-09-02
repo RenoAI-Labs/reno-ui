@@ -47,6 +47,7 @@ export const DEMOS: Record<string, ComponentType> = {
   "progress": dynamic(() => import("@/registry/reno/examples/progress-demo")),
   "radio-group": dynamic(() => import("@/registry/reno/examples/radio-group-demo")),
   "resizable": dynamic(() => import("@/registry/reno/examples/resizable-demo")),
+  "rich-text": dynamic(() => import("@/registry/reno/examples/rich-text-demo")),
   "scroll-area": dynamic(() => import("@/registry/reno/examples/scroll-area-demo")),
   "select": dynamic(() => import("@/registry/reno/examples/select-demo")),
   "separator": dynamic(() => import("@/registry/reno/examples/separator-demo")),

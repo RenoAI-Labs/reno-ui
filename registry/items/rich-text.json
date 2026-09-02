@@ -1,0 +1,61 @@
+{
+  "name": "rich-text",
+  "type": "registry:ui",
+  "title": "RichText",
+  "description": "Trình soạn thảo TipTap kèm toolbar dựng sẵn: 7 nhóm nút (định dạng, tiêu đề, danh sách, căn lề, liên kết, lịch sử, media), đọc/ghi HTML, chèn ảnh theo URL hoặc upload qua onImageUpload, nhúng YouTube. Chỉ cài khi cần — TipTap không lọt vào dự án không dùng.",
+  "dependencies": [
+    "@tiptap/react@^3.31.0",
+    "@tiptap/core@^3.31.0",
+    "@tiptap/pm@^3.31.0",
+    "@tiptap/starter-kit@^3.31.0",
+    "@tiptap/extension-image@^3.31.0",
+    "@tiptap/extension-text-align@^3.31.0",
+    "@tiptap/extension-youtube@^3.31.0",
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button",
+    "@reno/dialog",
+    "@reno/input",
+    "@reno/label",
+    "@reno/separator",
+    "@reno/spinner",
+    "@reno/tabs",
+    "@reno/toggle-group",
+    "@reno/rich-text-value"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/rich-text.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/rich-text/toolbar.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/rich-text/toolbar-group.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/rich-text/link-dialog.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/ui/rich-text/media-dialog.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/reno/hooks/use-rich-text.ts",
+      "type": "registry:hook"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno quanh TipTap v3; shadcn/ui không có rich text editor. Bố cục học từ article-editor.tsx của HASI (đang chạy production) nhưng code lại vì bản đó gắn token và i18n của HASI. Extension Pro (trả phí) không dùng và không được dùng",
+    "added": "2026-09-02",
+    "group": "Form"
+  }
+}

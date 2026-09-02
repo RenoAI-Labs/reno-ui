@@ -65,6 +65,18 @@ const RULES = [
   },
   {
     /*
+      Same shape as the hls.js rule below, and for the same reason: the only
+      file allowed to know TipTap exists is a hook, so the rule is scoped to
+      `registry/reno` rather than to `ui/`.
+    */
+    dir: "registry/reno",
+    forbid: [{ pattern: /^@tiptap\//, why: "TipTap belongs to use-rich-text.ts alone" }],
+    except: ["registry/reno/hooks/use-rich-text.ts"],
+    reason:
+      "`use-rich-text.ts` is the only file that may know TipTap exists. A project with no editor installs no TipTap, and a TipTap major bump stays a change in one file instead of a breaking change on the props of every consuming project — which is why `rich-text-value.ts` may not import it even as a type. It is also where the ban on the paid Extension Pro packages is enforceable.",
+  },
+  {
+    /*
       `registry/reno`, not `registry/reno/ui`: the one file allowed to touch
       hls.js is a hook, and a rule scoped to `ui/` would have let the player,
       the public types or any other hook import it freely.

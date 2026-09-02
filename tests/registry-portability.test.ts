@@ -547,3 +547,47 @@ describe("the boundary between the video primitive and a course block is written
     expect(doc).toContain("NOTICE");
   });
 });
+
+describe("the rich text editor's scope stays where it was agreed", () => {
+  /**
+   * A rich text editor is the component in a library most likely to grow
+   * without end, because every screen wants one more button. The plan fixed the
+   * ceiling at seven toolbar groups, drawn from what an editor already running
+   * in production actually uses, and named what is out: tables, footnotes,
+   * mentions, collaborative editing.
+   *
+   * That decision is worth nothing as prose. Read from the source instead, so
+   * an eighth group has to come past this test — which is the point.
+   */
+  const source = () =>
+    readFileSync(join(ROOT, "registry/reno/lib/rich-text-value.ts"), "utf8");
+
+  function toolbarGroups(): string[] {
+    const declaration = /export type ToolbarGroup\s*=([^;]+);/.exec(source());
+    expect(declaration).not.toBeNull();
+    return [...declaration![1].matchAll(/"([a-z-]+)"/g)].map((m) => m[1]);
+  }
+
+  it("names exactly the seven groups that were agreed", () => {
+    expect(toolbarGroups().sort()).toEqual(
+      ["align", "format", "heading", "history", "link", "list", "media"].sort(),
+    );
+  });
+
+  /*
+    There is deliberately no test here for the *default* group list. The
+    rendered toolbar is asserted in tests/rich-text.test.tsx, and a second check
+    reading the constant would mean one mistake lighting up two failures without
+    covering anything the first does not.
+  */
+
+  it("keeps the excluded features named, so exclusion is a decision and not an oversight", () => {
+    const doc = readFileSync(join(ROOT, "docs/rich-text-contract.md"), "utf8");
+    for (const excluded of ["table", "footnote", "mention", "collaborative"]) {
+      expect(doc.toLowerCase()).toContain(excluded);
+    }
+    // The paid extension set, which the license gate would catch only after it
+    // had already reached somebody's product.
+    expect(doc).toContain("Pro");
+  });
+});
