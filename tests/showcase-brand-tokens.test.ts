@@ -70,9 +70,11 @@ describe("the secondary pair is produced, not read back", () => {
     // A secondary button is a surface: light on light, dark on dark.
     expect(lightnessOf(light.get("--secondary")!)).toBeGreaterThan(0.9);
     expect(lightnessOf(dark.get("--secondary")!)).toBeLessThan(0.35);
-    // And its text has to go the other way, or the button is unreadable.
-    expect(lightnessOf(light.get("--secondary-foreground")!)).toBeLessThan(0.35);
-    expect(lightnessOf(dark.get("--secondary-foreground")!)).toBeGreaterThan(0.9);
+    // Whether the label on that surface is readable used to be asserted here as
+    // a lightness threshold on `--secondary-foreground`. That was a proxy for
+    // contrast, and `tests/brand-contrast.test.ts` now measures the real ratio
+    // across every hue the panel accepts. Two tests answering one question mean
+    // one regression reddens both and neither name says what broke.
   });
 
   it("keeps a vivid brand colour from turning a surface vivid", () => {
