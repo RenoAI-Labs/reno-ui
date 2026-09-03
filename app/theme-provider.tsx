@@ -7,7 +7,13 @@ export type PresetName = (typeof PRESET_NAMES)[number];
 export type ColorMode = "light" | "dark";
 
 const STORAGE_KEY = "reno-ui-docs-theme";
-const DEFAULT_PRESET: PresetName = "admin";
+/*
+  CMS, because the showcase now opens on the brand panel rather than on a row of
+  domain buttons, and CMS is the preset closest to "a brand" — content-first,
+  generous spacing, an accent that is nobody's default blue. Every preset is
+  still one dropdown away.
+*/
+const DEFAULT_PRESET: PresetName = "cms";
 const DEFAULT_MODE: ColorMode = "light";
 
 /**

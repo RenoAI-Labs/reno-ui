@@ -4,12 +4,12 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { ThemeSwitcher } from "@/app/theme-switcher";
-import { ShowcaseBrandPicker } from "./showcase-brand-picker";
+import { ModeToggle } from "@/app/theme-switcher";
+import { ShowcaseBrandPanel } from "./showcase-brand-panel";
 
 /**
  * Sticky header for showcase pages that have no application sidebar of their
- * own. Carries the same two theming controls as the dashboard topbar, because a
+ * own. Carries the same theming controls as the dashboard topbar, because a
  * page you cannot re-theme is useless for visual review.
  */
 export function ShowcasePageHeader({
@@ -39,8 +39,8 @@ export function ShowcasePageHeader({
         </div>
 
         <div className="ms-auto flex flex-wrap items-center gap-2">
-          <ThemeSwitcher />
-          <ShowcaseBrandPicker />
+          <ModeToggle />
+          <ShowcaseBrandPanel />
         </div>
       </div>
     </header>

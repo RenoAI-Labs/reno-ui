@@ -92,8 +92,12 @@ export const STATUS_HUES = {
 /**
  * Density presets. These drive `--density-*` tokens, which is what makes an ERP
  * screen fit more rows than an e-learning screen without any component change.
+ *
+ * Exported for the same reason `buildRamp` is: the showcase's brand panel lets
+ * you switch density live, and a second copy of these numbers there would let
+ * the panel preview a spacing scale the build cannot produce.
  */
-const DENSITY = {
+export const DENSITY = {
   compact: {
     controlHeightSm: "1.5rem",
     controlHeight: "1.75rem",

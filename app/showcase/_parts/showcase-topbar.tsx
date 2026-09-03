@@ -19,13 +19,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { ThemeSwitcher } from "@/app/theme-switcher";
-import { ShowcaseBrandPicker } from "./showcase-brand-picker";
+import { ModeToggle } from "@/app/theme-switcher";
+import { ShowcaseBrandPanel } from "./showcase-brand-panel";
 
 /**
  * Sticky application header: breadcrumb, primary actions, and the two controls
- * this page exists to demonstrate — preset/mode switching and the runtime brand
- * colour picker.
+ * this page exists to demonstrate — light/dark, and the brand panel.
+ *
+ * The preset row that used to sit here has moved inside the panel. A project
+ * does not arrive wanting "the CMS theme"; it arrives with a brand colour and a
+ * spacing preference, and one control that starts from a preset and lets you
+ * tune it says that better than four buttons named after our own domains.
  */
 export function ShowcaseTopbar({ title }: { title: string }) {
   return (
@@ -58,8 +62,8 @@ export function ShowcaseTopbar({ title }: { title: string }) {
       </Breadcrumb>
 
       <div className="ms-auto flex flex-wrap items-center gap-2">
-        <ThemeSwitcher />
-        <ShowcaseBrandPicker />
+        <ModeToggle />
+        <ShowcaseBrandPanel />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
