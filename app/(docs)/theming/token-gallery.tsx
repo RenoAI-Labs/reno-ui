@@ -23,7 +23,7 @@ const DENSITY_TOKENS = [
 
 /**
  * Static gallery — no client state. Every swatch reads a CSS variable, so the
- * whole thing re-themes from the [data-preset] attribute alone. That is the
+ * whole thing re-themes from the custom properties alone. That is the
  * mechanism a consuming project gets, demonstrated rather than described.
  */
 export function TokenGallery() {

@@ -28,7 +28,7 @@ export default function HomePage() {
             <Link href="/components">Xem component</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/theming">Thử theme preset</Link>
+            <Link href="/theming">Xem tầng token</Link>
           </Button>
         </div>
       </section>
@@ -41,12 +41,12 @@ export default function HomePage() {
         </p>
         <CodeBlock code={CONSUMER_CONFIG} />
         <p className="text-sm text-muted-foreground">Rồi cài bất kỳ item nào:</p>
-        <CodeBlock code={"npx shadcn@latest add @reno/theme-admin\nnpx shadcn@latest add @reno/button"} />
+        <CodeBlock code={"npx shadcn@latest add @reno/theme-base\nnpx shadcn@latest add @reno/button"} />
       </section>
 
       <section className="grid gap-4 sm:grid-cols-3">
         <Stat label="Primitive" value={String(UI_ITEMS.length)} />
-        <Stat label="Theme preset" value={String(THEME_ITEMS.length)} />
+        <Stat label="Theme" value={String(THEME_ITEMS.length)} />
         <Stat label="Runtime dependency" value="0" />
       </section>
     </div>

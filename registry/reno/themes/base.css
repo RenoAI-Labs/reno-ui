@@ -3,7 +3,7 @@
  * Source: registry/reno/themes/theme-presets.config.mjs
  * Regenerate: npm run theme:generate
  *
- * Theme Base — Neutral fallback theme. Declares every semantic token reno components read. Installed automatically as a dependency of every preset.
+ * Theme Base — The reno theme. Declares every semantic token reno components read, in OKLCH, with a solved light and dark mode.
  *
  * This file is the human-readable preview used by the docs site and by
  * scripts/check-contrast.mjs. The artifact actually SHIPPED to consuming

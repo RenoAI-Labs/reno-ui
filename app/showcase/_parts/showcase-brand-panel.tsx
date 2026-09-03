@@ -15,9 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { PRESETS } from "@/registry/reno/themes/theme-presets.config.mjs";
-import { PRESET_LABELS } from "@/app/theme-switcher";
-import { PRESET_NAMES, useTheme, type PresetName } from "@/app/theme-provider";
+import { BASE_PRESET } from "@/registry/reno/themes/theme-presets.config.mjs";
+import { useTheme } from "@/app/theme-provider";
 
 import {
   BRAND_VAR_NAMES,
@@ -39,21 +38,23 @@ import {
 } from "./showcase-brand-tokens";
 
 /**
- * Configure a brand, rather than pick one of our domains.
+ * Configure a brand.
  *
- * This replaces the preset row that used to sit in the topbar. The four presets
- * are still here — as starting points inside the panel — because they are what
- * the registry ships and because `check:render` sweeps all four. What changed is
- * the framing: a project does not arrive wanting "the CMS theme", it arrives
- * with a brand colour and a spacing preference, and this is the control that
- * answers that.
+ * reno ships one theme. This is how a project makes it theirs: a brand colour,
+ * a secondary, a corner radius and a spacing step — the four things the theme is
+ * built from — applied live, measured for contrast, and copyable as the CSS to
+ * paste into their own `globals.css`.
  *
- * Every knob is one the build already has: the brand ramp comes from the same
- * `buildRamp`, the spacing from the same four `DENSITY` steps. Nothing here can
- * preview a value `npm run theme:generate` could not produce — with one stated
- * exception, the secondary pair, which the build solves for contrast and this
- * can only approximate. That is why the contrast is measured and shown rather
- * than asserted.
+ * It replaced a row of four buttons named after our own domains. Those asked a
+ * visitor to pick one of ours; this asks what their brand is. The knobs are the
+ * same ones the presets encoded, so nothing was lost but the four names.
+ *
+ * Every value derives from `theme-presets.config.mjs` — the ramp from the same
+ * `buildRamp` the build script uses, the spacing from the same `DENSITY` steps.
+ * Nothing here can preview a value `npm run theme:generate` could not produce,
+ * with one stated exception: the secondary pair, which the build solves for
+ * contrast and this can only approximate. That is why both ratios are measured
+ * and shown rather than asserted.
  */
 
 /** Contrast floors. Same numbers as `CONTRAST` in the theme config. */
@@ -66,12 +67,22 @@ const DENSITY_LABELS: Record<DensityStep, string> = {
   roomy: "Rộng",
 };
 
+/**
+ * Named by size, not by shape.
+ *
+ * An earlier draft called `0rem` "Vuông", which is a promise the token scale
+ * cannot keep: `Card` uses `rounded-xl`, which is `calc(var(--radius) + 4px)`,
+ * so at zero a card still has 4px corners while a button reaches 0. That offset
+ * scale is the shadcn convention and not worth breaking — but the label was
+ * telling people to expect square and then not delivering it, which is why they
+ * read the control as broken.
+ */
 const RADIUS_LABELS: Record<RadiusChoice, string> = {
-  "0rem": "Vuông",
+  "0rem": "Nhỏ nhất",
   "0.25rem": "Nhỏ",
   "0.5rem": "Vừa",
   "0.75rem": "Lớn",
-  "1rem": "Tròn",
+  "1rem": "Rất lớn",
 };
 
 /** Everything the panel can override, so a reset can clear all of it. */
@@ -92,22 +103,17 @@ type BrandSettings = {
 const EMPTY: BrandSettings = { brand: null, secondary: null, density: null, radius: null };
 
 export function ShowcaseBrandPanel() {
-  const { preset, mode, setPreset } = useTheme();
+  const { mode } = useTheme();
 
   /*
-    Settings belong to the preset they were dialled under, and switching preset
-    drops them by derivation rather than by an effect that resets state.
-    Otherwise the previous starting point's brand hue would survive and hide the
-    very thing choosing a new starting point is supposed to show.
+    Plain state now. It used to be scoped to the preset it was dialled under, so
+    that switching preset dropped the overrides by derivation — there is no
+    preset to switch, so there is nothing to scope it to.
   */
-  const [tuned, setTuned] = React.useState<{ preset: PresetName; settings: BrandSettings }>({
-    preset,
-    settings: EMPTY,
-  });
-  const settings = tuned.preset === preset ? tuned.settings : EMPTY;
+  const [settings, setSettings] = React.useState<BrandSettings>(EMPTY);
 
   const update = (patch: Partial<BrandSettings>) =>
-    setTuned({ preset, settings: { ...settings, ...patch } });
+    setSettings((current) => ({ ...current, ...patch }));
 
   const [copied, setCopied] = React.useState(false);
   const [contrast, setContrast] = React.useState<{ primary: number | null; secondary: number | null }>(
@@ -168,11 +174,7 @@ export function ShowcaseBrandPanel() {
     });
   }, [overrides]);
 
-  const currentPreset = PRESETS.find((p) => p.name === preset);
-  const activeDensity =
-    settings.density ??
-    (currentPreset ? presetDensityStep(currentPreset.density) : null) ??
-    "normal";
+  const activeDensity = settings.density ?? presetDensityStep(BASE_PRESET.density) ?? "normal";
 
   const cssBlock = toCssBlock(overrides);
   const failing =
@@ -212,27 +214,10 @@ export function ShowcaseBrandPanel() {
             </p>
           </div>
 
-          <Field label="Điểm khởi đầu" htmlFor="brand-preset">
-            <Select value={preset} onValueChange={(next) => setPreset(next as PresetName)}>
-              <SelectTrigger id="brand-preset" size="sm" className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {PRESET_NAMES.map((name) => (
-                  <SelectItem key={name} value={name}>
-                    {PRESET_LABELS[name]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </Field>
-
-          <Separator />
-
           <Field label="Màu chính" htmlFor="brand-primary">
             <ColorInput
               id="brand-primary"
-              value={settings.brand ?? (currentPreset ? brandHex(currentPreset.brand) : "")}
+              value={settings.brand ?? brandHex(BASE_PRESET.brand)}
               onChange={(hex) => update({ brand: hex })}
             />
           </Field>
@@ -240,16 +225,14 @@ export function ShowcaseBrandPanel() {
           <Field label="Màu phụ" htmlFor="brand-secondary">
             <ColorInput
               id="brand-secondary"
-              value={
-                settings.secondary ?? (currentPreset ? brandHex(currentPreset.neutral) : "")
-              }
+              value={settings.secondary ?? brandHex(BASE_PRESET.neutral)}
               onChange={(hex) => update({ secondary: hex })}
             />
           </Field>
 
           <Field label="Bo góc" htmlFor="brand-radius">
             <Select
-              value={settings.radius ?? currentPreset?.radius ?? "0.5rem"}
+              value={settings.radius ?? BASE_PRESET.radius}
               onValueChange={(next) => update({ radius: next as RadiusChoice })}
             >
               <SelectTrigger id="brand-radius" size="sm" className="w-full">
@@ -323,7 +306,7 @@ export function ShowcaseBrandPanel() {
               variant="ghost"
               size="sm"
               disabled={cssBlock.length === 0}
-              onClick={() => setTuned({ preset, settings: EMPTY })}
+              onClick={() => setSettings(EMPTY)}
             >
               <RotateCcwIcon />
               Đặt lại

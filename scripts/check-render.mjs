@@ -42,8 +42,10 @@ const args = process.argv.slice(2);
 const baseIndex = args.indexOf("--base");
 const BASE = baseIndex === -1 ? "http://127.0.0.1:3000" : args[baseIndex + 1];
 
-const PRESETS = ["elearning", "admin", "erp", "cms"];
 const MODES = ["light", "dark"];
+
+/** How long to let the client finish rendering before believing a zero. */
+const HYDRATION_TIMEOUT_MS = 10_000;
 const STORAGE_KEY = "reno-ui-docs-theme";
 
 const DESKTOP = { width: 1440, height: 900 };
@@ -176,6 +178,37 @@ async function checkPage(context, spec, errors) {
     return;
   }
 
+  /*
+    Wait for what the page promised before measuring it.
+
+    `networkidle` means the requests stopped, not that React hydrated — and
+    every grid on this site renders its rows on the client. Measuring straight
+    after the navigation therefore passes on a warm server and fails on a cold
+    one, which is what happened the first time this ran against a
+    just-restarted `next start`: two grids reported zero rows and both were
+    fine on the retry. A gate that fails for reasons unrelated to the code is
+    worse than no gate, and CI always starts cold.
+
+    The wait is bounded, so a grid that genuinely renders nothing still fails —
+    it just fails after the timeout instead of immediately.
+  */
+  if (spec.minRows) {
+    await page
+      .waitForFunction(
+        (min) =>
+          document.querySelectorAll("[data-slot=data-grid] tbody tr").length >= min,
+        spec.minRows,
+        { timeout: HYDRATION_TIMEOUT_MS },
+      )
+      .catch(() => {});
+  }
+
+  if (spec.requireSelector) {
+    await page
+      .waitForSelector(spec.requireSelector, { timeout: HYDRATION_TIMEOUT_MS })
+      .catch(() => {});
+  }
+
   const metrics = await measure(page);
   checkOverflow(spec.path, metrics, errors);
 
@@ -199,10 +232,19 @@ async function checkPage(context, spec, errors) {
 }
 
 /**
- * The showcase across every preset and colour mode.
+ * The showcase in both colour modes.
  *
  * This is the sweep a person would do by hand and never actually does. It is
- * cheap here because the theme lives in localStorage and one reload applies it.
+ * cheap here because the mode lives in localStorage and one reload applies it.
+ *
+ * It used to run over four theme presets as well, and the comment here recorded
+ * that a virtualizer bug had reproduced under exactly one of them, because of
+ * its row height. The presets are gone (2026-09-03), and with them that
+ * coverage: the sweep no longer varies row height at all. The replacement — a
+ * sweep over the four density steps, which is the variable that actually caught
+ * that bug — was offered and declined, so this is a known, accepted gap rather
+ * than an oversight. If a virtualizer regression ever slips through again, this
+ * is where it slipped.
  */
 async function checkShowcase(context, viewport, errors) {
   const page = await context.newPage();
@@ -213,23 +255,29 @@ async function checkShowcase(context, viewport, errors) {
   // First load establishes the origin so localStorage can be written.
   await page.goto(`${BASE}/showcase`, { waitUntil: "networkidle" });
 
-  for (const preset of PRESETS) {
-    for (const mode of MODES) {
-      await page.evaluate(
-        ([key, value]) => localStorage.setItem(key, value),
-        [STORAGE_KEY, JSON.stringify({ preset, mode })],
-      );
-      await page.reload({ waitUntil: "networkidle" });
+  for (const mode of MODES) {
+    await page.evaluate(
+      ([key, value]) => localStorage.setItem(key, value),
+      [STORAGE_KEY, JSON.stringify({ mode })],
+    );
+    await page.reload({ waitUntil: "networkidle" });
+    // Same hydration race as `checkPage`: the grid's rows arrive on the client.
+    await page
+      .waitForFunction(
+        () => document.querySelectorAll("[data-slot=data-grid] tbody tr").length > 0,
+        undefined,
+        { timeout: HYDRATION_TIMEOUT_MS },
+      )
+      .catch(() => {});
 
-      const where = `/showcase [${preset}/${mode} @ ${viewport.width}px]`;
-      const metrics = await measure(page);
-      checkOverflow(where, metrics, errors);
+    const where = `/showcase [${mode} @ ${viewport.width}px]`;
+    const metrics = await measure(page);
+    checkOverflow(where, metrics, errors);
 
-      if (metrics.rows === 0) {
-        errors.push(`${where}: the people grid rendered no rows.`);
-      }
-      console.log(`  ✓ ${where} — ${metrics.rows} grid row(s)`);
+    if (metrics.rows === 0) {
+      errors.push(`${where}: the people grid rendered no rows.`);
     }
+    console.log(`  ✓ ${where} — ${metrics.rows} grid row(s)`);
   }
 
   for (const message of consoleErrors) errors.push(`/showcase: ${message}`);

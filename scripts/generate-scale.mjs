@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Generates `registry/reno/themes/*.css` from `theme-presets.config.mjs`.
+ * Generates `registry/reno/themes/base.css` from `theme-presets.config.mjs`.
  *
  * Two jobs:
  *   1. Build the OKLCH primitive ramps (`--reno-brand-50` .. `--reno-neutral-950`).
@@ -27,7 +27,6 @@ import { formatCss, oklch, wcagContrast } from "culori";
 import {
   BASE_PRESET,
   CONTRAST,
-  PRESETS,
   RAMP_STOPS,
   ANIMATION_CSS,
   ANIMATION_THEME_TOKENS,
@@ -437,8 +436,7 @@ function block(selector, entries, indent = "  ") {
   return `${selector} {\n${body}\n}`;
 }
 
-function renderPreset(preset) {
-  const isBase = preset.name === BASE_PRESET.name;
+function renderTheme(preset) {
   const ramps = buildRamps(preset);
   const primitives = buildPrimitives(preset, ramps);
   const shape = buildShapeTokens(preset);
@@ -463,51 +461,14 @@ function renderPreset(preset) {
  */
 `;
 
-  // Only theme-base ships the `@theme` mapping and the animation utilities.
-  // Presets are pure value overrides — re-emitting either in each of them would
-  // give a consuming project four identical copies to keep in sync.
-  const themeSection = isBase ? `\n${block("@theme inline", buildThemeBlock())}\n` : "";
-  const animationSection = isBase ? `\n${renderCssRules(ANIMATION_CSS)}\n` : "";
+  const themeSection = `\n${block("@theme inline", buildThemeBlock())}\n`;
+  const animationSection = `\n${renderCssRules(ANIMATION_CSS)}\n`;
 
   return `${header}${themeSection}
 ${block(":root", lightAll)}
 
 ${block(".dark", darkAll)}
 ${animationSection}`;
-}
-
-/**
- * Docs-site-only stylesheet.
- *
- * The shipped presets target `:root` / `.dark`, so only one can be active in a
- * real app. The docs theme switcher has to render all four side by side, so the
- * same token values are re-emitted under `[data-preset="..."]`. Generated from
- * the same source as the shipped CSS — never hand-maintained — so the switcher
- * can't show a palette that differs from what a project would install.
- */
-function renderDocsPresets() {
-  const sections = PRESETS.map((preset) => {
-    const ramps = buildRamps(preset);
-    const primitives = buildPrimitives(preset, ramps);
-    const shape = buildShapeTokens(preset);
-    const light = new Map([...primitives, ...shape, ...buildMode(preset, "light", ramps)]);
-    const dark = new Map([...primitives, ...shape, ...buildMode(preset, "dark", ramps)]);
-    const sel = `[data-preset="${preset.name}"]`;
-    return `/* ${preset.title} */\n${block(sel, light)}\n\n${block(`${sel}.dark`, dark)}`;
-  });
-
-  return `/**
- * GENERATED FILE — do not edit.
- * Source: registry/reno/themes/theme-presets.config.mjs
- * Regenerate: npm run theme:generate
- *
- * Docs site only. Not part of the registry and never installed into a project.
- * Scopes every preset to a [data-preset] attribute so the theming page can
- * switch between all four at runtime.
- */
-
-${sections.join("\n\n")}
-`;
 }
 
 function main() {
@@ -530,12 +491,18 @@ function main() {
   const check = args.includes("--check");
   const stale = [];
 
+  /*
+    One file. There used to be five, plus a docs-only stylesheet that re-emitted
+    every preset under `[data-preset="..."]` so the switcher could show them side
+    by side. The four domain presets are gone and so is that file — nothing
+    switches theme at runtime any more, and the brand panel overrides custom
+    properties on `<html>` instead.
+  */
   const outputs = [
-    ...[BASE_PRESET, ...PRESETS].map((preset) => ({
-      relPath: `registry/reno/themes/${preset.name}.css`,
-      content: renderPreset(preset),
-    })),
-    { relPath: "app/theme-presets.generated.css", content: renderDocsPresets() },
+    {
+      relPath: `registry/reno/themes/${BASE_PRESET.name}.css`,
+      content: renderTheme(BASE_PRESET),
+    },
   ];
 
   for (const { relPath, content } of outputs) {

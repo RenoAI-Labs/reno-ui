@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  PRESETS,
+  BASE_PRESET,
   RAMP_STOPS,
   buildRamp,
   css,
@@ -19,22 +19,18 @@ import { parseThemeCss } from "../scripts/lib/parse-theme-css.mjs";
  * fails if either side drifts, not just the one a snapshot happened to capture.
  */
 describe("brand ramp", () => {
-  it.each(PRESETS.map((preset) => preset.name))(
-    "reproduces every --reno-brand stop shipped by the %s preset",
-    (name) => {
-      const preset = PRESETS.find((p) => p.name === name)!;
-      // The parser is plain JS shared with the build scripts; name its shape here.
-      const { light } = parseThemeCss(`registry/reno/themes/${name}.css`) as {
-        light: Map<string, string>;
-      };
-      const ramp = buildRamp(preset.brand);
+  it("reproduces every --reno-brand stop shipped by the theme", () => {
+    // The parser is plain JS shared with the build scripts; name its shape here.
+    const { light } = parseThemeCss("registry/reno/themes/base.css") as {
+      light: Map<string, string>;
+    };
+    const ramp = buildRamp(BASE_PRESET.brand);
 
-      expect(ramp).toHaveLength(RAMP_STOPS.length);
-      for (const { stop, color } of ramp) {
-        expect(css(color)).toBe(light.get(`reno-brand-${stop}`));
-      }
-    },
-  );
+    expect(ramp).toHaveLength(RAMP_STOPS.length);
+    for (const { stop, color } of ramp) {
+      expect(css(color)).toBe(light.get(`reno-brand-${stop}`));
+    }
+  });
 
   it("keeps lightness monotonically decreasing from 50 to 950", () => {
     const ramp = buildRamp({ h: 250, c: 0.13 });

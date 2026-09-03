@@ -3,22 +3,16 @@
 import { Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { PRESET_NAMES, useTheme, type PresetName } from "@/app/theme-provider";
-
-
-export const PRESET_LABELS: Record<PresetName, string> = {
-  elearning: "E-learning",
-  admin: "Admin",
-  erp: "ERP",
-  cms: "CMS",
-};
+import { useTheme } from "@/app/theme-provider";
 
 /**
- * Light/dark on its own.
+ * Light or dark.
  *
- * Split out because the showcase needs the mode toggle without the preset row:
- * there, choosing a theme happens inside the brand panel, where a preset is one
- * starting point among the knobs rather than the only way to change anything.
+ * This file used to hold a preset row as well — four buttons named after our
+ * own domains. They are gone (2026-09-03): reno ships one theme, and branding
+ * it is what the showcase's brand panel is for. Flipping the colour mode stays,
+ * because it is the check that catches a component which hardcoded a colour —
+ * that component stops matching here first.
  */
 export function ModeToggle() {
   const { mode, setMode } = useTheme();
@@ -32,45 +26,5 @@ export function ModeToggle() {
     >
       {mode === "dark" ? <Moon /> : <Sun />}
     </Button>
-  );
-}
-
-/** Preset row on its own, for the docs pages. */
-export function PresetSwitcher() {
-  const { preset, setPreset } = useTheme();
-
-  return (
-    <div
-      role="radiogroup"
-      aria-label="Theme preset"
-      className="flex items-center gap-1 rounded-lg border border-border bg-card p-1"
-    >
-      {PRESET_NAMES.map((name) => (
-        <Button
-          key={name}
-          role="radio"
-          aria-checked={preset === name}
-          size="sm"
-          variant={preset === name ? "default" : "ghost"}
-          onClick={() => setPreset(name)}
-        >
-          {PRESET_LABELS[name]}
-        </Button>
-      ))}
-    </div>
-  );
-}
-
-/**
- * The daily driver for building components: flip preset and colour mode and see
- * every demo on the page re-theme. If a component hardcodes a colour or a fixed
- * height, it stops matching here first.
- */
-export function ThemeSwitcher() {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <PresetSwitcher />
-      <ModeToggle />
-    </div>
   );
 }

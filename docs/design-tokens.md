@@ -8,15 +8,15 @@ the rules here are enforced by lint and CI rather than left to discipline.
 
 ```
 PRIMITIVE   --reno-brand-500, --reno-neutral-100, --reno-destructive-700
-            Raw values. Defined only in theme presets.
+            Raw values. Defined only in the theme.
                 │
-                ▼  mapped by the preset
+                ▼  mapped by the theme
 SEMANTIC    --primary, --background, --muted-foreground, --border, --radius
             Roles. This is the ONLY tier components may read.
 ```
 
-Why the split matters: switching preset means remapping semantic → primitive. If
-a component read `--reno-blue-500` directly, an ERP preset that wants green
+Why the split matters: rebranding means remapping semantic → primitive. If
+a component read `--reno-blue-500` directly, a brand that wants green
 would have to edit the component. That single mistake destroys the multi-domain
 property, which is the entire point of the library.
 
@@ -55,7 +55,7 @@ reno additions beyond shadcn:
 
 ## Density tokens
 
-Colour is the obvious difference between presets. Density is the one that
+Colour is the obvious thing a brand changes. Density is the one that
 actually matters for ERP.
 
 | Token | Purpose |
@@ -73,7 +73,7 @@ actually matters for ERP.
 Anything with a height reads a density token. Never `h-10`.
 
 ```tsx
-// Correct — adapts per preset
+// Correct — adapts with the density scale
 className="h-[var(--density-control-height)] px-[var(--density-control-px)]"
 
 // Wrong — identical in ERP and e-learning
@@ -83,19 +83,47 @@ className="h-10 px-4"
 Concretely, `--density-row-height` is `2rem` under ERP and `3.25rem` under
 e-learning: roughly 60% more rows on the same screen, from a value change.
 
-## Presets
+## One theme, and how to brand it
 
-| Preset | Brand hue | Radius | Density |
-|---|---|---|---|
-| `elearning` | warm amber | 0.75rem | roomy |
-| `admin` | blue | 0.5rem | normal |
-| `erp` | teal-green | 0.25rem | compact |
-| `cms` | violet | 0.5rem | comfortable |
+reno-ui ships a single theme, `@reno/theme-base`:
 
-`theme-base` is a neutral fallback carrying the complete token set plus the
-Tailwind mapping layer. Every preset depends on it, so installing a preset pulls
-it automatically. A project that installs only `theme-base` still renders
-correctly.
+| | Value |
+|---|---|
+| Brand hue | 250 (blue), chroma 0.13 |
+| Neutral hue | 250, chroma 0.004 |
+| Radius | `0.5rem` |
+| Density | normal |
+
+Four domain presets shipped until 2026-09-03 — elearning, admin, erp, cms. They
+were removed on purpose: naming a theme after one of our own domains asks a
+project to pick one of ours, when a project arrives with a brand colour and an
+opinion about spacing instead. Everything those presets encoded was a hue, a
+radius and a density step, and all three are settings now.
+
+Branding is overriding primitives in your own `globals.css`, after the theme
+import:
+
+```css
+:root {
+  --reno-brand-500: oklch(0.637 0.174 38.4);
+  /* …the other ten stops… */
+  --radius: 0.25rem;
+  --density-row-height: 2rem;
+}
+```
+
+The **Thương hiệu** panel on [the showcase](https://ui.reno.ai.vn/showcase)
+generates exactly that block: it builds the ramp with the same `buildRamp` the
+build script uses, applies it live, measures the resulting WCAG contrast, and
+warns when a pick falls below AA. Copying from there beats hand-writing eleven
+OKLCH stops.
+
+What that block cannot do is re-solve the semantic layer. `--secondary`,
+`--muted`, `--border` and the rest are literals that `generate-scale.mjs` solved
+for contrast, so a brand far from the default will want those regenerated rather
+than overridden — edit `theme-presets.config.mjs` and run
+`npm run theme:generate`.
+
 
 ## How a theme reaches your project
 
@@ -120,12 +148,12 @@ two disagree — one source of truth, two representations.
 pair it *solves* for a lightness that clears the WCAG threshold, rather than
 picking a value that looks about right.
 
-Four presets × two modes × ~45 semantic tokens is well past the point where
+Two modes × ~45 semantic tokens is past the point where
 hand-picked OKLCH values stay accessible. `scripts/check-contrast.mjs` then
 re-derives the ratios from the emitted CSS independently, so a bug in the solver
 fails CI instead of shipping.
 
-To retune a preset, edit the hue, chroma and density numbers in the config and
+To retune the theme, edit the hue, chroma and density numbers in the config and
 run `npm run theme:generate`. Never edit the generated CSS.
 
 ### Contrast thresholds

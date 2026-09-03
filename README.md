@@ -23,10 +23,10 @@ Add the `@reno` namespace to your project's `components.json`:
 }
 ```
 
-Then install a theme and any components you need:
+Then install the theme and any components you need:
 
 ```bash
-npx shadcn@latest add @reno/theme-admin
+npx shadcn@latest add @reno/theme-base
 npx shadcn@latest add @reno/button
 ```
 
@@ -58,8 +58,8 @@ the questions worth asking before the first install.
 Three layers, each unaware of the one above it.
 
 ```
-Tokens       theme-base + 4 presets (elearning, admin, erp, cms)
-             OKLCH scales, radius, density, typography, dark mode
+Tokens       theme-base — one theme, OKLCH scales, radius, density,
+             typography, dark mode. Branded by overriding CSS variables.
      ↑
 Primitives   52 components, most derived from shadcn/ui, plus a virtualized DataGrid
      ↑
@@ -72,9 +72,19 @@ validation gate until reno-ui has been used end to end on one.
 
 Blocks import primitives. Primitives read tokens through CSS variables only —
 never a hardcoded colour, and never a fixed control height. That constraint is
-what lets a single `<Button>` render compact in an ERP screen and roomy in an
-e-learning one, and it is enforced by lint (`reno-tokens/no-raw-color`) rather
-than by convention.
+what lets a single `<Button>` render compact on a data-heavy screen and roomy on
+a reading-heavy one, and it is enforced by lint (`reno-tokens/no-raw-color`)
+rather than by convention.
+
+There is one theme, not a set of domain presets. Four of those shipped until
+2026-09-03 — elearning, admin, erp, cms — and they were removed: naming themes
+after our own domains asks a project to pick one of ours, when a project arrives
+with a brand colour and an opinion about spacing. What they encoded is a hue, a
+radius and a density step, which are now settings. Override
+`--reno-brand-*`, `--radius` and the `--density-*` scale in your own
+`globals.css`; the **Thương hiệu** panel on
+[the showcase](https://ui.reno.ai.vn/showcase) does it live, measures WCAG
+contrast as you go, and hands you the exact block to paste.
 
 See [docs/design-tokens.md](./docs/design-tokens.md) for the token contract,
 [docs/icons.md](./docs/icons.md) for the icon library, naming convention and why
@@ -175,7 +185,7 @@ npm run check:render     # opens the site in Chrome and asserts it draws
 | `npm run theme:sync` | Rebuild theme `cssVars` from theme CSS |
 | `npm run registry:assemble` | Rebuild `registry.json` from `registry/items/*.json` |
 | `npm run demos:generate` | Rebuild the docs demo index |
-| `npm run check:contrast` | WCAG AA gate across all presets |
+| `npm run check:contrast` | WCAG AA gate across the theme, both modes |
 | `npm run check:provenance` | License gate; regenerates the inventory in `docs/ui-components.md` |
 | `npm run check:boundaries` | Layering, framework-neutrality and bundle-split gate |
 | `npm run check:render` | Opens the built site in Chrome: rows render, no horizontal overflow, clean console |

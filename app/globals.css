@@ -7,9 +7,6 @@
  */
 @import "../registry/reno/themes/base.css";
 
-/* Docs-site only: [data-preset] scopes so the theming page can switch presets. */
-@import "./theme-presets.generated.css";
-
 /*
  * Dark mode is driven by a `dark` class on <html>, matching what shadcn writes
  * into a consuming project. Declared here because Tailwind v4 has no config file.

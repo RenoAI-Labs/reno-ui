@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { ThemeSwitcher } from "@/app/theme-switcher";
+import { ModeToggle } from "@/app/theme-switcher";
 
 const NAV = [
   { href: "/", label: "Tổng quan" },
@@ -31,7 +31,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="ml-auto">
-          <ThemeSwitcher />
+          <ModeToggle />
         </div>
       </div>
     </header>

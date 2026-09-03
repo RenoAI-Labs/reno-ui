@@ -87,7 +87,7 @@ makes Tailwind silently drop the opacity modifier — `bg-primary/50` renders
 fully opaque. v4 fixes that on its own, so the migration usually repairs bugs a
 project did not know it had.
 
-**Install a reno theme preset only if you want reno's palette.** A project with
+**Install the reno theme only if you want reno's palette.** A project with
 its own design system should keep its tokens and map them as above; installing
 `@reno/theme-*` would overwrite `--primary` with an `oklch(…)` value, and any
 remaining `hsl(var(--primary))` reference then resolves to nothing.
@@ -137,7 +137,7 @@ missing token.
 
 ### What you do not get
 
-- **Theme presets.** `@reno/theme-*` ships `@theme inline` and OKLCH; neither
+- **The theme.** `@reno/theme-base` ships `@theme inline` and OKLCH; neither
   means anything to v3. You keep your own palette, which is the point anyway.
 - **Exact visuals.** The primitives use five utilities that only exist in v4:
   `outline-hidden`, `shadow-xs`, `rounded-xs`, `field-sizing-*`, and the `**:`

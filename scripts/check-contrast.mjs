@@ -131,7 +131,7 @@ function main() {
     process.exit(1);
   }
   console.log(
-    `Contrast OK — ${checked} pairs across ${files.length} presets x 2 modes.`,
+    `Contrast OK — ${checked} pairs across ${files.length} theme(s) x 2 modes.`,
   );
 }
 

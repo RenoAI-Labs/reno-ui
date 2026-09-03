@@ -13,7 +13,7 @@ import {
   secondaryOverrides,
   toCssBlock,
 } from "@/app/showcase/_parts/showcase-brand-tokens";
-import { DENSITY, PRESETS } from "@/registry/reno/themes/theme-presets.config.mjs";
+import { BASE_PRESET, DENSITY } from "@/registry/reno/themes/theme-presets.config.mjs";
 
 /**
  * The showcase's brand panel produces CSS that a project pastes into its own
@@ -33,24 +33,23 @@ describe("the brand ramp comes from the build's own generator", () => {
     expect(overrides).toHaveLength(11);
   });
 
-  it("reproduces a shipped preset's ramp from its own brand colour", () => {
+  it("reproduces the shipped theme's ramp from its own brand colour", () => {
     /*
-      The whole claim of the panel: what you preview is a palette the build
-      could produce. Feeding CMS's brand colour back in has to land on CMS's
-      shipped ramp — if it does not, the panel is previewing colours no preset
-      will ever have.
+      The whole claim of the panel: what you preview is a palette the build could
+      produce. Feeding the theme's own brand colour back in has to land on the
+      ramp it ships — if it does not, the panel is previewing colours no build
+      will ever produce.
 
-      Compared at the mid stops. The extremes are near-white and near-black, so
-      a hex round trip loses hue precision there and would make this test about
+      Compared at the mid stops. The extremes are near-white and near-black, so a
+      hex round trip loses hue precision there and would make this test about
       sRGB rounding rather than about the ramp.
     */
-    const cms = PRESETS.find((p) => p.name === "cms")!;
-    const overrides = brandOverrides(brandHex(cms.brand));
+    const overrides = brandOverrides(brandHex(BASE_PRESET.brand));
     const byName = new Map(overrides.map((o) => [o.name, o.value]));
 
     for (const stop of [400, 500, 600, 700]) {
       // The hue is what has to survive; it is the identity of the brand.
-      expect(byName.get(`--reno-brand-${stop}`)).toContain(String(cms.brand.h));
+      expect(byName.get(`--reno-brand-${stop}`)).toContain(String(BASE_PRESET.brand.h));
     }
   });
 
@@ -111,18 +110,16 @@ describe("density and radius stay inside what the build ships", () => {
     expect(overrides.get("--density-gap")).toBe(DENSITY.compact.gap);
   });
 
-  it("names the step every shipped preset uses", () => {
-    // If a preset's density were not one of the four steps, the panel's
+  it("names the step the shipped theme uses", () => {
+    // If the theme's density were not one of the four steps, the panel's
     // dropdown would show the wrong one as selected.
-    for (const preset of PRESETS) {
-      expect(DENSITY_STEPS).toContain(presetDensityStep(preset.density));
-    }
+    expect(DENSITY_STEPS).toContain(presetDensityStep(BASE_PRESET.density));
   });
 
-  it("offers every radius the shipped presets use", () => {
-    for (const preset of PRESETS) {
-      expect(RADIUS_CHOICES).toContain(preset.radius as (typeof RADIUS_CHOICES)[number]);
-    }
+  it("offers the radius the shipped theme uses", () => {
+    expect(RADIUS_CHOICES).toContain(
+      BASE_PRESET.radius as (typeof RADIUS_CHOICES)[number],
+    );
   });
 });
 

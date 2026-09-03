@@ -2,31 +2,30 @@
 
 import * as React from "react";
 
-export const PRESET_NAMES = ["elearning", "admin", "erp", "cms"] as const;
-export type PresetName = (typeof PRESET_NAMES)[number];
 export type ColorMode = "light" | "dark";
 
 const STORAGE_KEY = "reno-ui-docs-theme";
-/*
-  CMS, because the showcase now opens on the brand panel rather than on a row of
-  domain buttons, and CMS is the preset closest to "a brand" — content-first,
-  generous spacing, an accent that is nobody's default blue. Every preset is
-  still one dropdown away.
-*/
-const DEFAULT_PRESET: PresetName = "cms";
 const DEFAULT_MODE: ColorMode = "light";
 
 /**
- * Runs before React hydrates so <html> already carries the right preset and mode
- * on first paint. Without it every reload flashes the default theme, which makes
- * the theming page useless for judging colours.
+ * Light or dark, and nothing else.
+ *
+ * This used to carry a theme preset as well — four domain names the docs site
+ * and showcase switched between. The presets are gone (2026-09-03): naming
+ * themes after our own domains asked a visitor to pick one of ours, when reno
+ * ships one theme and a panel for branding it. What is left is the colour mode,
+ * which is a reader's preference rather than a product decision.
+ */
+
+/**
+ * Runs before React hydrates so <html> already carries the right mode on first
+ * paint. Without it every reload flashes light, which makes the theming page
+ * useless for judging colours.
  */
 const NO_FLASH_SCRIPT = `
 try {
   var s = JSON.parse(localStorage.getItem(${JSON.stringify(STORAGE_KEY)}) || "{}");
-  var p = s.preset || ${JSON.stringify(DEFAULT_PRESET)};
   var m = s.mode || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-  document.documentElement.dataset.preset = p;
   document.documentElement.classList.toggle("dark", m === "dark");
 } catch (e) {}
 `;
@@ -37,7 +36,7 @@ try {
  * The no-flash script writes it before hydration, so mirroring it into
  * `useState` would mean rendering the wrong value first and correcting it in an
  * effect. `useSyncExternalStore` reads the DOM directly instead, which keeps the
- * switcher honest about what is actually applied.
+ * toggle honest about what is actually applied.
  */
 const listeners = new Set<() => void>();
 
@@ -50,19 +49,14 @@ function emit() {
   for (const listener of listeners) listener();
 }
 
-function readSnapshot(): string {
-  if (typeof document === "undefined") return `${DEFAULT_PRESET}:${DEFAULT_MODE}`;
-  const el = document.documentElement;
-  const preset = el.dataset.preset ?? DEFAULT_PRESET;
-  const mode = el.classList.contains("dark") ? "dark" : "light";
-  return `${preset}:${mode}`;
+function readSnapshot(): ColorMode {
+  if (typeof document === "undefined") return DEFAULT_MODE;
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
 }
 
-const SERVER_SNAPSHOT = `${DEFAULT_PRESET}:${DEFAULT_MODE}`;
-
-function persist(preset: PresetName, mode: ColorMode) {
+function persist(mode: ColorMode) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ preset, mode }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ mode }));
   } catch {
     // Private browsing or blocked storage — theming still works for this page
     // view, it just will not survive a reload.
@@ -79,33 +73,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useTheme() {
-  const snapshot = React.useSyncExternalStore(
-    subscribe,
-    readSnapshot,
-    () => SERVER_SNAPSHOT,
-  );
-
-  const [rawPreset, rawMode] = snapshot.split(":");
-  const preset = (PRESET_NAMES as readonly string[]).includes(rawPreset)
-    ? (rawPreset as PresetName)
-    : DEFAULT_PRESET;
-  const mode: ColorMode = rawMode === "dark" ? "dark" : "light";
-
-  const setPreset = React.useCallback(
-    (next: PresetName) => {
-      document.documentElement.dataset.preset = next;
-      persist(next, readSnapshot().endsWith("dark") ? "dark" : "light");
-      emit();
-    },
-    [],
-  );
+  const mode = React.useSyncExternalStore(subscribe, readSnapshot, () => DEFAULT_MODE);
 
   const setMode = React.useCallback((next: ColorMode) => {
-    const el = document.documentElement;
-    el.classList.toggle("dark", next === "dark");
-    persist((el.dataset.preset as PresetName) ?? DEFAULT_PRESET, next);
+    document.documentElement.classList.toggle("dark", next === "dark");
+    persist(next);
     emit();
   }, []);
 
-  return { preset, mode, setPreset, setMode };
+  return { mode, setMode };
 }

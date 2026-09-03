@@ -1,5 +1,5 @@
 /**
- * Source of truth for every reno theme preset.
+ * Source of truth for the reno theme.
  *
  * Nothing here is a final CSS value — `scripts/generate-scale.mjs` turns these
  * compact definitions into the OKLCH ramps and the contrast-solved semantic
@@ -7,8 +7,16 @@
  * values across 4 presets x 2 modes cannot be kept WCAG AA compliant by eye,
  * so the values are solved instead of guessed.
  *
- * To tune a preset: change the hue/chroma/density numbers below and re-run
- * `npm run theme:generate`. Never edit the generated `.css` files directly.
+ * To tune the theme: change the hue/chroma/density numbers below and re-run
+ * `npm run theme:generate`. Never edit the generated `.css` file directly.
+ *
+ * There used to be four domain presets here — elearning, admin, erp, cms. They
+ * are gone on purpose (2026-09-03). Naming themes after our own domains told a
+ * visitor to pick one of ours, when a project arrives with a brand colour and an
+ * opinion about spacing instead. What the presets encoded — a hue, a radius, a
+ * density step — is now a setting in the showcase's brand panel, which emits the
+ * CSS a project pastes into its own `globals.css`. The knobs survived; the four
+ * names did not.
  */
 
 import { clampChroma } from "culori";
@@ -79,8 +87,9 @@ export const CONTRAST = {
 };
 
 /**
- * Semantic hues shared by every preset. Only `primary` varies per preset —
- * destructive/success/warning/info must stay recognisable across domains.
+ * Semantic hues. `primary` comes from the brand ramp and is the one a project
+ * changes; destructive/success/warning/info stay put, because a red that means
+ * danger has to keep meaning danger whatever the brand colour is.
  */
 export const STATUS_HUES = {
   destructive: { h: 27, c: 0.19 },
@@ -90,8 +99,9 @@ export const STATUS_HUES = {
 };
 
 /**
- * Density presets. These drive `--density-*` tokens, which is what makes an ERP
- * screen fit more rows than an e-learning screen without any component change.
+ * Density steps. These drive the `--density-*` tokens, which is what lets a
+ * data-heavy screen fit more rows than a reading-heavy one with no component
+ * change — the same control, at a different size.
  *
  * Exported for the same reason `buildRamp` is: the showcase's brand panel lets
  * you switch density live, and a second copy of these numbers there would let
@@ -149,63 +159,24 @@ export const DENSITY = {
 };
 
 /**
- * `base` is not a domain preset — it is the neutral fallback. A project that
- * installs `@reno/theme-base` and no preset must still render correctly, so
- * base carries a complete token set of its own.
+ * The one theme reno ships.
+ *
+ * It carries a complete token set, so a project that installs `@reno/theme-base`
+ * and nothing else renders correctly. Branding it is a matter of overriding
+ * `--reno-brand-*`, `--radius` and the `--density-*` scale — which is what the
+ * showcase's brand panel does live, and what its Copy CSS hands you.
  */
 export const BASE_PRESET = {
   name: "base",
   title: "Theme Base",
   description:
-    "Neutral fallback theme. Declares every semantic token reno components read. Installed automatically as a dependency of every preset.",
+    "The reno theme. Declares every semantic token reno components read, in OKLCH, with a solved light and dark mode.",
   brand: { h: 250, c: 0.13 },
   neutral: { h: 250, c: 0.004 },
   radius: "0.5rem",
   density: DENSITY.normal,
 };
 
-export const PRESETS = [
-  {
-    name: "elearning",
-    title: "Theme E-learning",
-    description:
-      "Warm palette, large radius and roomy density for long reading sessions.",
-    brand: { h: 45, c: 0.145 },
-    neutral: { h: 60, c: 0.008 },
-    radius: "0.75rem",
-    density: DENSITY.roomy,
-  },
-  {
-    name: "admin",
-    title: "Theme Admin",
-    description:
-      "Neutral blue, standard density. The safe default for back-office screens.",
-    brand: { h: 250, c: 0.13 },
-    neutral: { h: 250, c: 0.004 },
-    radius: "0.5rem",
-    density: DENSITY.normal,
-  },
-  {
-    name: "erp",
-    title: "Theme ERP",
-    description:
-      "High-density preset for data-heavy ERP screens. Small radius, tight spacing, short grid rows.",
-    brand: { h: 165, c: 0.115 },
-    neutral: { h: 200, c: 0.003 },
-    radius: "0.25rem",
-    density: DENSITY.compact,
-  },
-  {
-    name: "cms",
-    title: "Theme CMS",
-    description:
-      "Content-first preset. Violet accent, generous typography and spacing.",
-    brand: { h: 305, c: 0.13 },
-    neutral: { h: 300, c: 0.004 },
-    radius: "0.5rem",
-    density: DENSITY.comfortable,
-  },
-];
 
 /** Non-color tokens that never vary between presets. */
 export const STATIC_THEME_TOKENS = {
