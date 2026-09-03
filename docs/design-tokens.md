@@ -89,10 +89,15 @@ reno-ui ships a single theme, `@reno/theme-base`:
 
 | | Value |
 |---|---|
-| Brand hue | 250 (blue), chroma 0.13 |
+| Brand hue | 250 (blue), chroma 0.13 — a starting point, not reno's brand |
 | Neutral hue | 250, chroma 0.004 |
 | Radius | `0.5rem` |
 | Density | normal |
+
+The default hue is deliberately the one that reads as a system default rather
+than as anybody's brand. It stays a real colour instead of a near-grey because
+an install nobody has branded yet still has to look finished — a grey `<Button>`
+in the default variant reads as broken, not as neutral.
 
 Four domain presets shipped until 2026-09-03 — elearning, admin, erp, cms. They
 were removed on purpose: naming a theme after one of our own domains asks a
@@ -118,11 +123,27 @@ build script uses, applies it live, measures the resulting WCAG contrast, and
 warns when a pick falls below AA. Copying from there beats hand-writing eleven
 OKLCH stops.
 
-What that block cannot do is re-solve the semantic layer. `--secondary`,
-`--muted`, `--border` and the rest are literals that `generate-scale.mjs` solved
-for contrast, so a brand far from the default will want those regenerated rather
-than overridden — edit `theme-presets.config.mjs` and run
-`npm run theme:generate`.
+### What the block does not cover, and when that matters
+
+Four semantic tokens read the brand ramp — `--primary`, `--ring`,
+`--sidebar-primary`, `--sidebar-ring` — so overriding the eleven stops moves
+everything that is meant to carry the brand. The other 48 colour tokens are
+literals that `generate-scale.mjs` solved for contrast, and overriding the ramp
+does not touch them.
+
+In practice that is fine, and the numbers are why: every surface token sits
+between chroma 0.0016 and 0.012, and `--card` and `--popover` are `oklch(1 0 0)`
+exactly. Below roughly 0.02 the hue is not perceptible, so those 48 tokens are
+effectively a greyscale. A branded primary on neutral greys is what most design
+systems ship.
+
+It matters in one case: **deliberately tinted neutrals** — warm greys under a
+warm brand. That needs the semantic layer re-solved rather than overridden, and
+it is a change to `theme-presets.config.mjs` (`neutral.h`) followed by
+`npm run theme:generate`, which is an operation on this repository rather than on
+a consuming project. A delivered project that wants tinted neutrals after
+handover has to come back to us for it — the one place the "you depend on nobody"
+promise is still thin.
 
 
 ## How a theme reaches your project

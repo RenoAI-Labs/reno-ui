@@ -37,6 +37,17 @@ writing our own implementation from scratch.
 **What is not:** cloning the repo, opening its source files, copying any code,
 or "adapting" a file. `scripts/check-provenance.mjs` rejects any row citing it.
 
+## Items that no longer exist
+
+The inventory below is generated from what the registry ships **today**. An item
+that has been removed leaves it, which is a problem for the one thing this file
+is for: a customer's record of what they own. Removed items are therefore listed
+here by hand, and stay listed.
+
+| Item | Removed | What a project that installed it should know |
+|---|---|---|
+| `theme-elearning`, `theme-admin`, `theme-erp`, `theme-cms` | 2026-09-03 | Installed files are copies, so the CSS in the project keeps working untouched. What is gone is future updates and the install command — `shadcn add @reno/theme-erp` now 404s. All four were `original` / `original`, so nothing about the licence changes. reno-ui now ships one theme, `theme-base`; rebranding is a matter of overriding `--reno-brand-*`, `--radius` and the `--density-*` scale, which the brand panel on the showcase generates. |
+
 ## Inventory
 
 <!-- BEGIN GENERATED INVENTORY -->

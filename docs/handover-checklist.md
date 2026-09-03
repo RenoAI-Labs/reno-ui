@@ -81,6 +81,13 @@ and npm projects all work.
 
       Run it *for* them if procurement is asking; it takes a minute and it is
       the number their legal side will actually accept.
+- [ ] **Check the "Items that no longer exist" table** in
+      `docs/ui-components.md` against what this project installed. The generated
+      inventory lists only what the registry ships today, so a component the
+      customer owns can be absent from their own record — the four domain theme
+      presets removed on 2026-09-03 are the first case. Their files keep
+      working; what they lose is updates and the install command, and their
+      paperwork should say so rather than leave a gap.
 - [ ] **If any Apache-2.0 package reached their `package.json`, copy `NOTICE`
       into their repository too** — and, if they redistribute the product,
       into whatever they ship. Apache-2.0 is permissive and compatible with MIT,
