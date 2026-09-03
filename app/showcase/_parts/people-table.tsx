@@ -240,6 +240,15 @@ const TOOLBAR_COLUMNS = [
   { id: "joinedAt", label: "Ngày vào", canSort: true },
 ];
 
+/**
+ * The grid's columns in declaration order, checkbox included.
+ *
+ * `TOOLBAR_COLUMNS` describes only the columns a menu shows, and TanStack reads
+ * `columnOrder` as the whole column list — so reordering needs this instead, or
+ * the first move would send the checkbox column to the far right.
+ */
+const COLUMN_IDS = ["select", ...TOOLBAR_COLUMNS.map((column) => column.id)];
+
 const FILTER_LABELS: Record<string, (value: string) => string> = {
   status: (value) => `Trạng thái: ${STATUS_LABELS[value as Person["status"]] ?? value}`,
   source: (value) => `Nguồn: ${SOURCE_LABELS[value as HireSource] ?? value}`,
@@ -297,6 +306,7 @@ export function PeopleTable() {
           state={state}
           onStateChange={setState}
           columns={TOOLBAR_COLUMNS}
+          columnIds={COLUMN_IDS}
           searchPlaceholder="Search Anything..."
           /*
             CSV only, and it downloads for real. Excel and PDF need a library,

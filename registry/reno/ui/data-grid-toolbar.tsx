@@ -4,6 +4,8 @@ import * as React from "react";
 import {
   ArrowDownUpIcon,
   ArrowDownIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
   ArrowUpIcon,
   CheckIcon,
   DownloadIcon,
@@ -22,10 +24,18 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import {
+  moveColumn as moveColumnBy,
+  movableColumnIds,
+  type ColumnOrderInput,
+} from "@/lib/grid-column-order";
 import { resolveLabels, type DataGridLabels } from "@/lib/grid-labels";
 import type { GridState } from "@/lib/grid-state";
 
@@ -74,6 +84,18 @@ export type DataGridToolbarProps = {
   state: GridState;
   onStateChange: (updater: (current: GridState) => GridState) => void;
   columns?: DataGridToolbarColumn[];
+  /**
+   * Every column the grid renders, in declaration order — including ones no
+   * menu shows, such as a selection checkbox.
+   *
+   * Required for the reorder entries, and separate from `columns` on purpose.
+   * `columnOrder` is read as the grid's whole column list: a partial one moves
+   * the columns it omits to the end, so a toolbar that seeded it from its own
+   * menu description would send the checkbox column to the far right the first
+   * time anyone reordered anything. Omit this and the columns menu simply does
+   * not offer reordering.
+   */
+  columnIds?: string[];
   labels?: Partial<DataGridLabels>;
   /** Overrides the search box's placeholder and accessible name. */
   searchPlaceholder?: string;
@@ -96,6 +118,7 @@ export function DataGridToolbar({
   state,
   onStateChange,
   columns = [],
+  columnIds,
   labels: labelOverrides,
   searchPlaceholder,
   exportFormats = ["csv", "excel", "pdf"],
@@ -180,6 +203,24 @@ export function DataGridToolbar({
     }));
 
   /**
+   * Reordering, with the arithmetic in `@/lib/grid-column-order`.
+   *
+   * What stays here is only which columns the toolbar knows about; which of
+   * them can move, and what the resulting order is, are pure and tested there.
+   */
+  const orderInput = (current: GridState): ColumnOrderInput => ({
+    columnIds: columnIds ?? [],
+    describedIds: columns.map((column) => column.id),
+    state: current,
+  });
+
+  const moveColumn = (id: string, delta: -1 | 1) =>
+    onStateChange((current) => ({
+      ...current,
+      columnOrder: moveColumnBy(orderInput(current), id, delta),
+    }));
+
+  /**
    * Sorting from the menu replaces the sort rather than adding to it.
    *
    * Multi-column sort is still available where it belongs — shift-clicking a
@@ -199,6 +240,18 @@ export function DataGridToolbar({
   const filterable = columns.filter((column) => column.options?.length);
   const sortable = columns.filter((column) => column.canSort);
   const hideable = columns.filter((column) => column.canHide !== false);
+  /*
+    Listed in the order the columns are drawn rather than in `columns` order: a
+    list ordered differently from the row it moves things in would make "left"
+    ambiguous.
+
+    No `columnIds` leaves this empty and the reorder section unrendered, which
+    is `movableColumnIds` returning nothing for an empty order rather than a
+    check here — a second check would be a second thing to keep true.
+  */
+  const movable = movableColumnIds(orderInput(state)).map(
+    (id) => columns.find((column) => column.id === id)!,
+  );
   const valueOf = (id: string) => activeFilters.find((f) => f.id === id)?.value ?? null;
 
   return (
@@ -358,6 +411,44 @@ export function DataGridToolbar({
                   {column.label}
                 </DropdownMenuCheckboxItem>
               ))}
+              {movable.length > 1 ? (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel>{labels.columnOrder}</DropdownMenuLabel>
+                  {movable.map((column, index) => (
+                    <DropdownMenuSub key={column.id}>
+                      <DropdownMenuSubTrigger>{column.label}</DropdownMenuSubTrigger>
+                      <DropdownMenuSubContent>
+                        {/*
+                          The menu stays open on a move: reordering is done by
+                          repetition, and closing after every step would make
+                          three places to the left cost three trips.
+                        */}
+                        <DropdownMenuItem
+                          disabled={index === 0}
+                          onSelect={(event) => {
+                            event.preventDefault();
+                            moveColumn(column.id, -1);
+                          }}
+                        >
+                          <ArrowLeftIcon />
+                          {labels.moveColumnLeft}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          disabled={index === movable.length - 1}
+                          onSelect={(event) => {
+                            event.preventDefault();
+                            moveColumn(column.id, 1);
+                          }}
+                        >
+                          <ArrowRightIcon />
+                          {labels.moveColumnRight}
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuSub>
+                  ))}
+                </>
+              ) : null}
             </DropdownMenuContent>
           </DropdownMenu>
         ) : null}

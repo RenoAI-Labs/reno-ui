@@ -196,6 +196,40 @@ facet means.
 None of this applies in server mode: `manualFiltering` is on, so the filters go
 to your backend as `GridQuery` and the row models are pass-throughs.
 
+## Reordering columns needs the whole column list
+
+The columns menu offers **Sang trái / Sang phải** per column, which writes
+`GridState.columnOrder`. It only appears when the toolbar is given `columnIds`:
+
+```tsx
+const TOOLBAR_COLUMNS = [{ id: "name", label: "Họ tên" }, /* … */];
+const COLUMN_IDS = ["select", ...TOOLBAR_COLUMNS.map((column) => column.id)];
+
+<DataGridToolbar columns={TOOLBAR_COLUMNS} columnIds={COLUMN_IDS} … />
+```
+
+Two lists, on purpose. `columns` describes the columns a menu shows; TanStack
+reads `columnOrder` as the grid's **entire** column list and relocates whatever
+is missing from it. Seed it from the menu description and the selection
+checkbox — which no menu shows — lands at the far right the first time anyone
+reorders anything. Nothing errors; the layout is just wrong. So `columnIds` is
+declaration order including every column, and without it the entries are not
+offered at all.
+
+Three kinds of column are not offered, and keep their place while others move
+across them:
+
+- **pinned** — drawn in its own pinned region whatever the order says, so
+  moving it would be a control with no visible effect;
+- **hidden** — swapping with a column nobody can see looks like a dead button;
+- **undescribed** — present in `columnIds` and absent from `columns`. There is
+  no label to put in the menu, and this is what keeps a selection checkbox
+  first without anyone having to pin it.
+
+Drag-and-drop is deliberately not shipped. It needs `@dnd-kit`, and a menu that
+moves one step at a time reaches keyboard and touch users that a drag handle
+does not.
+
 ## Export: CSV is shipped, the rest is yours
 
 `onExport` reports a format; producing the file is separate, and only one format
@@ -283,6 +317,8 @@ navigation as work it still has to scope.
 - [ ] Bulk endpoints accept `selection` + `query` and honour `exclude` mode.
 - [ ] Enforce row-level authorisation on filters and bulk actions, not only on
       the list endpoint.
+- [ ] Pass `columnIds` if the columns menu should offer reordering, and include
+      every column the grid draws in it.
 
 ## Open question
 

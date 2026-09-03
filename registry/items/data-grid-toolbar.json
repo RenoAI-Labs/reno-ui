@@ -17,6 +17,10 @@
   ],
   "files": [
     {
+      "path": "registry/reno/lib/grid-column-order.ts",
+      "type": "registry:lib"
+    },
+    {
       "path": "registry/reno/ui/data-grid-toolbar.tsx",
       "type": "registry:ui"
     }

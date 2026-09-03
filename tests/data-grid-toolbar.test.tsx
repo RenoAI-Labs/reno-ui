@@ -5,6 +5,7 @@ import { beforeAll, describe, expect, it, vi } from "vitest";
 
 import { DataGridToolbar } from "@/components/ui/data-grid-toolbar";
 import { paginationRange } from "@/components/ui/data-grid/pagination-range";
+import { movableColumnIds, moveColumn } from "@/lib/grid-column-order";
 import { emptyGridState, type GridState } from "@/lib/grid-state";
 import { englishLabels } from "@/lib/grid-labels";
 
@@ -45,6 +46,22 @@ const COLUMNS = [
     ],
   },
 ];
+
+/**
+ * Declaration order, checkbox included. The toolbar needs the whole list to
+ * reorder anything, because that is how TanStack reads `columnOrder`.
+ */
+const COLUMN_IDS = ["select", "name", "score", "status", "source"];
+
+/** What a grid with a selection column normally does with it. */
+const PINNED_SELECT = { start: ["select"], end: [] };
+
+/**
+ * State for the menu's own tests: `select` pinned as a grid would, and an
+ * explicit order so nothing here depends on the seeding rule that has its own
+ * test.
+ */
+const ORDERED = { columnOrder: COLUMN_IDS, columnPinning: PINNED_SELECT };
 
 function Harness({
   initial,
@@ -264,6 +281,196 @@ describe("the sort menu", () => {
     expect(
       screen.getByRole("menuitem", { name: new RegExp(englishLabels.sortDescending) }),
     ).toBeInTheDocument();
+  });
+});
+
+describe("reordering a column", () => {
+  /*
+    The arithmetic, tested apart from the menu.
+
+    Each case asserts both halves of one exclusion — which columns are offered,
+    and what the resulting order is — because they are the same mechanism seen
+    from two sides, and splitting them would mean one regression reddening two
+    tests without either name saying more than the other.
+  */
+  /*
+    `select` is pinned in every case but one, which is what the showcase does
+    and what keeps each case resting on a single exclusion: with the checkbox
+    held in place by pinning, a bug in any of the other rules shows up in the
+    one test named after it rather than in all of them.
+  */
+  const input = (state: Partial<GridState> = {}) => ({
+    columnIds: COLUMN_IDS,
+    describedIds: COLUMNS.map((column) => column.id),
+    state: {
+      ...emptyGridState(10),
+      columnOrder: COLUMN_IDS,
+      columnPinning: { start: ["select"], end: [] },
+      ...state,
+    },
+  });
+
+  it("writes the whole order out on the first move, not only the columns it moved", () => {
+    /*
+      An empty `columnOrder` means declaration order, so the first move is also
+      the one that has to write the array out — all of it. TanStack reads
+      `columnOrder` as the grid's entire column list and relocates whatever is
+      missing from it, so a partial order is not a smaller change, it is a
+      different layout.
+    */
+    expect(moveColumn(input({ columnOrder: [] }), "score", -1)).toEqual([
+      "select",
+      "score",
+      "name",
+      "status",
+      "source",
+    ]);
+  });
+
+  it("swaps with the neighbour", () => {
+    expect(moveColumn(input(), "score", 1)).toEqual([
+      "select",
+      "name",
+      "status",
+      "score",
+      "source",
+    ]);
+  });
+
+  it("lists the columns in the order they are drawn, not as declared", () => {
+    // "Left" is only unambiguous against the row as it currently reads.
+    expect(
+      movableColumnIds(input({ columnOrder: ["select", "source", "name", "score", "status"] })),
+    ).toEqual(["source", "name", "score", "status"]);
+  });
+
+  it("will not move a column nobody described, and moves nothing onto it", () => {
+    // `select` is a column the grid draws and no menu shows. Nothing here knows
+    // what to call it, so it is not offered — which is how a selection checkbox
+    // stays first without anyone having to pin it.
+    // Not pinned here, so being undescribed is the only thing holding it in
+    // place — which is the rule under test.
+    const loose = input({ columnPinning: { start: [], end: [] } });
+    expect(movableColumnIds(loose)).toEqual(["name", "score", "status", "source"]);
+    expect(moveColumn(loose, "select", 1)).toEqual(COLUMN_IDS);
+  });
+
+  it("will not move a pinned column, and moves across it", () => {
+    // Pinned is drawn in its own region whatever the order says, so moving one
+    // would be a control with no visible effect. `name` and `status` swap with
+    // each other and the pinned column keeps the slot between them.
+    const pinned = input({ columnPinning: { start: ["select", "score"], end: [] } });
+    expect(movableColumnIds(pinned)).toEqual(["name", "status", "source"]);
+    expect(moveColumn(pinned, "status", -1)).toEqual([
+      "select",
+      "status",
+      "score",
+      "name",
+      "source",
+    ]);
+  });
+
+  it("will not move a hidden column, and moves across it", () => {
+    // Swapping with a column nobody can see looks like a dead button.
+    const hidden = input({ columnVisibility: { score: false } });
+    expect(movableColumnIds(hidden)).toEqual(["name", "status", "source"]);
+    expect(moveColumn(hidden, "status", -1)).toEqual([
+      "select",
+      "status",
+      "score",
+      "name",
+      "source",
+    ]);
+  });
+
+  it("returns the order unchanged at either end of the row", () => {
+    // The menu disables those steps; the arithmetic still has to be safe,
+    // because a menu is not a place to raise errors.
+    expect(moveColumn(input(), "name", -1)).toEqual(COLUMN_IDS);
+    expect(moveColumn(input(), "source", 1)).toEqual(COLUMN_IDS);
+  });
+});
+
+describe("the column order menu", () => {
+  /*
+    Structure only. Radix mounts a submenu's items in jsdom but does not select
+    them from a synthesised click — measured, not assumed — so what the entries
+    produce is asserted against the functions above instead of through the menu.
+    What is worth asserting here is what the menu offers and what it refuses to,
+    which is where a reorder control misleads someone.
+  */
+  const openColumns = (user: ReturnType<typeof userEvent.setup>) =>
+    user.click(screen.getByRole("button", { name: englishLabels.columns }));
+
+  it("appears only when the toolbar knows the whole column list", async () => {
+    const user = userEvent.setup();
+    const { unmount } = render(<Harness />);
+
+    await openColumns(user);
+    // Without `columnIds` the toolbar cannot write a complete order, and an
+    // incomplete one relocates the columns it omits. So it offers nothing
+    // rather than offering something that breaks the layout.
+    expect(screen.queryByText(englishLabels.columnOrder)).not.toBeInTheDocument();
+    unmount();
+
+    render(<Harness columnIds={COLUMN_IDS} initial={ORDERED} />);
+    await openColumns(user);
+    expect(screen.getByText(englishLabels.columnOrder)).toBeInTheDocument();
+  });
+
+  it("offers exactly the movable columns, in the order they are drawn", async () => {
+    const user = userEvent.setup();
+    /*
+      Drawn in a different order than the toolbar was handed, which is the whole
+      reason the menu sorts by one and not the other. Declared and in force are
+      the same array here, so nothing in this test rests on which of the two the
+      reorder maths reads.
+    */
+    const drawn = ["select", "source", "name", "score", "status"];
+    const initial = { columnOrder: drawn, columnPinning: PINNED_SELECT };
+    render(<Harness columnIds={drawn} initial={initial} />);
+
+    /*
+      Expected from the same function the menu renders, rather than written out
+      again. That is deliberate: which columns can move is settled by the tests
+      above, and restating the answer here would mean one bug reddening both
+      with neither name saying more. What is left for this test is whether the
+      menu shows that answer — the plausible mistake being to walk `columns`,
+      the description it was handed, instead of the row as it currently reads.
+    */
+    const expected = movableColumnIds({
+      columnIds: drawn,
+      describedIds: COLUMNS.map((column) => column.id),
+      state: { ...emptyGridState(10), ...initial },
+    }).map((id) => COLUMNS.find((column) => column.id === id)!.label);
+    // Which is only a test while the two differ.
+    expect(expected).not.toEqual(COLUMNS.map((column) => column.label));
+
+    await openColumns(user);
+    // Only the submenu triggers carry role menuitem here — the visibility rows
+    // above are checkboxes — so this is the reorder list exactly.
+    expect(screen.getAllByRole("menuitem").map((item) => item.textContent)).toEqual(expected);
+  });
+
+  it("greys out the step that would leave the row", async () => {
+    const user = userEvent.setup();
+    render(<Harness columnIds={COLUMN_IDS} initial={ORDERED} />);
+
+    await openColumns(user);
+    // `aria-disabled`, not the `disabled` property: a menu item is a div, and
+    // the attribute is what a screen reader is told.
+    const step = (label: string) => screen.getByRole("menuitem", { name: label });
+
+    await user.click(screen.getByRole("menuitem", { name: "Name" }));
+    expect(step(englishLabels.moveColumnLeft)).toHaveAttribute("aria-disabled", "true");
+    expect(step(englishLabels.moveColumnRight)).not.toHaveAttribute("aria-disabled");
+
+    // Escape closes the whole menu, not just the submenu, so this reopens it.
+    await user.keyboard("{Escape}");
+    await openColumns(user);
+    await user.click(screen.getByRole("menuitem", { name: "Source" }));
+    expect(step(englishLabels.moveColumnLeft)).not.toHaveAttribute("aria-disabled");
+    expect(step(englishLabels.moveColumnRight)).toHaveAttribute("aria-disabled", "true");
   });
 });
 

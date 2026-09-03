@@ -38,6 +38,12 @@ export type DataGridLabels = {
 
   columns: string;
   toggleColumn: string;
+  /** Heading over the reorder entries in the columns menu. */
+  columnOrder: string;
+  /** Moves a column one place towards the start of the row. */
+  moveColumnLeft: string;
+  /** Moves a column one place towards the end of the row. */
+  moveColumnRight: string;
   search: string;
   reset: string;
   filter: string;
@@ -89,6 +95,9 @@ export const defaultLabels: DataGridLabels = {
 
   columns: "Cột",
   toggleColumn: "Ẩn/hiện cột",
+  columnOrder: "Thứ tự cột",
+  moveColumnLeft: "Sang trái",
+  moveColumnRight: "Sang phải",
   search: "Tìm kiếm",
   reset: "Đặt lại",
   filter: "Lọc",
@@ -138,6 +147,9 @@ export const englishLabels: DataGridLabels = {
 
   columns: "Columns",
   toggleColumn: "Toggle column",
+  columnOrder: "Column order",
+  moveColumnLeft: "Move left",
+  moveColumnRight: "Move right",
   search: "Search",
   reset: "Reset",
   filter: "Filter",
