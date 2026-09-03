@@ -29,6 +29,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { downloadCsv, toCsv } from "@/lib/grid-export";
 import { createGridColumns, emptyGridState, type GridState } from "@/lib/grid-state";
 import {
   HIRE_SOURCES,
@@ -245,6 +246,26 @@ const FILTER_LABELS: Record<string, (value: string) => string> = {
   department: (value) => `Phòng ban: ${value}`,
 };
 
+/**
+ * What goes into the CSV.
+ *
+ * Declared separately from the grid's columns rather than derived from them: an
+ * export is a different document. It wants the raw score, not a bar; the source
+ * label, not a badge; and it has no use for the selection checkbox.
+ */
+const CSV_COLUMNS = [
+  { label: "Mã", value: (row: Person) => row.id },
+  { label: "Họ tên", value: (row: Person) => row.name },
+  { label: "Email", value: (row: Person) => row.email },
+  { label: "Phòng ban", value: (row: Person) => row.department },
+  { label: "Chức danh", value: (row: Person) => row.role },
+  { label: "Trạng thái", value: (row: Person) => STATUS_LABELS[row.status] },
+  { label: "Điểm", value: (row: Person) => row.score },
+  { label: "Nguồn tuyển", value: (row: Person) => SOURCE_LABELS[row.source] },
+  { label: "Lương", value: (row: Person) => row.salary },
+  { label: "Ngày vào", value: (row: Person) => row.joinedAt },
+];
+
 export function PeopleTable() {
   const [state, setState] = React.useState<GridState>(() => ({
     ...emptyGridState(10),
@@ -277,7 +298,18 @@ export function PeopleTable() {
           onStateChange={setState}
           columns={TOOLBAR_COLUMNS}
           searchPlaceholder="Search Anything..."
-          onExport={(format) => setLastAction(`Đã yêu cầu xuất ${format.toUpperCase()}`)}
+          /*
+            CSV only, and it downloads for real. Excel and PDF need a library,
+            and picking one on a project's behalf is not reno's call — so the
+            menu does not offer what it will not do. `onImport` stays wired to
+            show the menu shape: emitting the intent is the component's job,
+            parsing somebody's spreadsheet is the project's.
+          */
+          exportFormats={["csv"]}
+          onExport={() => {
+            downloadCsv("nhan-su", toCsv(PEOPLE, CSV_COLUMNS));
+            setLastAction(`Đã xuất ${PEOPLE.length} dòng ra CSV`);
+          }}
           onImport={(format) => setLastAction(`Đã yêu cầu nhập từ ${format.toUpperCase()}`)}
           describeFilter={(filter) =>
             FILTER_LABELS[filter.id]?.(String(filter.value)) ??

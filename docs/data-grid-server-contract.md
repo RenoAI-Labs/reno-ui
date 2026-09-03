@@ -196,6 +196,53 @@ facet means.
 None of this applies in server mode: `manualFiltering` is on, so the filters go
 to your backend as `GridQuery` and the row models are pass-throughs.
 
+## Export: CSV is shipped, the rest is yours
+
+`onExport` reports a format; producing the file is separate, and only one format
+comes with reno.
+
+```tsx
+import { downloadCsv, toCsv } from "@/lib/grid-export";
+
+<DataGridToolbar
+  exportFormats={["csv"]}
+  onExport={() => downloadCsv("nhan-su", toCsv(rows, CSV_COLUMNS))}
+/>
+```
+
+`@reno/grid-export` is a separate item — install it when you want CSV. It looks
+like string joining and is not; three things go wrong silently and it handles
+all three:
+
+- **Separators inside values.** A comma, a quote or a newline in a cell ends the
+  field early. Quoted and doubled per RFC 4180, and only where needed so the
+  file stays readable.
+- **Excel and Vietnamese.** Without a byte-order mark Excel reads the file as
+  the system code page and every accented character arrives as mojibake.
+- **Formula injection.** A cell beginning with `=`, `+`, `-`, `@`, a tab or a
+  carriage return is a formula to Excel and Sheets. Data someone typed into your
+  app then executes on the machine of whoever opens the export. Prefixed with an
+  apostrophe rather than stripped, so `-5` stays `-5`.
+
+**Excel and PDF are deliberately not shipped.** Both need a library, and picking
+one for a project is not a component library's call — check whatever you choose
+against `ALLOWED_DEP_LICENSES` before it reaches a customer's bundle. Do not
+offer a format in `exportFormats` that you have not wired: a menu entry that
+does nothing teaches people the menu is decorative.
+
+**Import is not shipped either, and for a different reason.** The toolbar's job
+is to emit the intent; parsing somebody's spreadsheet — encodings, merged cells,
+header guessing, partial failure — is application work with no generic answer.
+
+Declare the exported columns separately from the grid's. An export is a
+different document: it wants the raw score rather than a bar, the status label
+rather than a badge, and it has no use for the selection checkbox.
+
+**Server mode:** reno holds only the current page, so an export built from
+`rows` is that page. Exporting the whole filtered result is a request to your
+backend with the same `GridQuery` the grid emits — decide which of the two your
+screens mean, and say so in the button.
+
 ## Accessibility, and where it stops
 
 The grid writes out `role="grid"`, `rowgroup`, `row`, `columnheader` and

@@ -45,6 +45,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 
 | Item | Type | Group | Source | License | Upstream ref | Added |
 |---|---|---|---|---|---|---|
+| `grid-export` | lib | Core | original | original | Viết cho reno. CSV trông như nối chuỗi nhưng không phải: ba thứ sai âm thầm là escape, BOM, và formula injection — ô bắt đầu bằng = + - @ chạy như công thức trên máy người mở file | 2026-09-03 |
 | `grid-labels` | lib | Core | original | original | Viết cho reno | 2026-09-01 |
 | `grid-query` | lib | Core | original | original | Viết cho reno; spec ở docs/data-grid-server-contract.md | 2026-09-01 |
 | `grid-state` | lib | Core | original | original | Viết cho reno; tên feature theo TanStack Table v9 | 2026-09-01 |

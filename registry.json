@@ -4,6 +4,27 @@
   "homepage": "https://ui.reno.ai.vn",
   "items": [
     {
+      "name": "grid-export",
+      "type": "registry:lib",
+      "title": "Grid Export",
+      "description": "Xuất dòng ra CSV đúng chuẩn: escape dấu phẩy/ngoặc/xuống dòng theo RFC 4180, BOM UTF-8 để Excel không hỏng tiếng Việt, và vô hiệu hoá formula injection. Không dependency. Excel/PDF cố tình để dự án tự chọn thư viện.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/reno/lib/grid-export.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno. CSV trông như nối chuỗi nhưng không phải: ba thứ sai âm thầm là escape, BOM, và formula injection — ô bắt đầu bằng = + - @ chạy như công thức trên máy người mở file",
+        "added": "2026-09-03",
+        "group": "Core"
+      }
+    },
+    {
       "name": "grid-labels",
       "type": "registry:lib",
       "title": "Grid Labels",
