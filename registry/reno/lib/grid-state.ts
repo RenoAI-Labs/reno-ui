@@ -14,6 +14,8 @@ import {
   columnSizingFeature,
   columnVisibilityFeature,
   createColumnHelper,
+  filterFn_equalsString,
+  filterFn_includesString,
   globalFilteringFeature,
   rowPaginationFeature,
   rowSelectionFeature,
@@ -43,6 +45,26 @@ export const gridFeatures = tableFeatures({
   rowPaginationFeature,
   rowSelectionFeature,
   rowSortingFeature,
+
+  /*
+    Filter functions are opt-in in v9, for the same tree-shaking reason the
+    features are — and leaving the slot empty fails silently. A column filter
+    whose function cannot be resolved is skipped: the toolbar writes the filter,
+    the chip appears, the row count does not move. Measured on the showcase
+    before this was registered: filtering by hire source left the footer reading
+    "1–10 of 240".
+
+    Two, not the whole set. `includesString` is what `filterFn: "auto"` resolves
+    to for a string column, so it is the default path. `equalsString` is what a
+    faceted filter means — the toolbar's filter menu writes one exact value, and
+    substring matching there would make a facet for "Kỹ thuật" also match every
+    department containing it. Faceted columns should say
+    `filterFn: "equalsString"`.
+  */
+  filterFns: {
+    includesString: filterFn_includesString,
+    equalsString: filterFn_equalsString,
+  },
 });
 
 export type GridFeatures = typeof gridFeatures;

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
 import { DataGrid } from "@/components/ui/data-grid";
@@ -348,3 +349,115 @@ describe("DataGrid client mode", () => {
     expect(screen.getByText("Mục 000")).toBeInTheDocument();
   });
 });
+
+describe("DataGrid column filters", () => {
+  /**
+   * The regression this exists for shipped and hid itself.
+   *
+   * TanStack v9 makes filter functions opt-in alongside the features, and an
+   * unresolvable one is skipped rather than reported: the toolbar wrote the
+   * filter, the chip appeared, and the row count never moved. Nothing caught it
+   * because the toolbar could only ever *remove* a filter until a filter menu
+   * existed to set one, and the only filter test covered the global one.
+   */
+  type Row = { id: string; name: string; team: string };
+
+  const teamColumns = createGridColumns<Row>((col) => [
+    col.accessor("name", { header: "Tên" }),
+    col.accessor("team", { header: "Nhóm", filterFn: "equalsString" }),
+  ]);
+
+  const staff: Row[] = Array.from({ length: 30 }, (_, i) => ({
+    id: String(i),
+    name: `Người ${i}`,
+    team: i % 3 === 0 ? "Kỹ thuật" : i % 3 === 1 ? "Kinh doanh" : "Kế toán",
+  }));
+
+  function TeamHarness({ initial }: { initial?: Partial<GridState> }) {
+    const [state, setState] = React.useState<GridState>(() => ({
+      ...emptyGridState(25),
+      ...initial,
+    }));
+    return (
+      <DataGrid
+        columns={teamColumns}
+        data={staff}
+        state={state}
+        onStateChange={setState}
+        getRowId={(row) => row.id}
+        mode="client"
+        labels={englishLabels}
+      />
+    );
+  }
+
+  it("actually removes the rows a column filter excludes", () => {
+    render(<TeamHarness initial={{ columnFilters: [{ id: "team", value: "Kỹ thuật" }] }} />);
+    // 10 of the 30 rows are on that team.
+    expect(screen.getByText("1–10 of 10")).toBeInTheDocument();
+    expect(screen.queryByText("Người 1")).not.toBeInTheDocument();
+  });
+
+  it("matches a faceted value exactly rather than as a substring", () => {
+    // "Kế toán" must not be matched by a filter for "toán", and a facet for one
+    // department must not pull in another that contains its name.
+    render(<TeamHarness initial={{ columnFilters: [{ id: "team", value: "toán" }] }} />);
+    expect(screen.getByText(englishLabels.empty)).toBeInTheDocument();
+  });
+});
+
+describe("DataGrid numbered pages", () => {
+  it("marks the page you are on, not only in colour", () => {
+    // `variant="default"` carries the current page as a fill, which reaches
+    // nobody using a screen reader — and "Page 3" alone does not say you are
+    // on it.
+    render(<ClientPager initial={{ pagination: { pageIndex: 2, pageSize: 10 } }} />);
+    const current = screen.getByRole("button", { name: englishLabels.page(3) });
+    expect(current).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("button", { name: englishLabels.page(1) })).not.toHaveAttribute(
+      "aria-current",
+    );
+  });
+
+  it("jumps straight to a page when its number is clicked", async () => {
+    const user = userEvent.setup();
+    render(<ClientPager />);
+    await user.click(screen.getByRole("button", { name: englishLabels.page(4) }));
+    expect(screen.getByText(englishLabels.rangeOf(31, 40, 240))).toBeInTheDocument();
+  });
+});
+
+/**
+ * 240 rows at 10 a page: 24 pages, enough for the window to need gaps.
+ *
+ * Columns and rows are module-level on purpose. Building them inside the
+ * component hands the table a new `columns` identity on every render, which
+ * rebuilds the instance and throws away the pagination state — the click lands
+ * and the page never moves.
+ */
+const pagerColumns = createGridColumns<{ id: string; name: string }>((col) => [
+  col.accessor("name", { header: "Tên" }),
+]);
+
+const pagerRows = Array.from({ length: 240 }, (_, i) => ({
+  id: String(i),
+  name: `Người ${i}`,
+}));
+
+function ClientPager({ initial }: { initial?: Partial<GridState> }) {
+  const [state, setState] = React.useState<GridState>(() => ({
+    ...emptyGridState(10),
+    ...initial,
+  }));
+  return (
+    <DataGrid
+      columns={pagerColumns}
+      data={pagerRows}
+      state={state}
+      onStateChange={setState}
+      getRowId={(row) => row.id}
+      mode="client"
+      labels={englishLabels}
+    />
+  );
+}

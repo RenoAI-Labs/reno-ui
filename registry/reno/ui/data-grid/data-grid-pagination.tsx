@@ -18,6 +18,8 @@ import {
 import type { DataGridLabels } from "@/lib/grid-labels";
 import { selectionCount, type GridSelection } from "@/lib/grid-query";
 
+import { paginationRange } from "./pagination-range";
+
 /**
  * Footer: page controls, page size, and the selection summary.
  *
@@ -56,6 +58,8 @@ export function DataGridPagination({
   const to = Math.min(total, (pageIndex + 1) * pageSize);
 
   const selected = selection ? selectionCount(selection, total) : 0;
+
+  const pages = paginationRange(page, totalPages);
 
   return (
     <div
@@ -128,6 +132,45 @@ export function DataGridPagination({
           >
             <ChevronLeftIcon />
           </Button>
+          {/*
+            Numbered pages, which are the only control here that answers "how
+            far in am I?" without arithmetic. Windowed rather than printed in
+            full: 200 buttons is a row nobody can aim at.
+
+            Hidden on the narrowest screens — the arrows and the "page 3 / 12"
+            readout already cover navigation there, and eight extra buttons is
+            what pushes this bar into a third wrapped row on a phone.
+          */}
+          <div className="hidden items-center gap-1 sm:flex">
+            {pages.map((slot, index) =>
+              slot === "gap" ? (
+                <span
+                  key={`gap-${index}`}
+                  aria-hidden
+                  className="px-1 text-muted-foreground"
+                  title={labels.morePages}
+                >
+                  …
+                </span>
+              ) : (
+                <Button
+                  key={slot}
+                  variant={slot === page ? "default" : "outline"}
+                  size="icon"
+                  aria-label={labels.page(slot)}
+                  // The pressed state, for a screen reader: `variant` carries it
+                  // in colour only, and "Page 3" alone does not say you are on
+                  // it.
+                  aria-current={slot === page ? "page" : undefined}
+                  className="tabular-nums"
+                  onClick={() => onPageChange(slot - 1)}
+                >
+                  {slot}
+                </Button>
+              ),
+            )}
+          </div>
+
           <Button
             variant="outline"
             size="icon"

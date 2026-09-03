@@ -164,6 +164,38 @@ result set, not the page they were looking at.
 Guard rails worth having: return the affected count for confirmation before
 committing, and cap or queue very large `exclude` operations.
 
+## Faceted filters need a filter function registered
+
+The toolbar's filter menu writes one exact value per column:
+
+```ts
+columnFilters: [{ id: "source", value: "referral" }]
+```
+
+For that to remove any rows in **client mode**, two things have to be true, and
+both fail silently when they are not.
+
+`gridFeatures` must register the filter function. TanStack v9 makes filter
+functions opt-in the same way it makes features opt-in, and a column filter
+whose function cannot be resolved is skipped — the filter is in the state, the
+chip is on screen, the row count does not move. reno registers `includesString`
+(what `filterFn: "auto"` resolves to for a string column) and `equalsString`.
+Anything else your columns use has to be added there, or passed directly as the
+column's `filterFn`, which needs no registration.
+
+And a faceted column should say so:
+
+```ts
+col.accessor("source", { header: "Nguồn", filterFn: "equalsString" })
+```
+
+Without it the column falls back to substring matching, so a facet for
+"Kỹ thuật" also matches every department whose name contains it. Exact is what a
+facet means.
+
+None of this applies in server mode: `manualFiltering` is on, so the filters go
+to your backend as `GridQuery` and the row models are pass-throughs.
+
 ## Accessibility, and where it stops
 
 The grid writes out `role="grid"`, `rowgroup`, `row`, `columnheader` and

@@ -1827,6 +1827,10 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/reno/ui/data-grid/pagination-range.ts",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/reno/ui/data-grid/column-pinning.ts",
           "type": "registry:ui"
         },

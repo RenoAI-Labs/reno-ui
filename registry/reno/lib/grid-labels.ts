@@ -42,7 +42,21 @@ export type DataGridLabels = {
   reset: string;
   filter: string;
   clearFilter: string;
+  /** Removes every column filter at once, from the filter menu's foot. */
+  clearFilters: string;
+  /** The "no filter" entry in a facet, e.g. ("Nguồn") => "Tất cả nguồn". */
+  allOf: (label: string) => string;
+  sort: string;
   export: string;
+  import: string;
+  /** e.g. ("CSV") => "Xuất CSV". Format names are proper nouns, not translated. */
+  exportAs: (format: string) => string;
+  /** e.g. ("Excel") => "Nhập từ Excel". */
+  importFrom: (format: string) => string;
+  /** Accessible name of a numbered page button. */
+  page: (page: number) => string;
+  /** Accessible name of the ellipsis standing in for omitted pages. */
+  morePages: string;
 
   selectAll: string;
   selectAllMatching: string;
@@ -79,7 +93,15 @@ export const defaultLabels: DataGridLabels = {
   reset: "Đặt lại",
   filter: "Lọc",
   clearFilter: "Xoá bộ lọc",
+  clearFilters: "Xoá tất cả bộ lọc",
+  allOf: (label) => `Tất cả ${label.toLocaleLowerCase("vi")}`,
+  sort: "Sắp xếp",
   export: "Xuất dữ liệu",
+  import: "Nhập dữ liệu",
+  exportAs: (format) => `Xuất ${format}`,
+  importFrom: (format) => `Nhập từ ${format}`,
+  page: (page) => `Trang ${page}`,
+  morePages: "Còn nhiều trang nữa",
 
   selectAll: "Chọn tất cả",
   selectAllMatching: "Chọn tất cả kết quả khớp bộ lọc",
@@ -120,7 +142,15 @@ export const englishLabels: DataGridLabels = {
   reset: "Reset",
   filter: "Filter",
   clearFilter: "Clear filter",
+  clearFilters: "Clear all filters",
+  allOf: (label) => `All ${label.toLowerCase()}`,
+  sort: "Sort",
   export: "Export",
+  import: "Import",
+  exportAs: (format) => `Export as ${format}`,
+  importFrom: (format) => `Import from ${format}`,
+  page: (page) => `Page ${page}`,
+  morePages: "More pages",
 
   selectAll: "Select all",
   selectAllMatching: "Select all matching the current filter",

@@ -2,7 +2,7 @@
   "name": "data-grid",
   "type": "registry:ui",
   "title": "DataGrid",
-  "description": "Grid ảo hoá cho admin/ERP: 10k+ dòng, server-side pagination/sort/filter, ghim/resize/ẩn cột, chọn dòng xuyên trang, empty/loading/error có sẵn. Chỉ cài khi cần — dự án nhẹ dùng @reno/table.",
+  "description": "Grid \u1ea3o ho\u00e1 cho admin/ERP: 10k+ d\u00f2ng, server-side pagination/sort/filter, ghim/resize/\u1ea9n c\u1ed9t, ch\u1ecdn d\u00f2ng xuy\u00ean trang, empty/loading/error c\u00f3 s\u1eb5n. Ch\u1ec9 c\u00e0i khi c\u1ea7n \u2014 d\u1ef1 \u00e1n nh\u1eb9 d\u00f9ng @reno/table.",
   "dependencies": [
     "@tanstack/react-table@^9.2.4",
     "@tanstack/react-virtual@^3.14.10",
@@ -55,6 +55,10 @@
       "type": "registry:ui"
     },
     {
+      "path": "registry/reno/ui/data-grid/pagination-range.ts",
+      "type": "registry:ui"
+    },
+    {
       "path": "registry/reno/ui/data-grid/column-pinning.ts",
       "type": "registry:ui"
     },
@@ -70,7 +74,7 @@
   "meta": {
     "source": "original",
     "license": "original",
-    "upstream": "Viết cho reno trên TanStack Table v9 + TanStack Virtual; shadcn/ui không có data grid",
+    "upstream": "Vi\u1ebft cho reno tr\u00ean TanStack Table v9 + TanStack Virtual; shadcn/ui kh\u00f4ng c\u00f3 data grid",
     "added": "2026-09-01",
     "group": "Data"
   }

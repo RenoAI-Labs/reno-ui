@@ -16,6 +16,23 @@ export type Person = {
   status: "active" | "leave" | "probation" | "left";
   salary: number;
   joinedAt: string;
+  /** Where the hire came from. Faceted in the toolbar's filter menu. */
+  source: HireSource;
+  /** Last performance review, 0-100. Rendered as a bar plus the number. */
+  score: number;
+  /** When the next review falls due, as a phrase rather than a date. */
+  nextReview: string;
+};
+
+export const HIRE_SOURCES = ["linkedin", "google", "referral", "website", "coldcall"] as const;
+export type HireSource = (typeof HIRE_SOURCES)[number];
+
+export const SOURCE_LABELS: Record<HireSource, string> = {
+  linkedin: "LinkedIn",
+  google: "Google",
+  referral: "Giới thiệu",
+  website: "Website",
+  coldcall: "Tự ứng tuyển",
 };
 
 export const DEPARTMENTS = [
@@ -43,6 +60,23 @@ const ROLES = [
 ];
 
 const STATUSES: Person["status"][] = ["active", "active", "active", "leave", "probation", "left"];
+
+/**
+ * Relative phrases rather than dates.
+ *
+ * "In 3 days" is what a reviewer actually needs from this column, and a real
+ * date here would have to be computed from `Date.now()` — which differs between
+ * the server render and the hydration that follows, and puts a mismatch error
+ * on the one page whose job is to look trustworthy.
+ */
+const REVIEW_WINDOWS = [
+  "Trong 2 ngày",
+  "Trong 3 ngày",
+  "Trong 1 tuần",
+  "Trong 2 tuần",
+  "Trong 1 tháng",
+  "Quá hạn 4 ngày",
+];
 
 export const STATUS_LABELS: Record<Person["status"], string> = {
   active: "Đang làm",
@@ -82,6 +116,11 @@ export const PEOPLE: Person[] = Array.from({ length: 240 }, (_, i) => {
     joinedAt: new Date(Date.UTC(2021, (i * 5) % 12, ((i * 17) % 27) + 1))
       .toISOString()
       .slice(0, 10),
+    // Same stride-plus-carry trick as the fields above: a bare stride would
+    // make the facet counts land on suspiciously round numbers.
+    source: HIRE_SOURCES[(i * 3 + Math.floor(i / 7)) % HIRE_SOURCES.length],
+    score: 22 + ((i * 37 + Math.floor(i / 5) * 11) % 77),
+    nextReview: REVIEW_WINDOWS[(i * 19 + Math.floor(i / 11)) % REVIEW_WINDOWS.length],
   };
 });
 
