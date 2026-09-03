@@ -290,6 +290,21 @@ written; it now exposes 26 rows, 5 column headers and 125 cells. `aria-sort` on
 the header only means something once the header is a `columnheader`, so it was
 inert until then too.
 
+Every control in a header cell is named after its column. That also had to be
+written out: an `aria-label` on the sort button replaced the header text the
+button wraps, so measured in Chrome on the showcase, six of ten headers reached
+the accessibility tree named "Sắp xếp tăng dần" — the column name absent from
+the button and, because a cell is named by its content, from the cell as well.
+`aria-sort` on a column nobody can name says nothing. The sort control now reads
+"Họ tên, Sắp xếp tăng dần" and the per-column menu "Tuỳ chọn cột Họ tên", while
+the cell itself is named by the column alone.
+
+A header rendered as an element rather than a string is the normal case — a
+glyph beside the text is what makes a wide grid scannable — so none of this can
+depend on a plain-string `header`. The names are composed with
+`aria-labelledby` against the rendered title, which works whatever a project
+renders there.
+
 Rows carry `aria-rowindex` and the grid `aria-rowcount`, because above the
 virtualize threshold most rows are not in the DOM and position in the markup says
 nothing about position in the page. The count is the current page plus its header

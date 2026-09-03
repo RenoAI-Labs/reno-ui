@@ -1,5 +1,5 @@
 import * as React from "react";
-import { act, render } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { DataGrid } from "@/components/ui/data-grid";
@@ -47,8 +47,16 @@ beforeAll(() => {
 type Row = { id: string; name: string; qty: number };
 
 const columns = createGridColumns<Row>((col) => [
-  col.accessor("name", { header: "Tên" }),
-  col.accessor("qty", { header: "Số lượng" }),
+  // A rendered header, not a string. That is the case with no plain text to
+  // fall back on, and the one the showcase actually uses.
+  col.accessor("name", {
+    header: () => (
+      <span>
+        <span aria-hidden>#</span> Tên
+      </span>
+    ),
+  }),
+  col.accessor("qty", { header: "Số lượng", enableSorting: false }),
 ]);
 
 const rows: Row[] = [
@@ -218,6 +226,59 @@ describe("DataGrid tells a reader where a row sits", () => {
       // +1 for the header row, +1 because aria-rowindex counts from one.
       expect(row.getAttribute("aria-rowindex")).toBe(String(position + 2));
     }
+  });
+});
+
+describe("DataGrid header controls say which column they belong to", () => {
+  /*
+    Computed accessible names, unlike the rest of this file. The defect here is
+    not a role a browser drops — it is `aria-label` on a control that wraps the
+    column's title, which replaces the title instead of adding to it. Measured
+    on the built showcase before the fix: six of ten headers reached Chrome's
+    accessibility tree named "Sắp xếp tăng dần", the column gone from both the
+    button and the cell that contains it.
+
+    So these queries go through the name computation on purpose, and the header
+    above renders an element rather than a string, because a header with a
+    plain-string fallback would hide the bug.
+  */
+  it("names a header cell after its column and nothing else", () => {
+    render(<Harness />);
+
+    /*
+      Exactly the column, which takes saying so. A cell is otherwise named by
+      everything inside it, and the two controls in there now name themselves
+      after the column — so the cell would read "Tên Column options Tên" to a
+      reader moving across the header row.
+    */
+    expect(screen.getByRole("columnheader", { name: "Tên" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Số lượng" })).toBeInTheDocument();
+  });
+
+  it("says what sorting a column would do, after naming the column", () => {
+    render(<Harness />);
+
+    // Column first, action second. `aria-sort` on the cell carries the current
+    // state; this says what a click would change it to. The column half is what
+    // an `aria-label` here used to destroy.
+    expect(
+      screen.getByRole("button", { name: `Tên ${englishLabels.sortAscending}` }),
+    ).toBeInTheDocument();
+  });
+
+  it("names each column's menu after that column", () => {
+    render(<Harness />);
+
+    // Every header used to render this as the toolbar's own "Columns", once per
+    // column, so a reader listing the buttons on a screen got the same name ten
+    // times and no way to tell which column any of them meant.
+    expect(
+      screen.getByRole("button", { name: `${englishLabels.columnMenu} Tên` }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: `${englishLabels.columnMenu} Số lượng` }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: englishLabels.columns })).not.toBeInTheDocument();
   });
 });
 

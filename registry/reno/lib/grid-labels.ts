@@ -37,6 +37,8 @@ export type DataGridLabels = {
   lastPage: string;
 
   columns: string;
+  /** Names the per-column menu in a header cell. Suffixed with the column. */
+  columnMenu: string;
   toggleColumn: string;
   /** Heading over the reorder entries in the columns menu. */
   columnOrder: string;
@@ -94,6 +96,7 @@ export const defaultLabels: DataGridLabels = {
   lastPage: "Trang cuối",
 
   columns: "Cột",
+  columnMenu: "Tuỳ chọn cột",
   toggleColumn: "Ẩn/hiện cột",
   columnOrder: "Thứ tự cột",
   moveColumnLeft: "Sang trái",
@@ -146,6 +149,7 @@ export const englishLabels: DataGridLabels = {
   lastPage: "Last page",
 
   columns: "Columns",
+  columnMenu: "Column options",
   toggleColumn: "Toggle column",
   columnOrder: "Column order",
   moveColumnLeft: "Move left",

@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon, PinIcon, PinOffIcon } from "lucide-react";
 import { flexRender, type Header, type RowData } from "@tanstack/react-table";
 
@@ -53,6 +54,24 @@ export function DataGridHeaderCell<TData extends RowData>({
 
   const canSort = column.getCanSort();
 
+  /*
+    Three ids, so the column's own title can name more than one control.
+
+    Measured on the built showcase before this existed: six of ten column
+    headers reached the accessibility tree named "Sắp xếp tăng dần", because an
+    `aria-label` on the sort button replaced the header text it wrapped — and a
+    header cell takes its name from its content, so the column name was gone
+    from the cell too. `aria-sort` on a column nobody can name says nothing.
+
+    `useId` rather than `header.id`: a page can render two grids, and two
+    elements sharing a DOM id would send every `aria-labelledby` here to the
+    first one.
+  */
+  const id = React.useId();
+  const titleId = `${id}-title`;
+  const sortHintId = `${id}-sort`;
+  const menuId = `${id}-menu`;
+
   return (
     <th
       data-slot="data-grid-header-cell"
@@ -61,6 +80,13 @@ export function DataGridHeaderCell<TData extends RowData>({
       role="columnheader"
       scope="col"
       colSpan={header.colSpan}
+      /*
+        Named by the column's title alone. A cell otherwise takes its name from
+        everything inside it, which now includes two controls that name
+        themselves after the column — so a reader moving across the header row
+        would hear "Trạng thái Tuỳ chọn cột Trạng thái" instead of the column.
+      */
+      aria-labelledby={header.isPlaceholder ? undefined : titleId}
       // `aria-sort` is what makes multi-column sort perceivable to a screen
       // reader; the arrow icon alone conveys nothing.
       aria-sort={
@@ -82,26 +108,56 @@ export function DataGridHeaderCell<TData extends RowData>({
               // which is the convention every spreadsheet user already knows.
               onClick={(event) => column.toggleSorting(undefined, event.shiftKey)}
               className="inline-flex items-center gap-1 rounded-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
-              aria-label={sorted === "asc" ? labels.sortDescending : labels.sortAscending}
+              /*
+                Referenced rather than left to compose from the content:
+                implementations differ on whether a space is inserted between
+                two child elements, and "TênSắp xếp tăng dần" is what that
+                costs. Ids join with a space everywhere.
+              */
+              aria-labelledby={`${titleId} ${sortHintId}`}
             >
-              {flexRender(column.columnDef.header, header.getContext())}
+              <span id={titleId}>
+                {flexRender(column.columnDef.header, header.getContext())}
+              </span>
               <SortIcon sorted={sorted} />
+              {/*
+                The action in words, after the column rather than instead of it.
+                A header that renders an icon beside its text has no plain
+                string to fall back on, so the name has to come from the
+                rendered content — which is also what keeps this working for a
+                header a project renders however it likes.
+              */}
+              <span id={sortHintId} className="sr-only">
+                {sorted === "asc" ? labels.sortDescending : labels.sortAscending}
+              </span>
             </button>
           ) : (
-            flexRender(column.columnDef.header, header.getContext())
+            <span id={titleId}>
+              {flexRender(column.columnDef.header, header.getContext())}
+            </span>
           )}
 
           {enableColumnPinning ? (
             <DropdownMenu>
+              {/*
+                Named "Tuỳ chọn cột" plus the column's own title, which is why
+                the title carries an id. Every header used to render this
+                trigger as "Cột" — the same name as the toolbar's columns
+                button, nine or ten times over on one screen, and not even a
+                description of a menu that sorts and pins.
+              */}
               <DropdownMenuTrigger
                 className="ms-auto inline-flex size-5 items-center justify-center rounded-sm opacity-0 outline-none group-hover/header:opacity-100 focus-visible:opacity-100 focus-visible:ring-[3px] focus-visible:ring-ring/50 data-[state=open]:opacity-100"
-                aria-label={labels.columns}
+                aria-labelledby={`${menuId} ${titleId}`}
               >
                 {pinned === false ? (
                   <PinIcon className="size-3.5" aria-hidden />
                 ) : (
                   <PinOffIcon className="size-3.5" aria-hidden />
                 )}
+                <span id={menuId} className="sr-only">
+                  {labels.columnMenu}
+                </span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 {canSort ? (
