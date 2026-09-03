@@ -140,7 +140,7 @@ jobs:
             --ts --tailwind --app --no-src-dir --eslint --use-npm --yes --skip-install
           cp /tmp/consumer/components.json /tmp/light/components.json
           cd /tmp/light
-          npx shadcn@4.19.1 add @reno/table @reno/empty-state @reno/error-state @reno/toggle-group @reno/theme-cms --yes
+          npx shadcn@4.19.1 add @reno/table @reno/empty-state @reno/error-state @reno/toggle-group @reno/theme-base --yes
           node -e '
             const deps = Object.keys(require("/tmp/light/package.json").dependencies || {});
             const banned = { tanstack: "@reno/data-grid", embla: "@reno/carousel" };

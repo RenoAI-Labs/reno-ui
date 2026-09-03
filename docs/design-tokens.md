@@ -154,7 +154,7 @@ project's `globals.css`**, which is why installing a preset re-themes the app
 with no manual step:
 
 ```bash
-npx shadcn@latest add @reno/theme-erp
+npx shadcn@latest add @reno/theme-base
 ```
 
 The `.css` files under `registry/reno/themes/` are *not* shipped. They are the

@@ -26,7 +26,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const THEME_DIR = join(ROOT, "registry/reno/themes");
 const ITEMS_DIR = join(ROOT, "registry/items");
 
-/** `theme-erp` -> `erp.css` */
+/** `theme-base` -> `base.css` */
 function cssFileFor(itemName) {
   return join(THEME_DIR, `${itemName.replace(/^theme-/, "")}.css`);
 }
