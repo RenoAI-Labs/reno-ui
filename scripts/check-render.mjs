@@ -21,9 +21,9 @@
  * 3. **A clean console.** React key warnings, hydration mismatches and thrown
  *    effects all surface here and nowhere else.
  *
- * The showcase is swept across all four presets in both colour modes, because
- * the virtualizer bug reproduced only under the preset whose row height happened
- * to equal the hook's default.
+ * The showcase is swept across both colour modes and two viewports. It used to
+ * be swept across four theme presets too, for the reason `checkShowcase`
+ * records — that coverage is gone with the presets, deliberately.
  *
  * Uses the Chrome already installed on the runner rather than downloading a
  * browser: `playwright-core` ships no binaries, and GitHub's ubuntu image has
