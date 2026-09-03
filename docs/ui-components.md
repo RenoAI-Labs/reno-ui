@@ -88,6 +88,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `hover-card` | ui | Overlay | shadcn/ui | MIT | shadcn hover-card, new-york style; content z-index read from --z-popover | 2026-09-01 |
 | `input` | ui | Form | shadcn/ui | MIT | shadcn input, new-york style; height/padding rewritten to read density tokens | 2026-09-01 |
 | `input-otp` | ui | Form | shadcn/ui | MIT | shadcn input-otp, new-york style; slot size rewritten to read the density control height, fake caret uses animate-pulse instead of a custom keyframe | 2026-09-01 |
+| `kv-row` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Rút từ kv-row.tsx của elearning (15 dòng) — phần khó là đường kẻ giữa hai dòng liền nhau, bản gốc lấy từ stylesheet ngoài component nên không cài lẻ được | 2026-09-03 |
 | `label` | ui | Form | shadcn/ui | MIT | shadcn label, new-york style; unchanged | 2026-09-01 |
 | `menubar` | ui | Nav | shadcn/ui | MIT | shadcn menubar, new-york style; height and z-index rewritten to read tokens | 2026-09-01 |
 | `navigation-menu` | ui | Nav | shadcn/ui | MIT | shadcn navigation-menu, new-york style; control height and z-index rewritten to read tokens | 2026-09-01 |
@@ -106,10 +107,13 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `slider` | ui | Form | shadcn/ui | MIT | shadcn slider, new-york style; unchanged | 2026-09-01 |
 | `sonner` | ui | Feedback | shadcn/ui | MIT | shadcn sonner, new-york style; next-themes swapped for an overridable theme prop (default "system") to stay framework-neutral | 2026-09-01 |
 | `spinner` | ui | Feedback | original | original | no shadcn equivalent; written for reno, sizes read density-control-height tokens | 2026-09-01 |
+| `stat-card` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Rút từ stat-card.tsx của elearning (134 dòng) và từ kpi-cards.tsx của chính showcase reno — cùng một hình dạng viết lần thứ ba. Khác bản gốc ở một điểm: direction (mũi tên) tách khỏi intent (màu), vì up không luôn là tin tốt | 2026-09-03 |
+| `stepper` | ui | Nav | original | original | Viết cho reno; shadcn/ui không có. Rút từ stepper.tsx của elearning (22 dòng) — bản gốc thuần trình bày, 0 semantics; đây là chỗ sửa chứ không phải chỗ port | 2026-09-03 |
 | `switch` | ui | Form | shadcn/ui | MIT | shadcn switch, new-york style; unchanged | 2026-09-01 |
 | `table` | ui | Data | shadcn/ui | MIT | shadcn table, new-york style; row/cell sizing rewritten to read density tokens | 2026-09-01 |
 | `tabs` | ui | Layout | shadcn/ui | MIT | shadcn tabs, new-york style; TabsList height rewritten to read density-control-height | 2026-09-01 |
 | `textarea` | ui | Form | shadcn/ui | MIT | shadcn textarea, new-york style; min-height rewritten as a multiple of the density control height | 2026-09-01 |
+| `timeline` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Rút từ consult-timeline.tsx của elearning (75 dòng); cố tình bỏ phần attachment qua route có auth và luật sửa-trong-24h — cả hai thuộc dự án, đi qua slot actions | 2026-09-03 |
 | `toggle` | ui | Form | shadcn/ui | MIT | shadcn toggle, new-york style; fixed heights h-8/h-9/h-10 rewritten to read --density-control-height*, and horizontal padding to --density-control-px | 2026-09-02 |
 | `toggle-group` | ui | Form | shadcn/ui | MIT | shadcn toggle-group, new-york style; item padding reads --density-control-px, and the consumer's `style` is merged into the gap variable instead of overwriting it | 2026-09-02 |
 | `tooltip` | ui | Overlay | shadcn/ui | MIT | shadcn tooltip, new-york style; content z-index read from --z-popover | 2026-09-01 |
@@ -196,7 +200,7 @@ Allowed: `MIT`, `ISC`, `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `0BSD`, `CC
 | `embla-carousel-react` | ^8.6.0 | MIT | `carousel` |
 | `hls.js` | ^1.7.1 | Apache-2.0 | `video-player` |
 | `input-otp` | ^1.5.0 | MIT | `input-otp` |
-| `lucide-react` | ^1.38.0 | ISC | `accordion`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `data-grid`, `data-grid-toolbar`, `date-picker`, `empty-state`, `error-state`, `input-otp`, `menubar`, `navigation-menu`, `pagination`, `radio-group`, `resizable`, `rich-text`, `select`, `sidebar`, `spinner`, `video-player` |
+| `lucide-react` | ^1.38.0 | ISC | `accordion`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `data-grid`, `data-grid-toolbar`, `date-picker`, `empty-state`, `error-state`, `input-otp`, `menubar`, `navigation-menu`, `pagination`, `radio-group`, `resizable`, `rich-text`, `select`, `sidebar`, `spinner`, `stat-card`, `stepper`, `video-player` |
 | `react-day-picker` | ^10.0.1 | MIT | `calendar` |
 | `react-hook-form` | ^7.87.0 | MIT | `form` |
 | `react-resizable-panels` | ^4.12.3 | MIT | `resizable` |

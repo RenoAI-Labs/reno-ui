@@ -1,0 +1,23 @@
+{
+  "name": "kv-row",
+  "type": "registry:ui",
+  "title": "KvRow",
+  "description": "Dòng nhãn — giá trị cho trang chi tiết. Dựng bằng <dl> nên screen reader đọc thành từng cặp; KvList tự vẽ đường kẻ giữa các dòng, không cần CSS từ dự án.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/kv-row.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Rút từ kv-row.tsx của elearning (15 dòng) — phần khó là đường kẻ giữa hai dòng liền nhau, bản gốc lấy từ stylesheet ngoài component nên không cài lẻ được",
+    "added": "2026-09-03",
+    "group": "Data"
+  }
+}

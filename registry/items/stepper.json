@@ -1,0 +1,25 @@
+{
+  "name": "stepper",
+  "type": "registry:ui",
+  "title": "Stepper",
+  "description": "Chỉ báo tiến trình nhiều bước: checkout, onboarding, wizard import. Ngang hoặc dọc. Dựng bằng <ol> + aria-current=step, trạng thái từng bước có chữ chứ không chỉ có màu. Mọi nhãn qua prop labels.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/stepper.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Rút từ stepper.tsx của elearning (22 dòng) — bản gốc thuần trình bày, 0 semantics; đây là chỗ sửa chứ không phải chỗ port",
+    "added": "2026-09-03",
+    "group": "Nav"
+  }
+}

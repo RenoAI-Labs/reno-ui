@@ -2138,6 +2138,29 @@
       }
     },
     {
+      "name": "kv-row",
+      "type": "registry:ui",
+      "title": "KvRow",
+      "description": "Dòng nhãn — giá trị cho trang chi tiết. Dựng bằng <dl> nên screen reader đọc thành từng cặp; KvList tự vẽ đường kẻ giữa các dòng, không cần CSS từ dự án.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/kv-row.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Rút từ kv-row.tsx của elearning (15 dòng) — phần khó là đường kẻ giữa hai dòng liền nhau, bản gốc lấy từ stylesheet ngoài component nên không cài lẻ được",
+        "added": "2026-09-03",
+        "group": "Data"
+      }
+    },
+    {
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
@@ -2665,6 +2688,59 @@
       }
     },
     {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "StatCard",
+      "description": "Ô KPI: nhãn, một con số, và chiều biến động. Có trạng thái loading, có biến thể bấm được (semantics button + bàn phím). Hướng mũi tên và màu tách riêng — churn tăng là tin xấu.",
+      "dependencies": [
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/card",
+        "@reno/badge",
+        "@reno/skeleton"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/stat-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Rút từ stat-card.tsx của elearning (134 dòng) và từ kpi-cards.tsx của chính showcase reno — cùng một hình dạng viết lần thứ ba. Khác bản gốc ở một điểm: direction (mũi tên) tách khỏi intent (màu), vì up không luôn là tin tốt",
+        "added": "2026-09-03",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Chỉ báo tiến trình nhiều bước: checkout, onboarding, wizard import. Ngang hoặc dọc. Dựng bằng <ol> + aria-current=step, trạng thái từng bước có chữ chứ không chỉ có màu. Mọi nhãn qua prop labels.",
+      "dependencies": [
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/stepper.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Rút từ stepper.tsx của elearning (22 dòng) — bản gốc thuần trình bày, 0 semantics; đây là chỗ sửa chứ không phải chỗ port",
+        "added": "2026-09-03",
+        "group": "Nav"
+      }
+    },
+    {
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
@@ -2758,6 +2834,29 @@
         "upstream": "shadcn textarea, new-york style; min-height rewritten as a multiple of the density control height",
         "added": "2026-09-01",
         "group": "Form"
+      }
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "Dòng thời gian dọc: lịch sử đơn, audit log, nhật ký tư vấn, bảng hoạt động. Dot tô theo intent, có slot actions cho từng mục. Dựng bằng <ol>.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/timeline.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Rút từ consult-timeline.tsx của elearning (75 dòng); cố tình bỏ phần attachment qua route có auth và luật sửa-trong-24h — cả hai thuộc dự án, đi qua slot actions",
+        "added": "2026-09-03",
+        "group": "Data"
       }
     },
     {

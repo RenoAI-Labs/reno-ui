@@ -1,62 +1,72 @@
-import { ArrowDownRight, ArrowUpRight, Clock, UserMinus, UserPlus, Users } from "lucide-react";
+import { Clock, UserMinus, UserPlus, Users } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { StatCard } from "@/components/ui/stat-card";
 import { number } from "./mock-data";
 
 /**
- * The KPI row. Deliberately includes one card in its loading state: a showcase
- * that only ever shows the happy path hides exactly the states that break.
+ * The KPI row.
+ *
+ * This file used to draw the tile itself — Card + Badge + Skeleton + an arrow,
+ * about forty lines of it. That shape was already written twice: once in a real
+ * project, once here. It is `@reno/stat-card` now, and this page consumes it
+ * like any project would, which is the only way the extraction is worth
+ * anything.
+ *
+ * One card is deliberately left in its loading state: a showcase that only ever
+ * shows the happy path hides exactly the states that break.
  */
 
 const KPIS = [
-  { key: "total", label: "Tổng nhân sự", value: 240, delta: 3.4, icon: Users, hint: "so với tháng trước" },
-  { key: "hired", label: "Tuyển mới tháng 8", value: 19, delta: 12.5, icon: UserPlus, hint: "so với tháng 7" },
-  { key: "left", label: "Nghỉ việc tháng 8", value: 9, delta: -8.2, icon: UserMinus, hint: "so với tháng 7" },
-];
+  {
+    key: "total",
+    label: "Tổng nhân sự",
+    value: 240,
+    delta: { text: "3,4%", direction: "up" },
+    icon: Users,
+    hint: "so với tháng trước",
+  },
+  {
+    key: "hired",
+    label: "Tuyển mới tháng 8",
+    value: 19,
+    delta: { text: "12,5%", direction: "up" },
+    icon: UserPlus,
+    hint: "so với tháng 7",
+  },
+  {
+    key: "left",
+    label: "Nghỉ việc tháng 8",
+    // Attrition rising is bad news: the arrow follows the number, the colour
+    // follows the business. This is the case a single "up = green" rule gets
+    // wrong, and the reason StatCard separates the two.
+    value: 9,
+    delta: { text: "8,2%", direction: "up", intent: "negative" },
+    icon: UserMinus,
+    hint: "so với tháng 7",
+  },
+] as const;
 
 export function KpiCards() {
   return (
     <div className="grid gap-[var(--density-gap)] sm:grid-cols-2 xl:grid-cols-4">
-      {KPIS.map((kpi) => {
-        const positive = kpi.delta >= 0;
-        const Arrow = positive ? ArrowUpRight : ArrowDownRight;
+      {KPIS.map((kpi) => (
+        <StatCard
+          key={kpi.key}
+          label={kpi.label}
+          value={number.format(kpi.value)}
+          icon={<kpi.icon className="size-4" aria-hidden />}
+          delta={kpi.delta}
+          hint={kpi.hint}
+        />
+      ))}
 
-        return (
-          <Card key={kpi.key}>
-            <CardHeader>
-              <CardDescription className="flex items-center gap-2">
-                <kpi.icon className="size-4" />
-                {kpi.label}
-              </CardDescription>
-              <CardTitle className="text-2xl tabular-nums">{number.format(kpi.value)}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Badge variant={positive ? "success" : "destructive"}>
-                <Arrow />
-                {Math.abs(kpi.delta).toFixed(1)}%
-              </Badge>
-              <span className="ms-2 text-xs text-muted-foreground">{kpi.hint}</span>
-            </CardContent>
-          </Card>
-        );
-      })}
-
-      <Card aria-busy>
-        <CardHeader>
-          <CardDescription className="flex items-center gap-2">
-            <Clock className="size-4" />
-            Chi phí lương tháng 8
-          </CardDescription>
-          <CardTitle>
-            <Skeleton className="h-7 w-32" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Skeleton className="h-5 w-40" />
-        </CardContent>
-      </Card>
+      <StatCard
+        label="Chi phí lương tháng 8"
+        value=""
+        icon={<Clock className="size-4" aria-hidden />}
+        delta={{ text: "" }}
+        loading
+      />
     </div>
   );
 }

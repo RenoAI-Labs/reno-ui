@@ -1,0 +1,28 @@
+{
+  "name": "stat-card",
+  "type": "registry:ui",
+  "title": "StatCard",
+  "description": "Ô KPI: nhãn, một con số, và chiều biến động. Có trạng thái loading, có biến thể bấm được (semantics button + bàn phím). Hướng mũi tên và màu tách riêng — churn tăng là tin xấu.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/card",
+    "@reno/badge",
+    "@reno/skeleton"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/stat-card.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Rút từ stat-card.tsx của elearning (134 dòng) và từ kpi-cards.tsx của chính showcase reno — cùng một hình dạng viết lần thứ ba. Khác bản gốc ở một điểm: direction (mũi tên) tách khỏi intent (màu), vì up không luôn là tin tốt",
+    "added": "2026-09-03",
+    "group": "Data"
+  }
+}

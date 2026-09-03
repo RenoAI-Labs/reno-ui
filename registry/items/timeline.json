@@ -1,0 +1,23 @@
+{
+  "name": "timeline",
+  "type": "registry:ui",
+  "title": "Timeline",
+  "description": "Dòng thời gian dọc: lịch sử đơn, audit log, nhật ký tư vấn, bảng hoạt động. Dot tô theo intent, có slot actions cho từng mục. Dựng bằng <ol>.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/timeline.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Rút từ consult-timeline.tsx của elearning (75 dòng); cố tình bỏ phần attachment qua route có auth và luật sửa-trong-24h — cả hai thuộc dự án, đi qua slot actions",
+    "added": "2026-09-03",
+    "group": "Data"
+  }
+}
