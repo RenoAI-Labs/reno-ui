@@ -193,11 +193,35 @@ export const STATIC_THEME_TOKENS = {
     "0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1)",
   "shadow-lg":
     "0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1)",
-  "z-dropdown": "1000",
+  /*
+    Three layers, not six, and the four overlay names deliberately hold the
+    same number.
+
+    A ladder by component type reads well and does not work. Radix portals
+    every overlay to `document.body`, so a select opened inside a popover is
+    that popover's *sibling*, and the order it needs is "above whatever opened
+    me" — which no fixed number per component type can express. With a ladder,
+    the select's 1000 lost to the popover's 1400 and the option list rendered
+    behind an opaque panel: open, hit-testable, invisible. Measured on the
+    showcase's brand panel. The same ladder put every select and dropdown
+    behind a dialog, sheet and drawer too, which is the most ordinary
+    composition an admin screen has.
+
+    Equal z-indexes hand the decision to DOM order instead, and DOM order is
+    open order: Radix appends each portal on open and removes it on close, so
+    the newest overlay paints last. That is also how it resolves an overlay
+    against its own backdrop — the backdrop is earlier in the same portal.
+
+    The names stay because components and the docs reference them, and because
+    they still say which layer a thing belongs to. Anything that has to sit
+    above a portaled overlay by rule rather than by order — a toast — needs its
+    own number, and anything in normal flow needs to be below all of them.
+  */
   "z-sticky": "1100",
-  "z-overlay": "1200",
+  "z-dropdown": "1300",
+  "z-overlay": "1300",
   "z-modal": "1300",
-  "z-popover": "1400",
+  "z-popover": "1300",
   "z-toast": "1500",
 };
 

@@ -83,6 +83,43 @@ className="h-10 px-4"
 Concretely, `--density-row-height` is `2rem` under ERP and `3.25rem` under
 e-learning: roughly 60% more rows on the same screen, from a value change.
 
+## Stacking tokens, and why four of them are equal
+
+| Token | Value | For |
+|---|---|---|
+| `--z-sticky` | 1100 | Sticky things in normal flow: a page header, the grid's header row |
+| `--z-dropdown` | 1300 | Dropdown, select, context menu, menubar, navigation menu |
+| `--z-overlay` | 1300 | The dim backdrop behind a dialog, sheet or drawer |
+| `--z-modal` | 1300 | Dialog, sheet, drawer |
+| `--z-popover` | 1300 | Popover, hover card, tooltip |
+| `--z-toast` | 1500 | Toasts |
+
+The four middle values are the same number on purpose, and raising one of them
+breaks something. These components portal their content to `document.body`, so
+an overlay opened from inside another overlay is that other overlay's
+**sibling** — and what it needs is to sit above whatever opened it. A select
+inside a popover needs to beat the popover; a select inside a dialog needs to
+beat the dialog; a dialog opened from a popover needs to beat the popover. No
+fixed number per component type satisfies all three.
+
+Equal z-indexes hand the decision to DOM order, and DOM order here is open
+order: Radix appends a portal when the overlay opens and removes it when it
+closes, so the most recently opened content paints last. It is also what puts a
+dialog above its own backdrop, since the backdrop is earlier in the same
+portal.
+
+This was a ladder once — dropdown 1000, modal 1300, popover 1400 — and the
+brand panel on the showcase is where it showed: the radius select opened at
+1000 against a popover at 1400 and rendered *behind* an opaque panel. Open in
+the DOM, clickable through the popover's `pointer-events: none`, and invisible.
+The same numbers put every select and dropdown behind a dialog, sheet and
+drawer, which is as ordinary as an admin screen gets.
+
+The names are kept because they still say which layer a component belongs to,
+and because a project that overrides them keeps working. `tests/z-layers.test.ts`
+reads the tokens out of the components that use them and fails if any portaled
+overlay ends up on a different layer.
+
 ## One theme, and how to brand it
 
 reno-ui ships a single theme, `@reno/theme-base`:
