@@ -204,15 +204,15 @@ Allowed: `MIT`, `ISC`, `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `0BSD`, `CC
 | `@tiptap/react` | ^3.31.0 | MIT | `rich-text` |
 | `@tiptap/starter-kit` | ^3.31.0 | MIT | `rich-text` |
 | `@uiw/react-codemirror` | ^4.25.11 | MIT | `code-editor` |
-| `class-variance-authority` | ^0.7.1 | Apache-2.0 | `avatar`, `badge`, `button`, `navigation-menu`, `sheet`, `sidebar`, `spinner`, `toggle`, `toggle-group` |
+| `class-variance-authority` | ^0.7.1 | Apache-2.0 | `alert`, `avatar`, `badge`, `button`, `navigation-menu`, `sheet`, `sidebar`, `spinner`, `toggle`, `toggle-group` |
 | `clsx` | ^2.1.1 | MIT | `utils` |
 | `cmdk` | ^1.1.1 | MIT | `command` |
 | `date-fns` | ^4.4.0 | MIT | `calendar`, `date-picker` |
 | `embla-carousel-react` | ^8.6.0 | MIT | `carousel` |
 | `hls.js` | ^1.7.1 | Apache-2.0 | `video-player` |
 | `input-otp` | ^1.5.0 | MIT | `input-otp` |
-| `lucide-react` | ^1.38.0 | ISC | `accordion`, `audio-player`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `data-grid`, `data-grid-toolbar`, `date-picker`, `empty-state`, `error-state`, `file-upload`, `input-otp`, `menubar`, `navigation-menu`, `number-input`, `pagination`, `radio-group`, `resizable`, `rich-text`, `select`, `sidebar`, `spinner`, `stat-card`, `stepper`, `video-player` |
-| `react-day-picker` | ^10.0.1 | MIT | `calendar` |
+| `lucide-react` | ^1.38.0 | ISC | `accordion`, `audio-player`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `command`, `context-menu`, `data-grid`, `data-grid-toolbar`, `date-picker`, `dialog`, `dropdown-menu`, `empty-state`, `error-state`, `file-upload`, `input-otp`, `menubar`, `navigation-menu`, `number-input`, `pagination`, `radio-group`, `resizable`, `rich-text`, `select`, `sheet`, `sidebar`, `spinner`, `stat-card`, `stepper`, `video-player` |
+| `react-day-picker` | ^10.0.1 | MIT | `calendar`, `date-picker` |
 | `react-hook-form` | ^7.87.0 | MIT | `form` |
 | `react-resizable-panels` | ^4.12.3 | MIT | `resizable` |
 | `recharts` | ^3.10.1 | MIT | `chart` |

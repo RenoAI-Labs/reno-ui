@@ -28,10 +28,13 @@ export default function ComponentsIndexPage() {
               <li key={item.name}>
                 <Link
                   href={`/components/${item.name}`}
-                  className="flex h-full flex-col gap-1 rounded-lg border border-border bg-card p-4 transition-colors hover:border-ring"
+                  className="flex h-full min-w-0 flex-col gap-1 rounded-lg border border-border bg-card p-4 transition-colors hover:border-ring"
                 >
                   <span className="font-medium">{item.title}</span>
-                  <span className="text-sm text-muted-foreground">
+                  {/* Descriptions name symbols and CSS classes, so a single token
+                      can be longer than the card. Without a break the grid track
+                      widens to fit it and the whole page scrolls sideways. */}
+                  <span className="text-sm break-words text-muted-foreground">
                     {item.description}
                   </span>
                 </Link>

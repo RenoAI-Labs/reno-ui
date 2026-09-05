@@ -20,12 +20,19 @@
  * honestly claim to support. Caret, not exact: a consumer should be free to
  * take patches, but never a major.
  *
+ * The same pass also catches the opposite mistake: source that imports a
+ * package the item never declares. `shadcn add` only installs what the item
+ * lists, so an undeclared import installs nothing and the consumer's FIRST
+ * typecheck fails inside a file it did not write. Five items shipped importing
+ * `lucide-react` without declaring it; nothing here read the source, so nothing
+ * could see it. Found by installing the registry into a blank project.
+ *
  * Usage:
  *   node scripts/sync-item-deps.mjs           # rewrite registry/items/*.json
  *   node scripts/sync-item-deps.mjs --check   # fail if any item is stale
  */
 
-import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -73,10 +80,53 @@ function pin(spec, itemName, errors) {
   return `${name}@^${bareVersion(declared)}`;
 }
 
+/**
+ * Packages every consumer already has because the component tree runs in them.
+ * Declaring these would make `shadcn add` try to reinstall the project's own
+ * framework, so they stay out of item dependencies on purpose.
+ */
+const AMBIENT = new Set(["react", "react-dom", "next"]);
+
+/** Bare npm package name from an import specifier, or null if it is not one. */
+function packageOf(spec) {
+  if (spec.startsWith(".") || spec.startsWith("/") || spec.startsWith("@/")) return null;
+  if (spec.startsWith("node:")) return null;
+  const parts = spec.split("/");
+  const name = spec.startsWith("@") ? parts.slice(0, 2).join("/") : parts[0];
+  if (AMBIENT.has(name) || name.startsWith("next/")) return null;
+  return name;
+}
+
+/** Every npm package an item's own source files import. */
+function importsOf(item) {
+  const found = new Set();
+  for (const file of item.files ?? []) {
+    const path = join(ROOT, file.path);
+    if (!existsSync(path)) continue;
+    // Comments hold example imports that nothing installs - a doc block showing
+    // `import { css } from "@codemirror/lang-css"` is not a dependency.
+    const src = readFileSync(path, "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .split("\n")
+      .filter((line) => !/^\s*\/\//.test(line))
+      .join("\n");
+    for (const m of src.matchAll(/\bfrom\s+["']([^"']+)["']/g)) {
+      const name = packageOf(m[1]);
+      if (name) found.add(name);
+    }
+    for (const m of src.matchAll(/\bimport\(\s*["']([^"']+)["']\s*\)/g)) {
+      const name = packageOf(m[1]);
+      if (name) found.add(name);
+    }
+  }
+  return found;
+}
+
 function main() {
   const check = process.argv.includes("--check");
   const errors = [];
   const stale = [];
+  const undeclared = [];
   let pinned = 0;
 
   for (const file of readdirSync(ITEMS_DIR).filter((f) => f.endsWith(".json")).sort()) {
@@ -84,6 +134,28 @@ function main() {
     const raw = readFileSync(path, "utf8");
     const item = JSON.parse(raw);
     let changed = false;
+
+    // Source imports a package the item never declared -> the consumer installs
+    // nothing and fails at typecheck. Add it here, from this repo's own range.
+    const declared = new Set(
+      DEP_FIELDS.flatMap((f) => item[f] ?? []).map((spec) => splitSpec(spec).name),
+    );
+    const missing = [...importsOf(item)].filter((name) => !declared.has(name)).sort();
+    if (missing.length) {
+      const unknown = missing.filter((name) => !known[name]);
+      if (unknown.length) {
+        errors.push(
+          `${item.name ?? file}: source imports ${unknown.map((u) => `"${u}"`).join(", ")}, ` +
+            `which reno-ui's own package.json does not have. Add it there first.`,
+        );
+      }
+      const addable = missing.filter((name) => known[name]);
+      if (addable.length) {
+        item.dependencies = [...(item.dependencies ?? []), ...addable].sort();
+        changed = true;
+        undeclared.push(`${item.name ?? file}: ${addable.join(", ")}`);
+      }
+    }
 
     for (const field of DEP_FIELDS) {
       const list = item[field];
@@ -104,6 +176,15 @@ function main() {
   if (errors.length) {
     console.error("Registry dependency check failed:");
     for (const e of errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+
+  if (check && undeclared.length) {
+    console.error(
+      `Registry items import npm packages they do not declare (${undeclared.length} item(s)):`,
+    );
+    for (const u of undeclared) console.error(`  - ${u}`);
+    console.error("Run `npm run items:sync` and rebuild the registry.");
     process.exit(1);
   }
 

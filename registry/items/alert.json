@@ -3,8 +3,12 @@
   "type": "registry:ui",
   "title": "Alert",
   "description": "Thông báo nổi bật với các biến thể default/destructive/success/warning/info dùng token trạng thái.",
-  "dependencies": [],
-  "registryDependencies": ["@reno/utils"],
+  "dependencies": [
+    "class-variance-authority@^0.7.1"
+  ],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
   "files": [
     {
       "path": "registry/reno/ui/alert.tsx",

@@ -4,7 +4,8 @@
   "title": "Dialog",
   "description": "Hộp thoại modal dùng Radix Dialog, với overlay và nội dung theo thang z-index modal của reno.",
   "dependencies": [
-    "@radix-ui/react-dialog@^1.1.23"
+    "@radix-ui/react-dialog@^1.1.23",
+    "lucide-react@^1.38.0"
   ],
   "registryDependencies": [
     "@reno/utils"

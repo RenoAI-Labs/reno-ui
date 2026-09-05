@@ -4,7 +4,8 @@
   "title": "Context Menu",
   "description": "Menu ngữ cảnh khi chuột phải (item, checkbox, radio, submenu) từ Radix Context Menu; chiều cao mục đọc token mật độ.",
   "dependencies": [
-    "@radix-ui/react-context-menu@^2.3.7"
+    "@radix-ui/react-context-menu@^2.3.7",
+    "lucide-react@^1.38.0"
   ],
   "registryDependencies": [
     "@reno/utils"
