@@ -1,0 +1,28 @@
+{
+  "name": "audio-player",
+  "type": "registry:ui",
+  "title": "AudioPlayer",
+  "description": "Trình phát audio kèm thanh điều khiển: phát/dừng, seek, thời lượng, âm lượng, tốc độ. Không lưu tiến độ - phát onProgress/onEnded để dự án tự lưu, cùng giao kèo với video-player.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button",
+    "@reno/slider",
+    "@reno/spinner"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/audio-player.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "video-player covers video via hls.js; pulling hls.js in to play an mp3 is bundle cost for nothing",
+    "added": "2026-09-05",
+    "group": "Data"
+  }
+}

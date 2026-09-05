@@ -1,0 +1,26 @@
+{
+  "name": "number-input",
+  "type": "registry:ui",
+  "title": "NumberInput",
+  "description": "Ô nhập số kèm nút giảm/tăng ở chiều cao density. Không nhầm với stepper - cái đó là chỉ báo tiến trình nhiều bước cho wizard.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/number-input.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "no shadcn equivalent; native number spinners are tiny, browser-specific and vanish on touch",
+    "added": "2026-09-05",
+    "group": "Form"
+  }
+}

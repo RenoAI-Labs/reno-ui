@@ -1,0 +1,27 @@
+{
+  "name": "file-upload",
+  "type": "registry:ui",
+  "title": "FileUpload",
+  "description": "Vùng kéo thả kèm danh sách tệp, tiến trình từng tệp và chặn theo type/size. Không tự upload - trả tệp đã nhận cho dự án và vẽ tiến trình dự án báo về; tệp bị từ chối được báo chứ không nuốt.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button",
+    "@reno/progress"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/file-upload.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "no shadcn equivalent; every media SaaS needs one and none of them upload the same way",
+    "added": "2026-09-05",
+    "group": "Form"
+  }
+}

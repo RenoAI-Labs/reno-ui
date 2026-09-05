@@ -70,6 +70,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `alert` | ui | Feedback | shadcn/ui | MIT | shadcn alert, new-york style; added success/warning/info variants on top of default/destructive | 2026-09-01 |
 | `alert-dialog` | ui | Overlay | shadcn/ui | MIT | shadcn alert-dialog, new-york style; overlay/content z-index read from --z-overlay/--z-modal, action/cancel reuse buttonVariants | 2026-09-01 |
 | `aspect-ratio` | ui | Layout | shadcn/ui | MIT | shadcn aspect-ratio, new-york style; unchanged | 2026-09-01 |
+| `audio-player` | ui | Data | original | original | video-player covers video via hls.js; pulling hls.js in to play an mp3 is bundle cost for nothing | 2026-09-05 |
 | `avatar` | ui | Data | shadcn/ui | MIT | shadcn avatar, new-york style; size variants rewritten to read density tokens | 2026-09-01 |
 | `badge` | ui | Feedback | shadcn/ui | MIT | shadcn badge, new-york style; added success/warning/info variants | 2026-09-01 |
 | `breadcrumb` | ui | Nav | shadcn/ui | MIT | shadcn breadcrumb, new-york style; ellipsis size rewritten to read density tokens | 2026-09-01 |
@@ -92,6 +93,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `dropdown-menu` | ui | Overlay | shadcn/ui | MIT | shadcn dropdown-menu, new-york style; content z-index read from --z-dropdown, item min-height/padding read density tokens | 2026-09-01 |
 | `empty-state` | ui | Feedback | original | original | Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này | 2026-09-02 |
 | `error-state` | ui | Feedback | original | original | Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này | 2026-09-02 |
+| `file-upload` | ui | Form | original | original | no shadcn equivalent; every media SaaS needs one and none of them upload the same way | 2026-09-05 |
 | `form` | ui | Form | shadcn/ui | MIT | shadcn form, new-york style; unchanged logic, restyled label error state via data-error | 2026-09-01 |
 | `hover-card` | ui | Overlay | shadcn/ui | MIT | shadcn hover-card, new-york style; content z-index read from --z-popover | 2026-09-01 |
 | `input` | ui | Form | shadcn/ui | MIT | shadcn input, new-york style; height/padding rewritten to read density tokens | 2026-09-01 |
@@ -100,6 +102,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `label` | ui | Form | shadcn/ui | MIT | shadcn label, new-york style; unchanged | 2026-09-01 |
 | `menubar` | ui | Nav | shadcn/ui | MIT | shadcn menubar, new-york style; height and z-index rewritten to read tokens | 2026-09-01 |
 | `navigation-menu` | ui | Nav | shadcn/ui | MIT | shadcn navigation-menu, new-york style; control height and z-index rewritten to read tokens | 2026-09-01 |
+| `number-input` | ui | Form | original | original | no shadcn equivalent; native number spinners are tiny, browser-specific and vanish on touch | 2026-09-05 |
 | `pagination` | ui | Data | shadcn/ui | MIT | shadcn pagination, new-york style; dropped next/link, added overridable Vietnamese labels | 2026-09-01 |
 | `popover` | ui | Overlay | shadcn/ui | MIT | shadcn popover, new-york style; content z-index read from --z-popover | 2026-09-01 |
 | `progress` | ui | Feedback | shadcn/ui | MIT | shadcn progress, new-york style; unchanged | 2026-09-01 |
@@ -208,7 +211,7 @@ Allowed: `MIT`, `ISC`, `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `0BSD`, `CC
 | `embla-carousel-react` | ^8.6.0 | MIT | `carousel` |
 | `hls.js` | ^1.7.1 | Apache-2.0 | `video-player` |
 | `input-otp` | ^1.5.0 | MIT | `input-otp` |
-| `lucide-react` | ^1.38.0 | ISC | `accordion`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `data-grid`, `data-grid-toolbar`, `date-picker`, `empty-state`, `error-state`, `input-otp`, `menubar`, `navigation-menu`, `pagination`, `radio-group`, `resizable`, `rich-text`, `select`, `sidebar`, `spinner`, `stat-card`, `stepper`, `video-player` |
+| `lucide-react` | ^1.38.0 | ISC | `accordion`, `audio-player`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `data-grid`, `data-grid-toolbar`, `date-picker`, `empty-state`, `error-state`, `file-upload`, `input-otp`, `menubar`, `navigation-menu`, `number-input`, `pagination`, `radio-group`, `resizable`, `rich-text`, `select`, `sidebar`, `spinner`, `stat-card`, `stepper`, `video-player` |
 | `react-day-picker` | ^10.0.1 | MIT | `calendar` |
 | `react-hook-form` | ^7.87.0 | MIT | `form` |
 | `react-resizable-panels` | ^4.12.3 | MIT | `resizable` |
