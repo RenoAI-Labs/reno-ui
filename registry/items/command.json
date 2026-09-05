@@ -4,7 +4,8 @@
   "title": "Command",
   "description": "Bảng lệnh tìm kiếm nhanh (bọc cmdk); CommandDialog kết hợp dialog để dùng như command palette.",
   "dependencies": [
-    "cmdk@^1.1.1"
+    "cmdk@^1.1.1",
+    "lucide-react@^1.38.0"
   ],
   "registryDependencies": [
     "@reno/utils",

@@ -575,7 +575,9 @@
       "type": "registry:ui",
       "title": "Alert",
       "description": "Thông báo nổi bật với các biến thể default/destructive/success/warning/info dùng token trạng thái.",
-      "dependencies": [],
+      "dependencies": [
+        "class-variance-authority@^0.7.1"
+      ],
       "registryDependencies": [
         "@reno/utils"
       ],
@@ -1014,7 +1016,8 @@
       "title": "Command",
       "description": "Bảng lệnh tìm kiếm nhanh (bọc cmdk); CommandDialog kết hợp dialog để dùng như command palette.",
       "dependencies": [
-        "cmdk@^1.1.1"
+        "cmdk@^1.1.1",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1040,7 +1043,8 @@
       "title": "Context Menu",
       "description": "Menu ngữ cảnh khi chuột phải (item, checkbox, radio, submenu) từ Radix Context Menu; chiều cao mục đọc token mật độ.",
       "dependencies": [
-        "@radix-ui/react-context-menu@^2.3.7"
+        "@radix-ui/react-context-menu@^2.3.7",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1182,7 +1186,8 @@
       "description": "DatePicker (một ngày) và DateRangePicker (khoảng ngày), ghép từ Popover + Calendar + Button, định dạng và locale mặc định tiếng Việt.",
       "dependencies": [
         "date-fns@^4.4.0",
-        "lucide-react@^1.38.0"
+        "lucide-react@^1.38.0",
+        "react-day-picker@^10.0.1"
       ],
       "registryDependencies": [
         "@reno/utils",
@@ -1210,7 +1215,8 @@
       "title": "Dialog",
       "description": "Hộp thoại modal dùng Radix Dialog, với overlay và nội dung theo thang z-index modal của reno.",
       "dependencies": [
-        "@radix-ui/react-dialog@^1.1.23"
+        "@radix-ui/react-dialog@^1.1.23",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1260,7 +1266,8 @@
       "title": "Dropdown Menu",
       "description": "Menu thả xuống đầy đủ (item, checkbox, radio, submenu) từ Radix Dropdown Menu; chiều cao mục đọc token mật độ.",
       "dependencies": [
-        "@radix-ui/react-dropdown-menu@^2.1.24"
+        "@radix-ui/react-dropdown-menu@^2.1.24",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"
@@ -1861,7 +1868,8 @@
       "description": "Bảng trượt vào từ cạnh màn hình (Radix Dialog), hỗ trợ bốn hướng top/right/bottom/left.",
       "dependencies": [
         "@radix-ui/react-dialog@^1.1.23",
-        "class-variance-authority@^0.7.1"
+        "class-variance-authority@^0.7.1",
+        "lucide-react@^1.38.0"
       ],
       "registryDependencies": [
         "@reno/utils"

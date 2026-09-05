@@ -5,7 +5,8 @@
   "description": "DatePicker (một ngày) và DateRangePicker (khoảng ngày), ghép từ Popover + Calendar + Button, định dạng và locale mặc định tiếng Việt.",
   "dependencies": [
     "date-fns@^4.4.0",
-    "lucide-react@^1.38.0"
+    "lucide-react@^1.38.0",
+    "react-day-picker@^10.0.1"
   ],
   "registryDependencies": [
     "@reno/utils",
