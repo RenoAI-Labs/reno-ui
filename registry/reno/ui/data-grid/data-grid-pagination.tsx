@@ -96,7 +96,14 @@ export function DataGridPagination({
             value={String(pageSize)}
             onValueChange={(value) => onPageSizeChange(Number(value))}
           >
-            <SelectTrigger size="sm" className="w-[4.5rem]">
+            {/*
+              Nhãn "số dòng mỗi trang" nằm ở thẻ span ngay trên, tức nó là nhãn
+              NHÌN THẤY chứ không phải nhãn cho máy đọc. Radix dựng trigger này
+              thành một <button>, mà một nút chỉ chứa con số hiện tại thì không
+              có tên cho trình đọc màn hình: axe báo mức critical (button-name)
+              và người dùng nghe thấy "25, nút".
+            */}
+            <SelectTrigger size="sm" className="w-[4.5rem]" aria-label={labels.rowsPerPage}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
