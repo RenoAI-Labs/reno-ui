@@ -63,12 +63,21 @@ actually matters for ERP.
 | `--density-control-height` | Button, input, select height |
 | `--density-control-height-sm` / `-lg` | Size variants |
 | `--density-control-px` | Horizontal padding inside controls |
+| `--density-input-height` / `--density-input-px` | `Input` only; falls back to the two `--density-control-*` above |
 | `--density-row-height` | DataGrid and table row height |
 | `--density-cell-padding-x` / `-y` | Table cell padding |
 | `--density-gap` | Default gap in forms and toolbars |
-| `--density-font-size` | Base UI text size |
+| `--density-font-size` | Base UI text size; `Button` reads it |
+| `--density-font-weight` | Weight of a control label; `Button` and `Badge` read it. Default 500 |
 | `--density-line-height` | Base UI line height |
 | `--radius` | Corner radius; `--radius-sm/md/lg/xl` derive from it |
+
+The two `--density-input-*` knobs and `--density-font-weight` are opt-in: each
+falls back to exactly the value that used to be hard-coded, so a theme that sets
+none of them renders as before. They exist for the case where a design gives the
+text field a tighter box than the button beside it, or asks for semibold button
+labels — both of which previously meant patching the component file, which the
+next registry pull would overwrite.
 
 Anything with a height reads a density token. Never `h-10`.
 

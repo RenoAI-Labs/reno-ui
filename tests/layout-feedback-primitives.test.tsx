@@ -220,6 +220,16 @@ describe("Badge", () => {
     const link = screen.getByRole("link", { name: "Nhãn" });
     expect(link).toHaveAttribute("data-slot", "badge");
   });
+
+  it("is a rounded rectangle unless shape says pill", () => {
+    const { rerender } = render(<Badge>Mới</Badge>);
+    expect(screen.getByText("Mới").className).toContain("rounded-md");
+
+    rerender(<Badge shape="pill">Mới</Badge>);
+    const pill = screen.getByText("Mới").className;
+    expect(pill).toContain("rounded-full");
+    expect(pill).not.toContain("rounded-md");
+  });
 });
 
 describe("Spinner", () => {

@@ -8,9 +8,17 @@ import { cn } from "@/lib/utils";
  * Sizes read `--density-*` rather than fixed Tailwind heights. That is what lets
  * the same button render 1.75rem tall under the ERP preset and 2.75rem tall
  * under e-learning with no code change — see docs/design-tokens.md.
+ *
+ * The label follows the same rule. `--density-font-size` was documented as "base
+ * UI text size" from the start but nothing read it: every control hard-coded
+ * `text-sm`, so a preset could shrink the row height and the label stayed put.
+ * Weight is the same story one step further — a brand whose buttons read
+ * semibold had no way to say so without patching the file. Both fall back to
+ * exactly what was hard-coded before (0.875rem / 500), so a theme that sets
+ * neither renders byte-identical to the previous version.
  */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow,background-color] outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap rounded-md text-[length:var(--density-font-size,0.875rem)] font-[weight:var(--density-font-weight,500)] transition-[color,box-shadow,background-color] outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive",
   {
     variants: {
       variant: {

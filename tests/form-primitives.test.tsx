@@ -47,7 +47,15 @@ describe("Input", () => {
     render(<Input placeholder="Nguyễn Văn A" />);
     const input = screen.getByPlaceholderText("Nguyễn Văn A");
     expect(input).toBeInTheDocument();
-    expect(input.className).toContain("h-[var(--density-control-height)]");
+    // The field takes `--density-input-height` when a theme sets one and falls
+    // back to the shared control height otherwise. Asserting the fallback is
+    // present is what keeps a future edit from hard-coding `h-9` again.
+    expect(input.className).toContain(
+      "h-[var(--density-input-height,var(--density-control-height))]",
+    );
+    expect(input.className).toContain(
+      "px-[var(--density-input-px,var(--density-control-px))]",
+    );
   });
 
   it("applies aria-invalid styling hooks", () => {

@@ -4,10 +4,25 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * `shape` exists because the two looks are not interchangeable and neither is
+ * wrong. A rounded rectangle reads as a label attached to the row it sits in; a
+ * pill reads as a standalone status token. Design systems pick one and stay with
+ * it, so it has to be settable without forking the file — the previous way was
+ * `className="rounded-full"` at every call site, which misses the badges the
+ * library renders itself (the DataGrid filter chip, the StatCard delta).
+ *
+ * Weight reads `--density-font-weight` for the same reason `Button` does; the
+ * fallback is the 500 that was hard-coded here before.
+ */
 const badgeVariants = cva(
-  "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-md border px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] [&>svg]:size-3 [&>svg]:pointer-events-none",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden border px-2 py-0.5 text-xs font-[weight:var(--density-font-weight,500)] whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] [&>svg]:size-3 [&>svg]:pointer-events-none",
   {
     variants: {
+      shape: {
+        rounded: "rounded-md",
+        pill: "rounded-full",
+      },
       variant: {
         default: "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
         secondary:
@@ -22,6 +37,7 @@ const badgeVariants = cva(
     },
     defaultVariants: {
       variant: "default",
+      shape: "rounded",
     },
   },
 );
@@ -29,6 +45,7 @@ const badgeVariants = cva(
 function Badge({
   className,
   variant,
+  shape,
   asChild = false,
   ...props
 }: React.ComponentProps<"span"> &
@@ -41,7 +58,7 @@ function Badge({
   return (
     <Comp
       data-slot="badge"
-      className={cn(badgeVariants({ variant }), className)}
+      className={cn(badgeVariants({ variant, shape }), className)}
       {...props}
     />
   );
