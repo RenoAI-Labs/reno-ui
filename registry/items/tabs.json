@@ -2,7 +2,7 @@
   "name": "tabs",
   "type": "registry:ui",
   "title": "Tabs",
-  "description": "Điều hướng dạng thẻ tab dựa trên Radix; chiều cao TabsList đọc density-control-height.",
+  "description": "Điều hướng dạng thẻ tab dựa trên Radix; hai biến thể segmented (mặc định) và underline cho object page; chiều cao TabsList đọc density-control-height.",
   "dependencies": [
     "@radix-ui/react-tabs@^1.1.21"
   ],

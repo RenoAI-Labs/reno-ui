@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 function EmptyState({
   icon,
   title,
+  titleAs,
   body,
   action,
   className,
@@ -26,11 +27,23 @@ function EmptyState({
   /** Defaults to an inbox glyph. Pass `null` for no icon at all. */
   icon?: React.ReactNode;
   title?: React.ReactNode;
+  /**
+   * Element the title renders as. Defaults to `p`.
+   *
+   * An empty state that IS the page — a list with no records yet, a section of
+   * an object page — is a region of the document, and its title is the heading
+   * a screen-reader user navigates to. A `<p>` is the right call only when the
+   * empty state sits inside something that already carries the heading, which
+   * is why the default did not change.
+   */
+  titleAs?: "p" | "h2" | "h3" | "h4";
   /** Supporting sentence under the title. */
   body?: React.ReactNode;
   /** The way out — usually a button that creates the first record. */
   action?: React.ReactNode;
 }) {
+  const TitleTag = titleAs ?? "p";
+
   return (
     <div
       data-slot="empty-state"
@@ -45,7 +58,11 @@ function EmptyState({
       ) : (
         icon
       )}
-      {title ? <p className="text-sm font-medium">{title}</p> : null}
+      {title ? (
+        <TitleTag className={cn("font-medium", titleAs ? "text-base" : "text-sm")}>
+          {title}
+        </TitleTag>
+      ) : null}
       {body ? <p className="text-sm text-muted-foreground">{body}</p> : null}
       {action}
     </div>
