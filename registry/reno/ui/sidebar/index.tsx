@@ -1,4 +1,4 @@
-export { SidebarProvider, useSidebar } from "./context";
+export { SidebarProvider, useSidebar, SIDEBAR_WIDTH } from "./context";
 export { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "./sidebar";
 export {
   SidebarInput,

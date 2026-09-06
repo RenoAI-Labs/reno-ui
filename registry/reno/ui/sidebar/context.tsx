@@ -7,7 +7,13 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "16rem";
+/**
+ * Exported because chrome that sits OUTSIDE the provider still has to line up
+ * with the rail - a banner pinned above the shell, a toolbar that spans the
+ * content column. Without it every such element hardcodes "16rem" a second
+ * time and the two drift the first time the rail is retuned.
+ */
+export const SIDEBAR_WIDTH = "16rem";
 export const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
