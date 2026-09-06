@@ -102,6 +102,38 @@ function solveForeground(surface, hue, min = CONTRAST.text) {
   });
 }
 
+/**
+ * Solve one `soft` pair: a tinted surface, and text that is readable ON IT.
+ *
+ * The `soft` appearance is not a lighter version of the solid one, and the two
+ * cannot share a foreground. `--success` is solved against the PAGE, so it is
+ * exactly as dark as white demands and no darker; put it on a pale green and it
+ * loses the contrast the page was giving it for free. The text of a soft badge
+ * therefore has to be solved a second time, against the tint it actually sits
+ * on — which is why these are tokens and not a `color-mix()` a component could
+ * do inline.
+ *
+ * The surface is a low-chroma wash of the same hue rather than a ramp stop: the
+ * status ramps only emit 100/500/700 (see `STATUS_STOPS`), and 100 is already
+ * too saturated to hold small text comfortably in light mode.
+ *
+ * @returns {[import("culori").Oklch, import("culori").Oklch]} `[surface, text]`
+ */
+function solveSoftPair(hue, chroma, dark) {
+  const surface = dark
+    ? mk(0.265, chroma * 0.32, hue)
+    : mk(0.955, chroma * 0.3, hue);
+  const text = solveLightness({
+    h: hue,
+    c: chroma * 0.92,
+    bg: surface,
+    min: CONTRAST.text,
+    startL: dark ? 0.72 : 0.5,
+    direction: dark ? 1 : -1,
+  });
+  return [surface, text];
+}
+
 // ---------------------------------------------------------------------------
 // Token construction
 // ---------------------------------------------------------------------------
@@ -209,7 +241,17 @@ function buildMode(preset, mode, ramps) {
       });
     put(role, stop ? ref(`${role}-${stop.stop}`) : css(fill));
     put(`${role}-foreground`, css(solveForeground(fill, hue.h)));
+
+    const [softSurface, softText] = solveSoftPair(hue.h, hue.c, dark);
+    put(`${role}-soft`, css(softSurface));
+    put(`${role}-soft-foreground`, css(softText));
   }
+
+  // Brand gets the same treatment so a soft badge/alert has a neutral-emphasis
+  // "default" to sit next to the four status ones.
+  const [primarySoft, primarySoftFg] = solveSoftPair(brandHue, preset.brand.c, dark);
+  put("primary-soft", css(primarySoft));
+  put("primary-soft-foreground", css(primarySoftFg));
 
   // --- Affordances ---------------------------------------------------------
   // `input` and `ring` carry a real WCAG 1.4.11 / 2.4.11 obligation: they are
@@ -324,7 +366,14 @@ const COLOR_TOKEN_NAMES = [
   "muted-foreground",
   "accent",
   "accent-foreground",
-  ...Object.keys(STATUS_HUES).flatMap((role) => [role, `${role}-foreground`]),
+  "primary-soft",
+  "primary-soft-foreground",
+  ...Object.keys(STATUS_HUES).flatMap((role) => [
+    role,
+    `${role}-foreground`,
+    `${role}-soft`,
+    `${role}-soft-foreground`,
+  ]),
   "border",
   "input",
   "ring",

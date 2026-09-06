@@ -53,6 +53,29 @@ reno additions beyond shadcn:
 | `--warning` / `--warning-foreground` | Caution |
 | `--info` / `--info-foreground` | Neutral notice |
 
+### Soft pairs
+
+Five more pairs exist for the `soft` appearance of `Badge` and `Alert`:
+
+| Token | Role |
+|---|---|
+| `--primary-soft` / `--primary-soft-foreground` | Pale brand chip |
+| `--destructive-soft` / `--destructive-soft-foreground` | Pale error chip or banner |
+| `--success-soft` / `--success-soft-foreground` | Pale confirmation |
+| `--warning-soft` / `--warning-soft-foreground` | Pale caution |
+| `--info-soft` / `--info-soft-foreground` | Pale notice |
+
+A soft pair is not a lighter solid one, and the two cannot share a foreground.
+`--success` is solved to clear 4.5:1 against the PAGE and is no darker than that
+needs; drop it onto a pale green and the contrast the page was giving it for free
+disappears. So the soft text is solved a second time, against the tint it sits
+on — which is also why `bg-success/10 text-success` is the wrong way to build
+this by hand. `scripts/check-contrast.mjs` gates all five pairs in both modes.
+
+A project with a hand-tuned status palette overrides the ten variables in its
+own `:root` / `.dark` and every soft Badge and Alert follows; nothing about the
+components changes.
+
 ## Density tokens
 
 Colour is the obvious thing a brand changes. Density is the one that

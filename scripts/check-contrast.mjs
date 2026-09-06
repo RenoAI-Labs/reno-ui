@@ -43,6 +43,14 @@ const TEXT_PAIRS = [
   ["success-foreground", "success"],
   ["warning-foreground", "warning"],
   ["info-foreground", "info"],
+  // The `soft` appearance of Badge and Alert: pale tint, dark text of the same
+  // hue. Solved as its own pair because the solid foreground is not readable on
+  // the tint and vice versa.
+  ["primary-soft-foreground", "primary-soft"],
+  ["destructive-soft-foreground", "destructive-soft"],
+  ["success-soft-foreground", "success-soft"],
+  ["warning-soft-foreground", "warning-soft"],
+  ["info-soft-foreground", "info-soft"],
   // These four render as text (links, inline error/status labels) on page and
   // card surfaces, not only as fills.
   ["primary", "background"],

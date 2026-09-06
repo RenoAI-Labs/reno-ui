@@ -187,6 +187,33 @@ describe("Alert", () => {
     render(<Alert variant="destructive" data-testid="alert" />);
     expect(screen.getByTestId("alert").className).toContain("text-destructive");
   });
+
+  it("keeps the description on the full status colour, not a 90% wash", () => {
+    render(<Alert variant="destructive" data-testid="alert" />);
+    const className = screen.getByTestId("alert").className;
+    expect(className).toContain(
+      "*:data-[slot=alert-description]:text-destructive",
+    );
+    expect(className).not.toContain("text-destructive/90");
+  });
+
+  it("stays solid unless appearance says soft", () => {
+    const { rerender } = render(<Alert variant="success" data-testid="alert" />);
+    expect(screen.getByTestId("alert").className).toContain("bg-card");
+
+    rerender(<Alert variant="success" appearance="soft" data-testid="alert" />);
+    const soft = screen.getByTestId("alert").className;
+    expect(soft).toContain("bg-success-soft");
+    expect(soft).toContain("text-success-soft-foreground");
+  });
+
+  it("steps padding and radius down at size sm", () => {
+    render(<Alert size="sm" data-testid="alert" />);
+    const className = screen.getByTestId("alert").className;
+    expect(className).toContain("rounded-md");
+    expect(className).toContain("px-3");
+    expect(className).not.toContain("px-4");
+  });
 });
 
 describe("Progress", () => {
@@ -219,6 +246,31 @@ describe("Badge", () => {
     );
     const link = screen.getByRole("link", { name: "Nhãn" });
     expect(link).toHaveAttribute("data-slot", "badge");
+  });
+
+  it("is solid unless appearance says soft", () => {
+    const { rerender } = render(<Badge variant="info">Mới</Badge>);
+    expect(screen.getByText("Mới").className).toContain("bg-info");
+
+    rerender(
+      <Badge variant="info" appearance="soft">
+        Mới
+      </Badge>,
+    );
+    const soft = screen.getByText("Mới").className;
+    expect(soft).toContain("bg-info-soft");
+    expect(soft).toContain("text-info-soft-foreground");
+  });
+
+  it("leaves secondary and outline alone — soft is a no-op there", () => {
+    render(
+      <Badge variant="outline" appearance="soft">
+        Mới
+      </Badge>,
+    );
+    const className = screen.getByText("Mới").className;
+    expect(className).toContain("text-foreground");
+    expect(className).not.toContain("-soft");
   });
 
   it("is a rounded rectangle unless shape says pill", () => {
