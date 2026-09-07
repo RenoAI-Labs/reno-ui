@@ -61,10 +61,20 @@ export function Timeline({
                 aria-hidden
                 className={cn(
                   "flex size-6 shrink-0 items-center justify-center rounded-full border [&_svg]:size-3",
-                  entry.intent === "success" && "border-success bg-success/10 text-success",
-                  entry.intent === "warning" && "border-warning bg-warning/10 text-warning",
+                  // The solved soft pair, not `bg-<role>/10 text-<role>`: an
+                  // alpha wash of the fill plus the fill as ink is the build
+                  // docs/design-tokens.md calls out as wrong, and it is wrong
+                  // for the same reason it was wrong in Alert — `--<role>` is
+                  // a background, so painting the glyph with it lands at
+                  // 2.14:1 on `--card` for an amber warning, under the 3:1 SC
+                  // 1.4.11 asks of a meaningful icon. `--<role>-soft-foreground`
+                  // is the ink of the same role and is solved against the tint.
+                  entry.intent === "success" &&
+                    "border-success/35 bg-success-soft text-success-soft-foreground",
+                  entry.intent === "warning" &&
+                    "border-warning/40 bg-warning-soft text-warning-soft-foreground",
                   entry.intent === "destructive" &&
-                    "border-destructive bg-destructive/10 text-destructive",
+                    "border-destructive/35 bg-destructive-soft text-destructive-soft-foreground",
                   (entry.intent ?? "default") === "default" &&
                     "border-border bg-muted text-muted-foreground",
                 )}

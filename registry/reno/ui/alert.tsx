@@ -17,10 +17,30 @@ import { cn } from "@/lib/utils";
  * The description used to be `text-destructive/90` on a `bg-card` surface. In a
  * dark theme that is a translucent light red over a dark card, and it landed at
  * 4.2:1 — under the 4.5:1 that SC 1.4.3 asks of body text, in the one variant
- * whose whole job is to be read. It now carries the full status colour, which is
- * already solved against `--card` by scripts/check-contrast.mjs. The visual step
- * between title and description survives as weight, which is what carried it
+ * whose whole job is to be read. It now carries the same colour as the title;
+ * the visual step between the two survives as weight, which is what carried it
  * anyway.
+ *
+ * That colour is `--<role>-soft-foreground`, not `--<role>`. The two are
+ * different roles and they answer to different thresholds: `--<role>` is a FILL
+ * — the Badge and the impersonation banner paint it as a background and put
+ * `--<role>-foreground` ink on top, so it is solved for 4.5:1 against its own
+ * ink, not against the page. `--<role>-soft-foreground` is the readable INK of
+ * the same role, solved for 4.5:1 against a pale surface. Every system that
+ * ships both keeps them apart — Material 3 has `warning` and
+ * `on-warning-container`, Radix has step 9 for the solid fill and step 11 for
+ * text — because one value cannot satisfy both obligations at once.
+ *
+ * The generated preset here happens to satisfy both, which is why
+ * `text-<role> bg-card` looked correct for as long as it did. A project that
+ * overrides `--warning` with a real brand amber — the case these tokens exist
+ * for — gets a fill colour, and painting it as text lands at 2.14:1 on `--card`
+ * against the 4.5:1 SC 1.4.3 asks. Measured on a consuming project's theme
+ * 2026-09-07: amber `hsl(38 92% 50%)` as text is 2.14:1 on `--card` and 2.03:1
+ * on `--background`; its `--warning-soft-foreground` is 5.16:1 and 4.91:1. In
+ * this repo's own preset the swap moves base/light by 0.13 and base/dark up by
+ * about two points, so nothing visibly changes here and the bug cannot come
+ * back for the next consumer.
  *
  * `size="sm"` is the compact banner: same anatomy, one step down on radius,
  * padding, gap and text. Screens ported from a dense design (an operations
@@ -50,12 +70,12 @@ const alertVariants = cva(
       variant: {
         default: "bg-card text-card-foreground",
         destructive:
-          "text-destructive bg-card *:data-[slot=alert-description]:text-destructive",
+          "text-destructive-soft-foreground bg-card *:data-[slot=alert-description]:text-destructive-soft-foreground",
         success:
-          "text-success bg-card *:data-[slot=alert-description]:text-success",
+          "text-success-soft-foreground bg-card *:data-[slot=alert-description]:text-success-soft-foreground",
         warning:
-          "text-warning bg-card *:data-[slot=alert-description]:text-warning",
-        info: "text-info bg-card *:data-[slot=alert-description]:text-info",
+          "text-warning-soft-foreground bg-card *:data-[slot=alert-description]:text-warning-soft-foreground",
+        info: "text-info-soft-foreground bg-card *:data-[slot=alert-description]:text-info-soft-foreground",
       },
     },
     compoundVariants: [

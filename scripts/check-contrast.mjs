@@ -31,9 +31,18 @@
  * A pair the file does not define is skipped and counted, not failed — a
  * project overrides some tokens, not all of them.
  *
+ * A project can alsoknow it is under a threshold and ship anyway. `--waive
+ * <fg>:<bg>` is that, and it is deliberately noisy: the pair is still measured
+ * and still printed, it just does not fail the run, and a waived pair that
+ * PASSES prints a stale-waiver warning so the list can only get shorter. A
+ * waived pair that is not in the lists below is an error, not a silent no-op —
+ * otherwise a typo would read as a green gate. The reason for a waiver lives
+ * with the project that declares it, not here.
+ *
  * Usage:
  *   node scripts/check-contrast.mjs [--verbose]
  *   node scripts/check-contrast.mjs --theme ../app/src/app/globals.css
+ *   node scripts/check-contrast.mjs --theme ./globals.css --waive input:background
  */
 
 import { readdirSync } from "node:fs";
@@ -71,20 +80,33 @@ const TEXT_PAIRS = [
   ["warning-soft-foreground", "warning-soft"],
   ["info-soft-foreground", "info-soft"],
   // These render as text (links, inline error/status labels) on page and card
-  // surfaces, not only as fills. `Alert` in its default `solid` appearance is
-  // literally `text-<role> bg-card` for all four status roles, so all four are
-  // listed — `success`/`warning`/`info` used to be missing, which meant the
-  // gate reported green on three variants it had never looked at.
+  // surfaces, not only as fills.
+  //
+  // `--primary` is painted as text by rich-text links, the active Tab label and
+  // the current Stepper step; `--destructive` by FormMessage, ErrorState,
+  // FileUpload, AudioPlayer and the destructive menu items. Both stay.
+  //
+  // `success`/`warning`/`info` used to be listed here too, because `Alert` in
+  // its `solid` appearance was `text-<role> bg-card`. It is not any more: a
+  // fill token painted as ink is 2.14:1 the moment a project overrides
+  // `--warning` with a real amber, and Alert now uses the ink token of the same
+  // role. So the pair that models what the components render moved with them —
+  // `<role>-soft-foreground` on the two neutral surfaces. This is not the gate
+  // looking away: the count is the same, the threshold is the same, and it is
+  // now measuring the value that actually reaches the screen. `--warning` keeps
+  // its own obligation one line up, as a fill under `warning-foreground`.
   ["primary", "background"],
   ["primary", "card"],
   ["destructive", "background"],
   ["destructive", "card"],
-  ["success", "background"],
-  ["success", "card"],
-  ["warning", "background"],
-  ["warning", "card"],
-  ["info", "background"],
-  ["info", "card"],
+  ["destructive-soft-foreground", "background"],
+  ["destructive-soft-foreground", "card"],
+  ["success-soft-foreground", "background"],
+  ["success-soft-foreground", "card"],
+  ["warning-soft-foreground", "background"],
+  ["warning-soft-foreground", "card"],
+  ["info-soft-foreground", "background"],
+  ["info-soft-foreground", "card"],
   ["sidebar-foreground", "sidebar"],
   ["sidebar-accent-foreground", "sidebar-accent"],
   ["sidebar-primary-foreground", "sidebar-primary"],
@@ -134,6 +156,22 @@ function check(vars, pairs, min, external = false) {
   });
 }
 
+/** `--waive input:background` -> the pair names, as `fg on bg` keys. */
+function waiveArgs(argv) {
+  const out = new Set();
+  for (let i = 0; i < argv.length; i += 1) {
+    if (argv[i] === "--waive" && argv[i + 1]) {
+      const [fg, bg] = argv[i + 1].split(":");
+      if (!fg || !bg) {
+        console.error(`--waive wants <fg>:<bg>, got "${argv[i + 1]}"`);
+        process.exit(2);
+      }
+      out.add(`${fg} on ${bg}`);
+    }
+  }
+  return out;
+}
+
 /** `--theme a.css --theme b.css` -> the paths, in order. */
 function themeArgs(argv) {
   const out = [];
@@ -146,6 +184,20 @@ function themeArgs(argv) {
 function main() {
   const verbose = process.argv.includes("--verbose");
   const external = themeArgs(process.argv);
+  const waived = waiveArgs(process.argv);
+  const knownPairs = new Set(
+    [...TEXT_PAIRS, ...UI_PAIRS].map(([fg, bg]) => `${fg} on ${bg}`),
+  );
+  const unknownWaivers = [...waived].filter((k) => !knownPairs.has(k));
+  if (unknownWaivers.length) {
+    console.error(
+      `--waive names ${unknownWaivers.length} pair(s) this gate does not measure:`,
+    );
+    for (const k of unknownWaivers) console.error(`  - ${k}`);
+    console.error("  A waiver on a pair nobody checks reads as green and is not.");
+    process.exit(2);
+  }
+  const staleWaivers = new Set(waived);
   const files = external.length
     ? external
     : readdirSync(THEME_DIR)
@@ -178,12 +230,21 @@ function main() {
           }
           continue;
         }
+        const key = `${res.fgName} on ${res.bgName}`;
         if (res.pass) {
           if (verbose) {
             console.log(
               `  ok   ${preset}/${mode}  ${res.fgName} on ${res.bgName}  ${res.ratio.toFixed(2)}:1`,
             );
           }
+          continue;
+        }
+        if (waived.has(key)) {
+          staleWaivers.delete(key);
+          console.log(
+            `  waived ${preset}/${mode}  ${key} = ${res.ratio?.toFixed(2) ?? "?"}:1 ` +
+              `(need ${res.min}:1) — declared, not fixed.`,
+          );
           continue;
         }
         failures.push(
@@ -204,6 +265,12 @@ function main() {
     }
   }
 
+  for (const key of staleWaivers) {
+    console.log(
+      `  ⚠ waiver on "${key}" is stale — the pair passes now. Drop the declaration.`,
+    );
+  }
+
   if (failures.length) {
     console.error(`Contrast check failed (${failures.length} of ${checked} pairs):`);
     for (const f of failures) console.error(`  - ${f}`);
@@ -212,6 +279,7 @@ function main() {
   console.log(
     `Contrast OK — ${checked - skipped} pairs across ${files.length} theme(s) x 2 modes` +
       (skipped ? `, ${skipped} not declared there` : "") +
+      (waived.size ? `, ${waived.size} waived` : "") +
       ".",
   );
 }

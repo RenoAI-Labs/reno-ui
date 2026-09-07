@@ -72,6 +72,17 @@ disappears. So the soft text is solved a second time, against the tint it sits
 on — which is also why `bg-success/10 text-success` is the wrong way to build
 this by hand. `scripts/check-contrast.mjs` gates all five pairs in both modes.
 
+**`--<role>` is a fill; `--<role>-soft-foreground` is the ink.** That is the
+whole rule, and it is the one thing a project overriding these tokens has to
+know. Fill it and put `--<role>-foreground` on top (Badge, the solid banner);
+write it as text and you are using a background colour as a text colour. The
+presets generated here satisfy both obligations at once, so the mistake stays
+invisible in this repo — a project whose warning is a real amber
+(`hsl(38 92% 50%)`, ink text only) measures 2.14:1 for `text-warning` on
+`--card`, against the 4.5:1 SC 1.4.3 asks. Alert and Timeline both had it and
+both now paint the ink token, and the gate's pair list follows what the
+components render, so nothing is watching a pair the screen no longer draws.
+
 A project with a hand-tuned status palette overrides the ten variables in its
 own `:root` / `.dark` and every soft Badge and Alert follows; nothing about the
 components changes.

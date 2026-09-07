@@ -263,14 +263,30 @@ describe("Alert", () => {
 
   it("applies the destructive variant's token", () => {
     render(<Alert variant="destructive" data-testid="alert" />);
-    expect(screen.getByTestId("alert").className).toContain("text-destructive");
+    expect(screen.getByTestId("alert").className).toContain(
+      "text-destructive-soft-foreground",
+    );
+  });
+
+  it("paints every status role with the ink token, never the fill token", () => {
+    // `--<role>` is a background — Badge and the impersonation banner fill with
+    // it and put `--<role>-foreground` on top. Painting it as text is 2.14:1 on
+    // `--card` for a project whose warning is a real amber. Asserted per role
+    // because three of the four were added later and got the fill token.
+    for (const role of ["destructive", "success", "warning", "info"] as const) {
+      const { unmount } = render(<Alert variant={role} data-testid="alert" />);
+      const className = screen.getByTestId("alert").className;
+      expect(className).toContain(`text-${role}-soft-foreground`);
+      expect(className).not.toMatch(new RegExp(`text-${role}(?![\\w-])`));
+      unmount();
+    }
   });
 
   it("keeps the description on the full status colour, not a 90% wash", () => {
     render(<Alert variant="destructive" data-testid="alert" />);
     const className = screen.getByTestId("alert").className;
     expect(className).toContain(
-      "*:data-[slot=alert-description]:text-destructive",
+      "*:data-[slot=alert-description]:text-destructive-soft-foreground",
     );
     expect(className).not.toContain("text-destructive/90");
   });
