@@ -14,7 +14,7 @@
   "meta": {
     "source": "shadcn/ui",
     "license": "MIT",
-    "upstream": "shadcn card, new-york style; no changes needed, padding already uses normal spacing",
+    "upstream": "shadcn card, new-york style; padding uses normal spacing, and an unstyled flag drops the built-in utilities so a project stylesheet can own the box",
     "added": "2026-09-01",
     "group": "Layout"
   }

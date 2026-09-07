@@ -60,6 +60,19 @@ describe("ErrorState", () => {
     render(<ErrorState body="Hỏng rồi" />);
     expect(screen.getByRole("alert")).toBeInTheDocument();
   });
+
+  it("keeps the title a paragraph unless titleAs asks for a heading", () => {
+    render(<ErrorState title="Hỏng rồi" />);
+    expect(screen.queryByRole("heading")).toBeNull();
+    expect(screen.getByText("Hỏng rồi").tagName).toBe("P");
+    expect(screen.getByText("Hỏng rồi").className).toContain("text-sm");
+  });
+
+  it("renders the title as the heading a full-page error needs", () => {
+    render(<ErrorState title="Không tải được trang" titleAs="h3" />);
+    const heading = screen.getByRole("heading", { name: "Không tải được trang", level: 3 });
+    expect(heading.className).toContain("text-base");
+  });
 });
 
 describe("the DataGrid states are the same components, not copies", () => {

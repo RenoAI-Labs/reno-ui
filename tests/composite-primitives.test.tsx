@@ -12,6 +12,11 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import {
+  FileUpload,
+  defaultFileUploadLabels,
+  englishFileUploadLabels,
+} from "@/components/ui/file-upload";
 
 // jsdom is missing a few browser APIs these components touch: ResizeObserver
 // (Radix Popover/Tooltip positioning), Element.scrollIntoView (cmdk, to keep
@@ -151,5 +156,31 @@ describe("Sidebar", () => {
       "useSidebar must be used within a SidebarProvider.",
     );
     spy.mockRestore();
+  });
+});
+
+describe("FileUpload", () => {
+  it("gives the sr-only file input an accessible name", () => {
+    // Without one, axe reports `critical: label` on every page that renders an
+    // upload: the input is visually hidden but still a labelable control, and
+    // the visible browse button names the button, not the input.
+    render(<FileUpload />);
+    expect(
+      screen.getByLabelText(defaultFileUploadLabels.inputLabel),
+    ).toHaveAttribute("type", "file");
+  });
+
+  it("translates that name with the rest of the label set", () => {
+    render(<FileUpload labels={englishFileUploadLabels} />);
+    expect(
+      screen.getByLabelText(englishFileUploadLabels.inputLabel),
+    ).toHaveAttribute("type", "file");
+  });
+
+  it("takes an override without the rest of the label set", () => {
+    render(<FileUpload labels={{ inputLabel: "Ảnh minh hoạ" }} />);
+    expect(screen.getByLabelText("Ảnh minh hoạ")).toHaveAttribute("type", "file");
+    // Everything not overridden still falls back to the default set.
+    expect(screen.getByText(defaultFileUploadLabels.hint)).toBeInTheDocument();
   });
 });

@@ -25,14 +25,24 @@ import { cn } from "@/lib/utils";
  * `size="sm"` is the compact banner: same anatomy, one step down on radius,
  * padding, gap and text. Screens ported from a dense design (an operations
  * console, an ERP grid page) need it; it is a size, not a new component.
+ *
+ * The icon column opens for a bare `<svg>` — the lucide glyph most call sites
+ * pass — and that covers most of them. It did not cover the rest: a status dot,
+ * a spinner, an avatar, a numbered pip are all `<div>`s, and an Alert built
+ * around one had to restate `grid-cols-[Npx_1fr]` and the gap at every call
+ * site. `AlertIcon` is that column made explicit: wrap anything in it and the
+ * column opens, sized to the content rather than to a number the call site has
+ * to know. `<svg>` children keep working untouched, so nothing that renders an
+ * Alert today changes.
  */
 const alertVariants = cva(
-  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 border has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 border has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>[data-slot=alert-icon]]:grid-cols-[auto_1fr] [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
   {
     variants: {
       size: {
-        default: "rounded-lg px-4 py-3 text-sm has-[>svg]:gap-x-3",
-        sm: "rounded-md px-3 py-2.5 text-[0.8125rem] has-[>svg]:gap-x-2.5",
+        default:
+          "rounded-lg px-4 py-3 text-sm has-[>svg]:gap-x-3 has-[>[data-slot=alert-icon]]:gap-x-3",
+        sm: "rounded-md px-3 py-2.5 text-[0.8125rem] has-[>svg]:gap-x-2.5 has-[>[data-slot=alert-icon]]:gap-x-2.5",
       },
       appearance: {
         solid: "",
@@ -106,6 +116,28 @@ function Alert({
   );
 }
 
+/**
+ * The icon column, for anything that is not a bare `<svg>`.
+ *
+ * `w-fit` plus a grid column of `auto` is what lets an 18px dot and a 24px
+ * avatar both sit in the column without either the component or the call site
+ * naming a width. The `translate-y-0.5` matches what a bare `<svg>` child gets,
+ * so the two paths line up against the title.
+ */
+function AlertIcon({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="alert-icon"
+      aria-hidden="true"
+      className={cn(
+        "col-start-1 row-start-1 flex w-fit shrink-0 translate-y-0.5 items-center justify-center [&>svg]:size-4",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -135,4 +167,4 @@ function AlertDescription({
   );
 }
 
-export { Alert, AlertTitle, AlertDescription };
+export { Alert, AlertIcon, AlertTitle, AlertDescription };

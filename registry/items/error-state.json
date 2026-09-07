@@ -16,7 +16,7 @@
   "meta": {
     "source": "original",
     "license": "original",
-    "upstream": "Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này",
+    "upstream": "Tách ra từ data-grid-states.tsx của reno; shadcn/ui không có component này; titleAs cho tiêu đề thành heading như EmptyState",
     "added": "2026-09-02",
     "group": "Feedback"
   }

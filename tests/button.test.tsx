@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 describe("Button", () => {
   it("renders as a button by default", () => {
@@ -33,5 +33,49 @@ describe("Button", () => {
     expect(screen.getByRole("button").className).toContain(
       "h-[var(--density-control-height)]",
     );
+  });
+});
+
+describe("Button variant=\"unstyled\"", () => {
+  it("emits no classes of its own, so a project stylesheet wins", () => {
+    render(
+      <Button variant="unstyled" className="btn btn-primary">
+        Lưu
+      </Button>,
+    );
+    // Not "no background utility" like ghost — no utility at all, including the
+    // base and the size, which is what a project's own .btn rule needs.
+    expect(screen.getByRole("button").className).toBe("btn btn-primary");
+  });
+
+  it("ignores size, which ghost could not", () => {
+    render(
+      <Button variant="unstyled" size="lg" className="btn">
+        Lưu
+      </Button>,
+    );
+    expect(screen.getByRole("button").className).toBe("btn");
+  });
+
+  it("keeps the element behaviour it is there for", () => {
+    render(
+      <Button variant="unstyled" className="btn" disabled>
+        Lưu
+      </Button>,
+    );
+    const button = screen.getByRole("button");
+    expect(button).toBeDisabled();
+    expect(button).toHaveAttribute("data-slot", "button");
+  });
+
+  it("is honoured by buttonVariants() too, not only by <Button>", () => {
+    // AlertDialogAction and PaginationLink style raw elements through this.
+    expect(buttonVariants({ variant: "unstyled", className: "btn" })).toBe("btn");
+    expect(buttonVariants({ variant: "ghost" })).toContain("inline-flex");
+  });
+
+  it("leaves every other variant byte-identical", () => {
+    expect(buttonVariants()).toBe(buttonVariants({ variant: "default", size: "default" }));
+    expect(buttonVariants({ variant: "ghost" })).toContain("hover:bg-accent");
   });
 });

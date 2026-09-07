@@ -10,6 +10,11 @@
  *   - 4.5:1 for anything rendered as normal-size text.
  *   - 3.0:1 for `--input` and `--ring`: the boundary that identifies a control
  *     and its focus state are non-text UI components under SC 1.4.11.
+ *   - The pair list below is hand-maintained, and it describes what the
+ *     COMPONENTS render, not every combination the theme could produce. A pair
+ *     nobody added is a pair the gate never looks at, and a gate that reports
+ *     green on something it never measured is worse than no gate. When a
+ *     component starts painting a token on a new surface, add the pair here.
  *   - `--border` is reported but not gated. It is used for decorative dividers
  *     and card outlines where no information depends on perceiving it; gating it
  *     at 3:1 would force heavy rules on every surface. Controls get `--input`.
@@ -51,12 +56,21 @@ const TEXT_PAIRS = [
   ["success-soft-foreground", "success-soft"],
   ["warning-soft-foreground", "warning-soft"],
   ["info-soft-foreground", "info-soft"],
-  // These four render as text (links, inline error/status labels) on page and
-  // card surfaces, not only as fills.
+  // These render as text (links, inline error/status labels) on page and card
+  // surfaces, not only as fills. `Alert` in its default `solid` appearance is
+  // literally `text-<role> bg-card` for all four status roles, so all four are
+  // listed — `success`/`warning`/`info` used to be missing, which meant the
+  // gate reported green on three variants it had never looked at.
   ["primary", "background"],
   ["primary", "card"],
   ["destructive", "background"],
   ["destructive", "card"],
+  ["success", "background"],
+  ["success", "card"],
+  ["warning", "background"],
+  ["warning", "card"],
+  ["info", "background"],
+  ["info", "card"],
   ["sidebar-foreground", "sidebar"],
   ["sidebar-accent-foreground", "sidebar-accent"],
   ["sidebar-primary-foreground", "sidebar-primary"],

@@ -40,6 +40,18 @@ export type FileUploadRejection = {
 export type FileUploadLabels = {
   hint: string;
   browse: string;
+  /**
+   * Accessible name for the `sr-only` `<input type="file">`.
+   *
+   * The input is visually hidden and driven by the `browse` button, but it is
+   * still a labelable control in the accessibility tree, and an unnamed one is
+   * an axe `critical: label` violation on every page that renders an upload.
+   * The visible button's own label cannot serve: it names the button, not the
+   * input, and the two are different nodes. Kept separate from `browse` because
+   * "Chọn tệp" reads as an instruction on a button and as a name on a field,
+   * and a project translating the two may want different words.
+   */
+  inputLabel: string;
   remove: string;
   maxSize: (formatted: string) => string;
   accepted: (list: string) => string;
@@ -50,6 +62,7 @@ export type FileUploadLabels = {
 export const defaultFileUploadLabels: FileUploadLabels = {
   hint: "Kéo thả tệp vào đây",
   browse: "Chọn tệp",
+  inputLabel: "Chọn tệp để tải lên",
   remove: "Xoá tệp",
   maxSize: (formatted) => `Tối đa ${formatted} mỗi tệp`,
   accepted: (list) => `Định dạng: ${list}`,
@@ -60,6 +73,7 @@ export const defaultFileUploadLabels: FileUploadLabels = {
 export const englishFileUploadLabels: FileUploadLabels = {
   hint: "Drag and drop files here",
   browse: "Choose files",
+  inputLabel: "Choose files to upload",
   remove: "Remove file",
   maxSize: (formatted) => `Up to ${formatted} per file`,
   accepted: (list) => `Formats: ${list}`,
@@ -184,6 +198,7 @@ function FileUpload({
         <input
           ref={inputRef}
           type="file"
+          aria-label={labels.inputLabel}
           className="sr-only"
           accept={accept}
           multiple={multiple}

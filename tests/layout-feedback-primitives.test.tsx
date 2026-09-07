@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@/components/ui/alert";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -59,6 +59,30 @@ describe("Card", () => {
     expect(screen.getByText("Tiêu đề").closest('[data-slot="card"]')).toBeInTheDocument();
     expect(screen.getByText("Nội dung")).toHaveAttribute("data-slot", "card-content");
     expect(screen.getByText("Chân trang")).toHaveAttribute("data-slot", "card-footer");
+  });
+
+  it("drops every built-in utility when unstyled, keeping the slot", () => {
+    render(
+      <Card unstyled className="card auth-card" data-testid="card">
+        <CardContent unstyled className="card-p">
+          Nội dung
+        </CardContent>
+      </Card>,
+    );
+    const card = screen.getByTestId("card");
+    // The four the utilities layer used to win with, gone.
+    expect(card.className).toBe("card auth-card");
+    expect(card).toHaveAttribute("data-slot", "card");
+    expect(screen.getByText("Nội dung").className).toBe("card-p");
+  });
+
+  it("keeps its own measurements when unstyled is not asked for", () => {
+    render(<Card data-testid="card" />);
+    const className = screen.getByTestId("card").className;
+    expect(className).toContain("rounded-xl");
+    expect(className).toContain("py-6");
+    expect(className).toContain("shadow-xs");
+    expect(className).toContain("gap-6");
   });
 });
 
@@ -181,6 +205,43 @@ describe("Alert", () => {
       </Alert>,
     );
     expect(screen.getByRole("alert")).toBeInTheDocument();
+  });
+
+  it("opens the icon column for a non-svg icon, sized to its content", () => {
+    render(
+      <Alert data-testid="alert">
+        <AlertIcon>
+          <span className="ai" />
+        </AlertIcon>
+        <AlertTitle>Tiêu đề</AlertTitle>
+      </Alert>,
+    );
+    const className = screen.getByTestId("alert").className;
+    // `auto`, not a pixel number the call site has to know.
+    expect(className).toContain("has-[>[data-slot=alert-icon]]:grid-cols-[auto_1fr]");
+    expect(className).toContain("has-[>[data-slot=alert-icon]]:gap-x-3");
+  });
+
+  it("leaves the bare-svg path untouched", () => {
+    render(<Alert data-testid="alert" />);
+    const className = screen.getByTestId("alert").className;
+    expect(className).toContain("has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr]");
+    expect(className).toContain("grid-cols-[0_1fr]");
+  });
+
+  it("marks the icon slot decorative by default and lets a caller say otherwise", () => {
+    const { rerender } = render(
+      <AlertIcon data-testid="icon">
+        <span />
+      </AlertIcon>,
+    );
+    expect(screen.getByTestId("icon")).toHaveAttribute("aria-hidden", "true");
+    rerender(
+      <AlertIcon data-testid="icon" aria-hidden={undefined} role="img" aria-label="Lỗi">
+        <span />
+      </AlertIcon>,
+    );
+    expect(screen.getByTestId("icon")).not.toHaveAttribute("aria-hidden");
   });
 
   it("applies the destructive variant's token", () => {
