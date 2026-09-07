@@ -39,13 +39,27 @@ function extractBlock(source, selector) {
   return null;
 }
 
-/** Parse `--name: value;` declarations into an ordered Map keyed without `--`. */
+/**
+ * Parse `--name: value;` declarations into an ordered Map keyed without `--`.
+ *
+ * Comments come out first, before the split on `;`. A generated preset only
+ * carries short end-of-line comments, so skipping a chunk that STARTS with `/*`
+ * was enough for it — but the files this parser reads now include a consuming
+ * project's hand-written `globals.css`, and a prose comment there contains
+ * semicolons. Each one splits the comment, and the fragment that carries the
+ * comment's tail also carries the declaration right after it, whose name then
+ * reads as `... * / --primary-soft` and is dropped. Measured on a real project
+ * 2026-09-07: two semicolons inside one paragraph silently removed
+ * `--primary-soft`, `--st-blue-fg` and everything resolving through them, which
+ * check-contrast reported as five pairs "not declared here" — the shape of a
+ * green gate that never looked.
+ */
 function parseDeclarations(body) {
   const out = new Map();
   if (!body) return out;
-  for (const raw of body.split(";")) {
+  for (const raw of body.replace(/\/\*[\s\S]*?\*\//g, "").split(";")) {
     const line = raw.trim();
-    if (!line || line.startsWith("/*")) continue;
+    if (!line) continue;
     const colon = line.indexOf(":");
     if (colon === -1) continue;
     const name = line.slice(0, colon).trim();
