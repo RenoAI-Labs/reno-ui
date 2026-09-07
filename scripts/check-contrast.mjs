@@ -19,11 +19,25 @@
  *     and card outlines where no information depends on perceiving it; gating it
  *     at 3:1 would force heavy rules on every surface. Controls get `--input`.
  *
- * Usage: node scripts/check-contrast.mjs [--verbose]
+ * A theme is only half the answer, though. The tokens this audits are the ones
+ * the LIBRARY generates, and a project is expected to override them — that is
+ * what the `cssVars` in every registry item are for. Override `--info-soft` with
+ * a hand-picked colour from a design export and this gate keeps reporting green
+ * on a pair it is no longer looking at, while the real screen is under 4.5:1.
+ * `--theme <path>` is the way out: point it at the consuming project's own
+ * `globals.css` and the same pair list, the same thresholds and the same solver
+ * run against the values that actually ship. Any file with `:root` and `.dark`
+ * blocks parses, so a project needs no build step and no copy of this script.
+ * A pair the file does not define is skipped and counted, not failed — a
+ * project overrides some tokens, not all of them.
+ *
+ * Usage:
+ *   node scripts/check-contrast.mjs [--verbose]
+ *   node scripts/check-contrast.mjs --theme ../app/src/app/globals.css
  */
 
 import { readdirSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { wcagContrast } from "culori";
 
@@ -91,37 +105,79 @@ const ADVISORY_PAIRS = [
   ["border", "card"],
 ];
 
-function check(vars, pairs, min) {
+/**
+ * @param external true when `vars` came from a project's own stylesheet rather
+ *   than from a generated preset. A token the file never declares is then a
+ *   token the project did not override, which is a skip; in a generated preset
+ *   the same absence is a bug in the generator.
+ */
+function check(vars, pairs, min, external = false) {
   return pairs.map(([fgName, bgName]) => {
     const fgRaw = vars.get(fgName);
     const bgRaw = vars.get(bgName);
     if (fgRaw === undefined || bgRaw === undefined) {
-      return { fgName, bgName, missing: true, pass: false };
+      return { fgName, bgName, missing: true, pass: external, skipped: external };
     }
-    const ratio = wcagContrast(resolveVar(fgRaw, vars), resolveVar(bgRaw, vars));
+    let fg;
+    let bg;
+    try {
+      fg = resolveVar(fgRaw, vars);
+      bg = resolveVar(bgRaw, vars);
+    } catch {
+      // A project's `:root` may point at a variable declared somewhere this
+      // parser does not read. Unmeasurable, not failing.
+      if (!external) throw new Error(`Unresolved token in --${fgName} / --${bgName}`);
+      return { fgName, bgName, missing: true, pass: true, skipped: true };
+    }
+    const ratio = wcagContrast(fg, bg);
     return { fgName, bgName, ratio, min, pass: ratio >= min };
   });
 }
 
+/** `--theme a.css --theme b.css` -> the paths, in order. */
+function themeArgs(argv) {
+  const out = [];
+  for (let i = 0; i < argv.length; i += 1) {
+    if (argv[i] === "--theme" && argv[i + 1]) out.push(argv[i + 1]);
+  }
+  return out;
+}
+
 function main() {
   const verbose = process.argv.includes("--verbose");
-  const files = readdirSync(THEME_DIR).filter((f) => f.endsWith(".css")).sort();
+  const external = themeArgs(process.argv);
+  const files = external.length
+    ? external
+    : readdirSync(THEME_DIR)
+        .filter((f) => f.endsWith(".css"))
+        .sort()
+        .map((f) => join(THEME_DIR, f));
   const failures = [];
   let checked = 0;
+  let skipped = 0;
 
   for (const file of files) {
-    const preset = file.replace(/\.css$/, "");
-    const parsed = parseThemeCss(join(THEME_DIR, file));
+    const preset = basename(file).replace(/\.css$/, "");
+    const parsed = parseThemeCss(resolve(file));
 
     for (const mode of ["light", "dark"]) {
       const vars = parsed[mode];
       const results = [
-        ...check(vars, TEXT_PAIRS, CONTRAST.text),
-        ...check(vars, UI_PAIRS, CONTRAST.ui),
+        ...check(vars, TEXT_PAIRS, CONTRAST.text, external.length > 0),
+        ...check(vars, UI_PAIRS, CONTRAST.ui, external.length > 0),
       ];
       checked += results.length;
 
       for (const res of results) {
+        if (res.skipped) {
+          skipped += 1;
+          if (verbose) {
+            console.log(
+              `  skip ${preset}/${mode}  ${res.fgName} on ${res.bgName}  (not declared here)`,
+            );
+          }
+          continue;
+        }
         if (res.pass) {
           if (verbose) {
             console.log(
@@ -138,7 +194,8 @@ function main() {
       }
 
       if (verbose) {
-        for (const res of check(vars, ADVISORY_PAIRS, 0)) {
+        for (const res of check(vars, ADVISORY_PAIRS, 0, external.length > 0)) {
+          if (res.skipped) continue;
           console.log(
             `  note ${preset}/${mode}  ${res.fgName} on ${res.bgName}  ${res.ratio.toFixed(2)}:1 (advisory)`,
           );
@@ -153,7 +210,9 @@ function main() {
     process.exit(1);
   }
   console.log(
-    `Contrast OK — ${checked} pairs across ${files.length} theme(s) x 2 modes.`,
+    `Contrast OK — ${checked - skipped} pairs across ${files.length} theme(s) x 2 modes` +
+      (skipped ? `, ${skipped} not declared there` : "") +
+      ".",
   );
 }
 
