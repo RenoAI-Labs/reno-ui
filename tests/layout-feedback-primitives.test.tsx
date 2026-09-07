@@ -219,7 +219,24 @@ describe("Alert", () => {
     const className = screen.getByTestId("alert").className;
     // `auto`, not a pixel number the call site has to know.
     expect(className).toContain("has-[>[data-slot=alert-icon]]:grid-cols-[auto_1fr]");
-    expect(className).toContain("has-[>[data-slot=alert-icon]]:gap-x-3");
+  });
+
+  it("puts the icon gap on a margin a call site can override", () => {
+    // A `has-[>[data-slot=alert-icon]]:gap-x-*` would outrank a plain utility.
+    const { rerender } = render(
+      <AlertIcon data-testid="icon">
+        <span />
+      </AlertIcon>,
+    );
+    expect(screen.getByTestId("icon").className).toContain("me-3");
+    rerender(
+      <AlertIcon data-testid="icon" className="me-2.5">
+        <span />
+      </AlertIcon>,
+    );
+    const className = screen.getByTestId("icon").className;
+    expect(className).toContain("me-2.5");
+    expect(className).not.toContain("me-3");
   });
 
   it("leaves the bare-svg path untouched", () => {

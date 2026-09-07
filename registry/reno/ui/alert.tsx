@@ -40,9 +40,8 @@ const alertVariants = cva(
   {
     variants: {
       size: {
-        default:
-          "rounded-lg px-4 py-3 text-sm has-[>svg]:gap-x-3 has-[>[data-slot=alert-icon]]:gap-x-3",
-        sm: "rounded-md px-3 py-2.5 text-[0.8125rem] has-[>svg]:gap-x-2.5 has-[>[data-slot=alert-icon]]:gap-x-2.5",
+        default: "rounded-lg px-4 py-3 text-sm has-[>svg]:gap-x-3",
+        sm: "rounded-md px-3 py-2.5 text-[0.8125rem] has-[>svg]:gap-x-2.5",
       },
       appearance: {
         solid: "",
@@ -123,6 +122,13 @@ function Alert({
  * avatar both sit in the column without either the component or the call site
  * naming a width. The `translate-y-0.5` matches what a bare `<svg>` child gets,
  * so the two paths line up against the title.
+ *
+ * The space to the title is a margin here, not the parent's `gap-x` the `<svg>`
+ * path uses. A gap would have to be written `has-[>[data-slot=alert-icon]]:`,
+ * and `:has()` takes the specificity of its argument — that selector outranks a
+ * plain `gap-x-*` utility, so a call site whose design says 10px could never
+ * dial it back down. `me-3` is the same 12px the `<svg>` path gets and any
+ * `me-*` in `className` replaces it cleanly.
  */
 function AlertIcon({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -130,7 +136,7 @@ function AlertIcon({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="alert-icon"
       aria-hidden="true"
       className={cn(
-        "col-start-1 row-start-1 flex w-fit shrink-0 translate-y-0.5 items-center justify-center [&>svg]:size-4",
+        "col-start-1 row-start-1 me-3 flex w-fit shrink-0 translate-y-0.5 items-center justify-center [&>svg]:size-4",
         className,
       )}
       {...props}
