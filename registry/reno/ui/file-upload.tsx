@@ -183,7 +183,10 @@ function FileUpload({
         <p className="text-sm font-medium">{labels.hint}</p>
         <p className="text-muted-foreground text-xs">
           {accept ? labels.accepted(accept) : null}
-          {accept && maxSize !== undefined ? " · " : null}
+          {/* A hyphen, not a middot. `·` is one of the typographic characters
+              that reads as machine-written next to hand-typed UI copy, and a
+              separator carries no meaning the character has to supply. */}
+          {accept && maxSize !== undefined ? " - " : null}
           {maxSize !== undefined ? labels.maxSize(formatBytes(maxSize)) : null}
         </p>
         <Button
