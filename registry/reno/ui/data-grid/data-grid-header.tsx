@@ -16,6 +16,7 @@ import type { GridFeatures } from "@/lib/grid-state";
 
 import { indexOf, useDataGridContext, widthsOf } from "./data-grid-context";
 import { pinnedEdgeClass, pinnedStyle } from "./column-pinning";
+import { columnSizeStyle } from "./column-sizing";
 
 /**
  * Header cells: sort affordance, resize handle and the pin/sort menu.
@@ -48,7 +49,8 @@ export function DataGridHeaderCell<TData extends RowData>({
   const group = pinned === "start" ? layout.start : pinned === "end" ? layout.end : [];
   const groupIndex = pinned === false ? -1 : indexOf(group, column.id);
   const style = {
-    width: column.getSize(),
+    // Same call as the body cell below it, so header and body cannot drift.
+    ...columnSizeStyle(column.getSize(), pinned),
     ...(pinned === false ? {} : pinnedStyle(pinned, widthsOf(group), groupIndex)),
   };
 

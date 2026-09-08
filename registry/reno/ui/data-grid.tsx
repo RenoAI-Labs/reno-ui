@@ -213,6 +213,13 @@ export function DataGrid<TData extends RowData>({
             */
             aria-rowcount={headerGroups.length + rows.length}
             className="w-full border-separate border-spacing-0 text-sm"
+            /*
+              Full width with the declared column widths as a floor: under that
+              floor the viewport scrolls sideways, above it the cells share out
+              what is left over (see `columnSizeStyle`). Dropping `w-full` would
+              bring back the strip of empty table to the right of the last
+              column on any grid with few columns.
+            */
             style={{ minWidth: totalWidth, display: "grid" }}
           >
             <thead

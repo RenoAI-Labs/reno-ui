@@ -1188,6 +1188,10 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/reno/ui/data-grid/column-sizing.ts",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/reno/ui/data-grid/use-density-row-height.ts",
           "type": "registry:ui"
         },
