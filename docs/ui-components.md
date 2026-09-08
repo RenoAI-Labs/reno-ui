@@ -83,6 +83,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `code-editor` | ui | Form | original | original | Viết cho reno quanh @uiw/react-codemirror; shadcn/ui không có code editor. Theme mặc định của CodeMirror bị tắt và thay bằng bảng màu đọc từ token reno | 2026-09-02 |
 | `collapsible` | ui | Layout | shadcn/ui | MIT | shadcn collapsible, new-york style; unchanged | 2026-09-01 |
 | `combobox` | ui | Form | original | original | shadcn only documents this as a recipe combining Popover/Command/Button; written from scratch as a typed, reusable component | 2026-09-01 |
+| `combobox-creatable` | ui | Form | original | original | no shadcn equivalent; the plain combobox is left untouched and this sits beside it, so a project whose selects are all closed lists never ships a create path a user could find | 2026-09-08 |
 | `command` | ui | Overlay | shadcn/ui | MIT | shadcn command (cmdk), new-york style; input/item heights read density tokens, CommandDialog composes the Dialog primitive | 2026-09-01 |
 | `context-menu` | ui | Overlay | shadcn/ui | MIT | shadcn context-menu, new-york style; content z-index read from --z-dropdown, item min-height/padding read density tokens | 2026-09-01 |
 | `data-grid` | ui | Data | original | original | Viết cho reno trên TanStack Table v9 + TanStack Virtual; shadcn/ui không có data grid | 2026-09-01 |
@@ -96,6 +97,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `file-upload` | ui | Form | original | original | no shadcn equivalent; every media SaaS needs one and none of them upload the same way; the hidden file input carries an overridable accessible name | 2026-09-05 |
 | `form` | ui | Form | shadcn/ui | MIT | shadcn form, new-york style; unchanged logic, restyled label error state via data-error | 2026-09-01 |
 | `hover-card` | ui | Overlay | shadcn/ui | MIT | shadcn hover-card, new-york style; content z-index read from --z-popover | 2026-09-01 |
+| `image-cropper` | ui | Form | original | original | no shadcn equivalent; written on pointer events and canvas rather than pulling in react-image-crop, because the server never decodes the image - the consuming projects upload straight to object storage with a presigned PUT, so whatever the browser produces is what gets stored | 2026-09-08 |
 | `input` | ui | Form | shadcn/ui | MIT | shadcn input, new-york style; height/padding rewritten to read density tokens | 2026-09-01 |
 | `input-otp` | ui | Form | shadcn/ui | MIT | shadcn input-otp, new-york style; slot size rewritten to read the density control height, fake caret uses animate-pulse instead of a custom keyframe | 2026-09-01 |
 | `kv-row` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Rút từ kv-row.tsx của elearning (15 dòng) — phần khó là đường kẻ giữa hai dòng liền nhau, bản gốc lấy từ stylesheet ngoài component nên không cài lẻ được | 2026-09-03 |
@@ -211,7 +213,7 @@ Allowed: `MIT`, `ISC`, `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `0BSD`, `CC
 | `embla-carousel-react` | ^8.6.0 | MIT | `carousel` |
 | `hls.js` | ^1.7.1 | Apache-2.0 | `video-player` |
 | `input-otp` | ^1.5.0 | MIT | `input-otp` |
-| `lucide-react` | ^1.38.0 | ISC | `accordion`, `audio-player`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `command`, `context-menu`, `data-grid`, `data-grid-toolbar`, `date-picker`, `dialog`, `dropdown-menu`, `empty-state`, `error-state`, `file-upload`, `input-otp`, `menubar`, `navigation-menu`, `number-input`, `pagination`, `radio-group`, `resizable`, `rich-text`, `select`, `sheet`, `sidebar`, `spinner`, `stat-card`, `stepper`, `video-player` |
+| `lucide-react` | ^1.38.0 | ISC | `accordion`, `audio-player`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `combobox-creatable`, `command`, `context-menu`, `data-grid`, `data-grid-toolbar`, `date-picker`, `dialog`, `dropdown-menu`, `empty-state`, `error-state`, `file-upload`, `image-cropper`, `input-otp`, `menubar`, `navigation-menu`, `number-input`, `pagination`, `radio-group`, `resizable`, `rich-text`, `select`, `sheet`, `sidebar`, `spinner`, `stat-card`, `stepper`, `video-player` |
 | `react-day-picker` | ^10.0.1 | MIT | `calendar`, `date-picker` |
 | `react-hook-form` | ^7.87.0 | MIT | `form` |
 | `react-resizable-panels` | ^4.12.3 | MIT | `resizable` |
