@@ -1041,6 +1041,36 @@
       }
     },
     {
+      "name": "combobox-creatable",
+      "type": "registry:ui",
+      "title": "ComboboxCreatable",
+      "description": "Combobox có thêm dòng \"Tạo ...\" khi ô tìm kiếm không khớp lựa chọn nào: gọi onCreate với đúng chữ đã gõ, chờ được round-trip lên server (có trạng thái đang tạo), tạo hỏng thì giữ nguyên chữ và báo lỗi. Dùng chung kiểu option với combobox.",
+      "dependencies": [
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button",
+        "@reno/popover",
+        "@reno/command",
+        "@reno/spinner",
+        "@reno/combobox"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/combobox-creatable.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "no shadcn equivalent; the plain combobox is left untouched and this sits beside it, so a project whose selects are all closed lists never ships a create path a user could find",
+        "added": "2026-09-08",
+        "group": "Form"
+      }
+    },
+    {
       "name": "command",
       "type": "registry:ui",
       "title": "Command",
@@ -1447,6 +1477,40 @@
         "upstream": "shadcn hover-card, new-york style; content z-index read from --z-popover",
         "added": "2026-09-01",
         "group": "Overlay"
+      }
+    },
+    {
+      "name": "image-cropper",
+      "type": "registry:ui",
+      "title": "ImageCropper",
+      "description": "Cắt và thu nhỏ ảnh ngay trên trình duyệt trước khi upload: vùng chọn kéo/resize được, khoá tỉ lệ tuỳ chọn, giới hạn cạnh dài, trả về File cho dự án tự gửi đi. Không thêm dependency nào - vùng cắt là một hình chữ nhật cộng một lệnh drawImage.",
+      "dependencies": [
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/image-cropper.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/image-cropper/crop-geometry.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/reno/ui/image-cropper/crop-to-file.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "no shadcn equivalent; written on pointer events and canvas rather than pulling in react-image-crop, because the server never decodes the image - the consuming projects upload straight to object storage with a presigned PUT, so whatever the browser produces is what gets stored",
+        "added": "2026-09-08",
+        "group": "Form"
       }
     },
     {

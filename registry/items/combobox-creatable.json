@@ -1,0 +1,30 @@
+{
+  "name": "combobox-creatable",
+  "type": "registry:ui",
+  "title": "ComboboxCreatable",
+  "description": "Combobox có thêm dòng \"Tạo ...\" khi ô tìm kiếm không khớp lựa chọn nào: gọi onCreate với đúng chữ đã gõ, chờ được round-trip lên server (có trạng thái đang tạo), tạo hỏng thì giữ nguyên chữ và báo lỗi. Dùng chung kiểu option với combobox.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button",
+    "@reno/popover",
+    "@reno/command",
+    "@reno/spinner",
+    "@reno/combobox"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/combobox-creatable.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "no shadcn equivalent; the plain combobox is left untouched and this sits beside it, so a project whose selects are all closed lists never ships a create path a user could find",
+    "added": "2026-09-08",
+    "group": "Form"
+  }
+}
