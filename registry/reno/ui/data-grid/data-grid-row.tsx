@@ -8,6 +8,7 @@ import type { GridFeatures } from "@/lib/grid-state";
 
 import { indexOf, useDataGridContext, widthsOf } from "./data-grid-context";
 import { pinnedEdgeClass, pinnedStyle } from "./column-pinning";
+import { columnSizeStyle } from "./column-sizing";
 
 /**
  * One rendered row. Shared by the plain and virtualized bodies so the two can
@@ -60,7 +61,8 @@ export function DataGridRow<TData extends RowData>({
             style={{
               display: "flex",
               alignItems: "center",
-              width: cell.column.getSize(),
+              // Same call as the header cell above it, so the two cannot drift.
+              ...columnSizeStyle(cell.column.getSize(), pinned),
               ...(pinned === false
                 ? {}
                 : pinnedStyle(pinned, widthsOf(group), groupIndex)),
