@@ -17,3 +17,4 @@ public/r/
 # Internal planning, estimates and reviews. Kept out of the public repo — the
 # technical "why" that outside readers need lives in docs/ instead.
 plans/
+.vercel
