@@ -285,6 +285,33 @@ function slideUtilities() {
   return out;
 }
 
+/** Đầu trung tính, khai TƯỜNG MINH - xem chú thích dưới. */
+const NEUTRAL_KEYFRAME = {
+  opacity: "1",
+  transform: "translate3d(0, 0, 0) scale3d(1, 1, 1)",
+};
+
+/**
+ * Hai keyframe enter/exit phải có ĐỦ HAI ĐẦU, kể cả khi hai đầu bằng nhau.
+ *
+ * Bản trước mỗi cái chỉ khai một đầu, và đầu đó dùng biến modifier với giá trị
+ * mặc định TRUNG TÍNH (`opacity: 1`, `scale: 1`). Nên khi một component gắn
+ * `animate-out` mà không gắn kèm `fade-out-*` / `zoom-out-*`, keyframe rút gọn
+ * thành "đi từ trạng thái hiện tại tới đúng trạng thái hiện tại" - một hoạt ảnh
+ * không đổi gì.
+ *
+ * Trình duyệt KHÔNG chạy một hoạt ảnh như vậy: không `animationstart`, không
+ * `animationend`. Mà Radix `Presence` lại chờ đúng `animationend` để tháo phần
+ * tử khỏi DOM. Kết quả: menu/popover/dialog đóng về mặt trạng thái
+ * (`data-state="closed"`) nhưng NẰM LẠI trên trang - nó che nút kích hoạt và
+ * `aria-hidden` mọi thứ xung quanh, nên người dùng kẹt luôn, `Escape` cũng
+ * không thoát.
+ *
+ * Đo trên `DropdownMenu` ngày 2026-09-12 (issue #5): Radix trần đóng bình
+ * thường; gắn thêm đúng một class `animate-out` là kẹt; thêm đầu còn lại là hết.
+ * Khai đầu trung tính tường minh làm hoạt ảnh luôn có hai mốc khác nhau về mặt
+ * khai báo, nên trình duyệt luôn chạy và luôn bắn `animationend`.
+ */
 export const ANIMATION_CSS = {
   "@keyframes reno-enter": {
     from: {
@@ -292,8 +319,10 @@ export const ANIMATION_CSS = {
       transform:
         "translate3d(var(--reno-enter-translate-x, 0), var(--reno-enter-translate-y, 0), 0) scale3d(var(--reno-enter-scale, 1), var(--reno-enter-scale, 1), var(--reno-enter-scale, 1))",
     },
+    to: { ...NEUTRAL_KEYFRAME },
   },
   "@keyframes reno-exit": {
+    from: { ...NEUTRAL_KEYFRAME },
     to: {
       opacity: "var(--reno-exit-opacity, 1)",
       transform:

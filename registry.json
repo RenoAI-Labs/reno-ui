@@ -480,9 +480,17 @@
           "from": {
             "opacity": "var(--reno-enter-opacity, 1)",
             "transform": "translate3d(var(--reno-enter-translate-x, 0), var(--reno-enter-translate-y, 0), 0) scale3d(var(--reno-enter-scale, 1), var(--reno-enter-scale, 1), var(--reno-enter-scale, 1))"
+          },
+          "to": {
+            "opacity": "1",
+            "transform": "translate3d(0, 0, 0) scale3d(1, 1, 1)"
           }
         },
         "@keyframes reno-exit": {
+          "from": {
+            "opacity": "1",
+            "transform": "translate3d(0, 0, 0) scale3d(1, 1, 1)"
+          },
           "to": {
             "opacity": "var(--reno-exit-opacity, 1)",
             "transform": "translate3d(var(--reno-exit-translate-x, 0), var(--reno-exit-translate-y, 0), 0) scale3d(var(--reno-exit-scale, 1), var(--reno-exit-scale, 1), var(--reno-exit-scale, 1))"
