@@ -1,0 +1,29 @@
+{
+  "name": "row-actions",
+  "type": "registry:ui",
+  "title": "RowActions",
+  "description": "Cột \"Hành động\" của danh sách: tối đa 4 hành động dùng nhiều nhất là nút icon có tooltip, phần còn lại nằm trong menu \"⋯\" (chỉ có khi có hơn 4). Hành động phá huỷ trong menu mang màu destructive và hỏi xác nhận.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/alert-dialog",
+    "@reno/button",
+    "@reno/dropdown-menu",
+    "@reno/tooltip"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/row-actions.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. maxInline bị chặn ở 4: yêu cầu 6 nút inline là yêu cầu phá luật, không phải một thiết lập",
+    "added": "2026-10-21",
+    "group": "Data"
+  }
+}

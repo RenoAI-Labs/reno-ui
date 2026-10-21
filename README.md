@@ -92,6 +92,20 @@ brand logos stay out, and
 [docs/data-grid-server-contract.md](./docs/data-grid-server-contract.md) for what
 the DataGrid sends a backend.
 
+### Admin layout standard
+
+The [showcase](https://ui.reno.ai.vn/showcase) is a complete admin portal — dashboard,
+reports, a list page, settings with a permission matrix, and a profile — and its
+shell, header, avatar menu, grid and settings layout are the fixed layout of
+every project's admin portal. Positions and functions are the standard; brand
+colour and style are per project, through tokens. The contract, its version
+(`admin-layout-standard v1`) and the list of what may and may not vary are in
+[docs/admin-layout-standard.md](./docs/admin-layout-standard.md). The parts a
+project installs for it are the registry items `page-header`, `user-menu`,
+`quota-widget`, `attention-card`, `bulk-action-bar`, `row-actions`, `save-bar`
+and `permission-matrix`, beside the existing `sidebar`, `stat-card`, `chart` and
+`data-grid`.
+
 ### DataGrid
 
 `@reno/table` is a styled `<table>` for light list views. `@reno/data-grid` is

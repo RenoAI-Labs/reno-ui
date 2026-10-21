@@ -70,10 +70,12 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `alert` | ui | Feedback | shadcn/ui | MIT | shadcn alert, new-york style; added success/warning/info variants, a solid/soft appearance axis, size=sm, and an AlertIcon slot so a non-svg icon opens the icon column | 2026-09-01 |
 | `alert-dialog` | ui | Overlay | shadcn/ui | MIT | shadcn alert-dialog, new-york style; overlay/content z-index read from --z-overlay/--z-modal, action/cancel reuse buttonVariants | 2026-09-01 |
 | `aspect-ratio` | ui | Layout | shadcn/ui | MIT | shadcn aspect-ratio, new-york style; unchanged | 2026-09-01 |
+| `attention-card` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Màu nhấn lấy từ --warning và --destructive ở alpha thấp, không dùng màu palette | 2026-10-21 |
 | `audio-player` | ui | Data | original | original | video-player covers video via hls.js; pulling hls.js in to play an mp3 is bundle cost for nothing | 2026-09-05 |
 | `avatar` | ui | Data | shadcn/ui | MIT | shadcn avatar, new-york style; size variants rewritten to read density tokens | 2026-09-01 |
 | `badge` | ui | Feedback | shadcn/ui | MIT | shadcn badge, new-york style; added success/warning/info variants | 2026-09-01 |
 | `breadcrumb` | ui | Nav | shadcn/ui | MIT | shadcn breadcrumb, new-york style; ellipsis size rewritten to read density tokens | 2026-09-01 |
+| `bulk-action-bar` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Luật bắt buộc của admin-layout-standard §7: danh sách có thao tác hàng loạt thì có cột chọn và thanh này | 2026-10-21 |
 | `button` | ui | Form | shadcn/ui | MIT | shadcn button, new-york style; sizes rewritten to read density tokens; variant=unstyled emits no classes so a project stylesheet owns the look | 2026-09-01 |
 | `calendar` | ui | Data | shadcn/ui | MIT | shadcn calendar, new-york style, react-day-picker v10; sizing rewritten to read density tokens, locale defaulted to vi | 2026-09-01 |
 | `card` | ui | Layout | shadcn/ui | MIT | shadcn card, new-york style; padding uses normal spacing, and an unstyled flag drops the built-in utilities so a project stylesheet can own the box | 2026-09-01 |
@@ -105,12 +107,17 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `menubar` | ui | Nav | shadcn/ui | MIT | shadcn menubar, new-york style; height and z-index rewritten to read tokens | 2026-09-01 |
 | `navigation-menu` | ui | Nav | shadcn/ui | MIT | shadcn navigation-menu, new-york style; control height and z-index rewritten to read tokens | 2026-09-01 |
 | `number-input` | ui | Form | original | original | no shadcn equivalent; native number spinners are tiny, browser-specific and vanish on touch | 2026-09-05 |
+| `page-header` | ui | Layout | original | original | Viết cho reno; shadcn/ui không có. Là một component chứ không phải quy ước className vì vị trí breadcrumb, tiêu đề, bộ lọc và nút chính là một phần của chuẩn layout admin | 2026-10-21 |
 | `pagination` | ui | Data | shadcn/ui | MIT | shadcn pagination, new-york style; dropped next/link, added overridable Vietnamese labels | 2026-09-01 |
+| `permission-matrix` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Mô hình quyền của harness: một tài khoản có nhiều vai trò, quyền hiệu lực là hợp các cột; ma trận chỉ sửa vai trò | 2026-10-21 |
 | `popover` | ui | Overlay | shadcn/ui | MIT | shadcn popover, new-york style; content z-index read from --z-popover | 2026-09-01 |
 | `progress` | ui | Feedback | shadcn/ui | MIT | shadcn progress, new-york style; unchanged | 2026-09-01 |
+| `quota-widget` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Thanh vẽ từ số thô còn con số hiển thị do dự án định dạng, nên chuỗi định dạng sai không thể vẽ sai thanh | 2026-10-21 |
 | `radio-group` | ui | Form | shadcn/ui | MIT | shadcn radio-group, new-york style; unchanged | 2026-09-01 |
 | `resizable` | ui | Layout | shadcn/ui | MIT | shadcn resizable, new-york style; ported to react-resizable-panels v4 exports (Group/Separator, orientation prop) since the shadcn docs still show the v2/v3 API | 2026-09-01 |
 | `rich-text` | ui | Form | original | original | Viết cho reno quanh TipTap v3; shadcn/ui không có rich text editor. Bố cục học từ article-editor.tsx của HASI (đang chạy production) nhưng code lại vì bản đó gắn token và i18n của HASI. Extension Pro (trả phí) không dùng và không được dùng | 2026-09-02 |
+| `row-actions` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. maxInline bị chặn ở 4: yêu cầu 6 nút inline là yêu cầu phá luật, không phải một thiết lập | 2026-10-21 |
+| `save-bar` | ui | Form | original | original | Viết cho reno; shadcn/ui không có | 2026-10-21 |
 | `scroll-area` | ui | Layout | shadcn/ui | MIT | shadcn scroll-area, new-york style; unchanged | 2026-09-01 |
 | `select` | ui | Form | shadcn/ui | MIT | shadcn select, new-york style; trigger height rewritten to read density tokens, content z-index rewritten to --z-dropdown | 2026-09-01 |
 | `separator` | ui | Layout | shadcn/ui | MIT | shadcn separator, new-york style; unchanged | 2026-09-01 |
@@ -130,6 +137,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `toggle` | ui | Form | shadcn/ui | MIT | shadcn toggle, new-york style; fixed heights h-8/h-9/h-10 rewritten to read --density-control-height*, and horizontal padding to --density-control-px | 2026-09-02 |
 | `toggle-group` | ui | Form | shadcn/ui | MIT | shadcn toggle-group, new-york style; item padding reads --density-control-px, and the consumer's `style` is merged into the gap variable instead of overwriting it | 2026-09-02 |
 | `tooltip` | ui | Overlay | shadcn/ui | MIT | shadcn tooltip, new-york style; content z-index read from --z-popover | 2026-09-01 |
+| `user-menu` | ui | Nav | original | original | Viết cho reno; shadcn/ui không có. Là popover chứ không phải dropdown-menu vì thẻ tiến độ và nhóm nút phân đoạn không phải mục của role menu | 2026-10-21 |
 | `video-player` | ui | Data | original | original | Viết cho reno quanh hls.js; shadcn/ui không có video player. Rút từ lib/hls-player.ts của elearning (96 dòng) nhưng chỉ phần primitive — playlist/tiến độ học/ghi chú thuộc block course-player | 2026-09-02 |
 
 <!-- END GENERATED INVENTORY -->
@@ -213,7 +221,7 @@ Allowed: `MIT`, `ISC`, `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `0BSD`, `CC
 | `embla-carousel-react` | ^8.6.0 | MIT | `carousel` |
 | `hls.js` | ^1.7.1 | Apache-2.0 | `video-player` |
 | `input-otp` | ^1.5.0 | MIT | `input-otp` |
-| `lucide-react` | ^1.38.0 | ISC | `accordion`, `audio-player`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `combobox-creatable`, `command`, `context-menu`, `data-grid`, `data-grid-toolbar`, `date-picker`, `dialog`, `dropdown-menu`, `empty-state`, `error-state`, `file-upload`, `image-cropper`, `input-otp`, `menubar`, `navigation-menu`, `number-input`, `pagination`, `radio-group`, `resizable`, `rich-text`, `select`, `sheet`, `sidebar`, `spinner`, `stat-card`, `stepper`, `video-player` |
+| `lucide-react` | ^1.38.0 | ISC | `accordion`, `audio-player`, `breadcrumb`, `calendar`, `carousel`, `checkbox`, `combobox`, `combobox-creatable`, `command`, `context-menu`, `data-grid`, `data-grid-toolbar`, `date-picker`, `dialog`, `dropdown-menu`, `empty-state`, `error-state`, `file-upload`, `image-cropper`, `input-otp`, `menubar`, `navigation-menu`, `number-input`, `pagination`, `permission-matrix`, `radio-group`, `resizable`, `rich-text`, `row-actions`, `select`, `sheet`, `sidebar`, `spinner`, `stat-card`, `stepper`, `user-menu`, `video-player` |
 | `react-day-picker` | ^10.0.1 | MIT | `calendar`, `date-picker` |
 | `react-hook-form` | ^7.87.0 | MIT | `form` |
 | `react-resizable-panels` | ^4.12.3 | MIT | `resizable` |
@@ -256,6 +264,25 @@ The 58 packages above pull in **199 in total**, counting runtime dependencies on
 MIT members are counted rather than listed; everything else is named.
 
 <!-- END GENERATED TRANSITIVE LICENSES -->
+
+## Admin layout standard
+
+The showcase's admin portal is the reference implementation of
+[admin-layout-standard.md](./admin-layout-standard.md) (`admin-layout-standard v1`).
+These registry items exist because that standard uses them, and the showcase
+consumes them the way a project would — all `original` / `original`, added
+2026-10-21:
+
+| Item | Standard element |
+|---|---|
+| `page-header` | Title, subtitle, filters and primary action inside the content area |
+| `user-menu` | Avatar menu: identity, usage, account items, language, appearance, help, sign-out |
+| `quota-widget` | Credit or usage meter, in the sidebar footer and the avatar menu |
+| `attention-card` | "Cần bạn xử lý" cards on the dashboard |
+| `bulk-action-bar` | Strip above a list while rows are selected |
+| `row-actions` | The "Hành động" column: at most four inline actions, the rest behind "⋯" |
+| `save-bar` | Sticky "Hoàn tác" / "Lưu tất cả thay đổi (n)" bar on settings pages |
+| `permission-matrix` | Roles by permissions matrix with sticky header and first column |
 
 ## Adding an item
 

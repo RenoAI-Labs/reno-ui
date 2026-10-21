@@ -1,0 +1,24 @@
+{
+  "name": "bulk-action-bar",
+  "type": "registry:ui",
+  "title": "BulkActionBar",
+  "description": "Thanh thao tác hàng loạt phía trên danh sách khi có dòng được chọn: \"Đã chọn N\", các nút, \"Bỏ chọn\"; thêm banner chọn tất cả kết quả khớp bộ lọc khi đã chọn cả trang. Không có dòng nào được chọn thì không vẽ gì.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/bulk-action-bar.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Luật bắt buộc của admin-layout-standard §7: danh sách có thao tác hàng loạt thì có cột chọn và thanh này",
+    "added": "2026-10-21",
+    "group": "Data"
+  }
+}

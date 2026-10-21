@@ -1,0 +1,24 @@
+{
+  "name": "save-bar",
+  "type": "registry:ui",
+  "title": "SaveBar",
+  "description": "Thanh dính ở đáy trang cài đặt: số thay đổi chưa lưu, \"Hoàn tác\" và \"Lưu tất cả thay đổi (n)\". Không có thay đổi thì vô hiệu hoá chứ không ẩn, để trang không nhảy.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/button"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/save-bar.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có",
+    "added": "2026-10-21",
+    "group": "Form"
+  }
+}
