@@ -75,6 +75,16 @@ export type DataGridProps<TData extends RowData> = {
   className?: string;
   /** Rendered inside the empty state — typically a "create the first one" CTA. */
   emptyAction?: React.ReactNode;
+  /**
+   * Reports which rows are on screen and how many match the filters.
+   *
+   * Exists for the bulk action bar: "the whole page is selected, select all N
+   * matching" needs to know what the page is, and only the grid knows — its
+   * filter, sort and page chain is the one source of truth, and re-deriving it
+   * outside would be a second implementation to keep in step. Called after a
+   * render in which either value changed, never during one.
+   */
+  onViewChange?: (view: { pageRowIds: string[]; total: number }) => void;
 };
 
 export function DataGrid<TData extends RowData>({
@@ -98,6 +108,7 @@ export function DataGrid<TData extends RowData>({
   height = 480,
   className,
   emptyAction,
+  onViewChange,
 }: DataGridProps<TData>) {
   const labels = React.useMemo(() => resolveLabels(labelOverrides), [labelOverrides]);
   // State, not a ref: the virtualized body needs a render once the viewport
@@ -156,6 +167,18 @@ export function DataGrid<TData extends RowData>({
   // page, so using it would make every page claim to be the whole result.
   const total =
     mode === "server" ? (rowCount ?? 0) : table.getFilteredRowModel().rows.length;
+
+  // Report the view after the render that produced it. The ids are joined into
+  // one string so the effect depends on a value that is equal when the page is,
+  // not on an array that is new every render.
+  const pageKey = rows.map((row) => row.id).join("\u0000");
+  const onViewChangeRef = React.useRef(onViewChange);
+  React.useEffect(() => {
+    onViewChangeRef.current = onViewChange;
+  });
+  React.useEffect(() => {
+    onViewChangeRef.current?.({ pageRowIds: pageKey ? pageKey.split("\u0000") : [], total });
+  }, [pageKey, total]);
 
   // Density drives row height, so ERP renders more rows per screen than
   // e-learning with no prop and no code change.

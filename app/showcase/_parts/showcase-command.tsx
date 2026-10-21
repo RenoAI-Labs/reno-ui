@@ -11,12 +11,12 @@ import {
   CommandList,
   CommandShortcut,
 } from "@/components/ui/command";
-import { NAV_GROUPS } from "./showcase-nav";
+import { ACCOUNT_PAGES, FOOTER_LINKS, NAV_GROUPS } from "./showcase-nav";
 
 /**
- * ⌘K palette over the same navigation model the sidebar renders.
+ * Ctrl K palette over the same navigation model the sidebar renders.
  *
- * `open` is lifted so the sidebar's search button and the keyboard shortcut both
+ * `open` is lifted so the header's search field and the keyboard shortcut both
  * drive one dialog rather than two that can end up both open.
  */
 export function ShowcaseCommand({
@@ -26,7 +26,7 @@ export function ShowcaseCommand({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSelect: (key: string) => void;
+  onSelect: (href: string) => void;
 }) {
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -39,24 +39,30 @@ export function ShowcaseCommand({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open, onOpenChange]);
 
+  const groups = [
+    ...NAV_GROUPS,
+    { label: "Tài khoản", items: ACCOUNT_PAGES },
+    { label: "Tham khảo", items: FOOTER_LINKS },
+  ];
+
   return (
     <CommandDialog
       open={open}
       onOpenChange={onOpenChange}
       title="Tìm nhanh"
-      description="Tìm màn hình, nhân viên hoặc tài liệu"
+      description="Tìm màn hình trong showcase"
     >
       <CommandInput placeholder="Nhập để tìm màn hình…" />
       <CommandList>
         <CommandEmpty>Không tìm thấy kết quả.</CommandEmpty>
-        {NAV_GROUPS.map((group) => (
+        {groups.map((group) => (
           <CommandGroup key={group.label} heading={group.label}>
             {group.items.map((item) => (
               <CommandItem
                 key={item.key}
                 value={item.label}
                 onSelect={() => {
-                  onSelect(item.key);
+                  onSelect(item.href);
                   onOpenChange(false);
                 }}
               >

@@ -1,0 +1,26 @@
+{
+  "name": "attention-card",
+  "type": "registry:ui",
+  "title": "AttentionCard",
+  "description": "Thẻ \"Cần bạn xử lý\": nhãn trạng thái, meta bên phải, một con số lớn, một dòng giải thích và một nút. Mức độ (warning hoặc destructive) tô viền và nền bằng token.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/badge",
+    "@reno/button",
+    "@reno/card"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/attention-card.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Màu nhấn lấy từ --warning và --destructive ở alpha thấp, không dùng màu palette",
+    "added": "2026-10-21",
+    "group": "Data"
+  }
+}

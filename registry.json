@@ -685,6 +685,32 @@
       }
     },
     {
+      "name": "attention-card",
+      "type": "registry:ui",
+      "title": "AttentionCard",
+      "description": "Thẻ \"Cần bạn xử lý\": nhãn trạng thái, meta bên phải, một con số lớn, một dòng giải thích và một nút. Mức độ (warning hoặc destructive) tô viền và nền bằng token.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/badge",
+        "@reno/button",
+        "@reno/card"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/attention-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Màu nhấn lấy từ --warning và --destructive ở alpha thấp, không dùng màu palette",
+        "added": "2026-10-21",
+        "group": "Data"
+      }
+    },
+    {
       "name": "audio-player",
       "type": "registry:ui",
       "title": "AudioPlayer",
@@ -788,6 +814,30 @@
         "upstream": "shadcn breadcrumb, new-york style; ellipsis size rewritten to read density tokens",
         "added": "2026-09-01",
         "group": "Nav"
+      }
+    },
+    {
+      "name": "bulk-action-bar",
+      "type": "registry:ui",
+      "title": "BulkActionBar",
+      "description": "Thanh thao tác hàng loạt phía trên danh sách khi có dòng được chọn: \"Đã chọn N\", các nút, \"Bỏ chọn\"; thêm banner chọn tất cả kết quả khớp bộ lọc khi đã chọn cả trang. Không có dòng nào được chọn thì không vẽ gì.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/bulk-action-bar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Luật bắt buộc của admin-layout-standard §7: danh sách có thao tác hàng loạt thì có cột chọn và thanh này",
+        "added": "2026-10-21",
+        "group": "Data"
       }
     },
     {
@@ -1702,6 +1752,29 @@
       }
     },
     {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "PageHeader",
+      "description": "Đầu trang của một màn hình quản trị: breadcrumb tuỳ chọn, tiêu đề, dòng phụ, rồi bộ lọc trang và nút chính ở bên phải. Vị trí các phần cố định theo admin-layout-standard §2.3.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/page-header.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Là một component chứ không phải quy ước className vì vị trí breadcrumb, tiêu đề, bộ lọc và nút chính là một phần của chuẩn layout admin",
+        "added": "2026-10-21",
+        "group": "Layout"
+      }
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
@@ -1725,6 +1798,34 @@
         "license": "MIT",
         "upstream": "shadcn pagination, new-york style; dropped next/link, added overridable Vietnamese labels",
         "added": "2026-09-01",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "permission-matrix",
+      "type": "registry:ui",
+      "title": "PermissionMatrix",
+      "description": "Ma trận phân quyền: vai trò là cột, quyền là hàng nhóm theo tài nguyên, mỗi ô một checkbox; badge \"Phạm vi khác\"; hàng tiêu đề và cột đầu dính; nút Tạo vai trò, Hoàn tác, Lưu tất cả thay đổi (n). Quyền ngụ ý (Toàn quyền) được giữ đúng hai chiều.",
+      "dependencies": [
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/badge",
+        "@reno/button",
+        "@reno/checkbox"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/permission-matrix.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Mô hình quyền của harness: một tài khoản có nhiều vai trò, quyền hiệu lực là hợp các cột; ma trận chỉ sửa vai trò",
+        "added": "2026-10-21",
         "group": "Data"
       }
     },
@@ -1776,6 +1877,30 @@
         "upstream": "shadcn progress, new-york style; unchanged",
         "added": "2026-09-01",
         "group": "Feedback"
+      }
+    },
+    {
+      "name": "quota-widget",
+      "type": "registry:ui",
+      "title": "QuotaWidget",
+      "description": "Đồng hồ hạn mức hoặc điểm còn lại: nhãn, số còn lại trên tổng, thanh tiến độ, dòng chú thích và một hành động. Nằm cuối sidebar và trong menu người dùng.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/progress"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/quota-widget.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Thanh vẽ từ số thô còn con số hiển thị do dự án định dạng, nên chuỗi định dạng sai không thể vẽ sai thanh",
+        "added": "2026-10-21",
+        "group": "Data"
       }
     },
     {
@@ -1888,6 +2013,59 @@
         "license": "original",
         "upstream": "Viết cho reno quanh TipTap v3; shadcn/ui không có rich text editor. Bố cục học từ article-editor.tsx của HASI (đang chạy production) nhưng code lại vì bản đó gắn token và i18n của HASI. Extension Pro (trả phí) không dùng và không được dùng",
         "added": "2026-09-02",
+        "group": "Form"
+      }
+    },
+    {
+      "name": "row-actions",
+      "type": "registry:ui",
+      "title": "RowActions",
+      "description": "Cột \"Hành động\" của danh sách: tối đa 4 hành động dùng nhiều nhất là nút icon có tooltip, phần còn lại nằm trong menu \"⋯\" (chỉ có khi có hơn 4). Hành động phá huỷ trong menu mang màu destructive và hỏi xác nhận.",
+      "dependencies": [
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/alert-dialog",
+        "@reno/button",
+        "@reno/dropdown-menu",
+        "@reno/tooltip"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/row-actions.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. maxInline bị chặn ở 4: yêu cầu 6 nút inline là yêu cầu phá luật, không phải một thiết lập",
+        "added": "2026-10-21",
+        "group": "Data"
+      }
+    },
+    {
+      "name": "save-bar",
+      "type": "registry:ui",
+      "title": "SaveBar",
+      "description": "Thanh dính ở đáy trang cài đặt: số thay đổi chưa lưu, \"Hoàn tác\" và \"Lưu tất cả thay đổi (n)\". Không có thay đổi thì vô hiệu hoá chứ không ẩn, để trang không nhảy.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/button"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/save-bar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có",
+        "added": "2026-10-21",
         "group": "Form"
       }
     },
@@ -2399,6 +2577,38 @@
         "upstream": "shadcn tooltip, new-york style; content z-index read from --z-popover",
         "added": "2026-09-01",
         "group": "Overlay"
+      }
+    },
+    {
+      "name": "user-menu",
+      "type": "registry:ui",
+      "title": "UserMenu",
+      "description": "Popover dưới avatar ở header: danh tính, thẻ hạn mức, các mục tài khoản, ngôn ngữ, giao diện Sáng/Tối/Auto, trợ giúp, đăng xuất. Nội dung và thứ tự cố định theo admin-layout-standard §3.",
+      "dependencies": [
+        "lucide-react@^1.38.0"
+      ],
+      "registryDependencies": [
+        "@reno/utils",
+        "@reno/avatar",
+        "@reno/badge",
+        "@reno/button",
+        "@reno/popover",
+        "@reno/quota-widget",
+        "@reno/separator",
+        "@reno/toggle-group"
+      ],
+      "files": [
+        {
+          "path": "registry/reno/ui/user-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "source": "original",
+        "license": "original",
+        "upstream": "Viết cho reno; shadcn/ui không có. Là popover chứ không phải dropdown-menu vì thẻ tiến độ và nhóm nút phân đoạn không phải mục của role menu",
+        "added": "2026-10-21",
+        "group": "Nav"
       }
     },
     {

@@ -7,6 +7,8 @@
  * would sit on the one page whose whole purpose is to look trustworthy.
  */
 
+import type { RoleId } from "./mock-admin-data";
+
 export type Person = {
   id: string;
   name: string;
@@ -22,6 +24,8 @@ export type Person = {
   score: number;
   /** When the next review falls due, as a phrase rather than a date. */
   nextReview: string;
+  /** One or more: an account holds several roles, and the grid shows them as chips. */
+  roles: RoleId[];
 };
 
 export const HIRE_SOURCES = ["linkedin", "google", "referral", "website", "coldcall"] as const;
@@ -94,6 +98,24 @@ export const STATUS_VARIANTS: Record<Person["status"], "success" | "info" | "war
   };
 
 /**
+ * Weighted so most people are plain employees and a few hold two roles, which
+ * is the shape that makes the role tabs' counts and the multi-role chips read
+ * as real data.
+ */
+const PRIMARY_ROLES: RoleId[] = [
+  "employee", "employee", "employee", "employee", "manager",
+  "hr", "recruiter", "trainer", "accountant", "auditor", "admin",
+];
+const EXTRA_ROLES: RoleId[] = ["trainer", "manager", "recruiter", "employee"];
+
+function rolesFor(i: number): RoleId[] {
+  const primary = PRIMARY_ROLES[(i * 7 + Math.floor(i / 9)) % PRIMARY_ROLES.length]!;
+  if (i % 4 !== 0) return [primary];
+  const extra = EXTRA_ROLES[(i / 4) % EXTRA_ROLES.length]!;
+  return extra === primary ? [primary] : [primary, extra];
+}
+
+/**
  * Each field advances on its own stride *plus* a slower carry term. Strides
  * alone repeat with period lcm(10, 8, 20) = 40, which over 240 rows means every
  * name appears six times — obvious the moment the list is sorted. The carry
@@ -121,26 +143,9 @@ export const PEOPLE: Person[] = Array.from({ length: 240 }, (_, i) => {
     source: HIRE_SOURCES[(i * 3 + Math.floor(i / 7)) % HIRE_SOURCES.length],
     score: 22 + ((i * 37 + Math.floor(i / 5) * 11) % 77),
     nextReview: REVIEW_WINDOWS[(i * 19 + Math.floor(i / 11)) % REVIEW_WINDOWS.length],
+    roles: rolesFor(i),
   };
 });
-
-export type MonthlyPoint = {
-  month: string;
-  tuyenMoi: number;
-  nghiViec: number;
-  ungTuyen: number;
-};
-
-export const HEADCOUNT_BY_MONTH: MonthlyPoint[] = [
-  { month: "T1", tuyenMoi: 12, nghiViec: 4, ungTuyen: 68 },
-  { month: "T2", tuyenMoi: 9, nghiViec: 6, ungTuyen: 54 },
-  { month: "T3", tuyenMoi: 17, nghiViec: 3, ungTuyen: 92 },
-  { month: "T4", tuyenMoi: 14, nghiViec: 8, ungTuyen: 77 },
-  { month: "T5", tuyenMoi: 21, nghiViec: 5, ungTuyen: 105 },
-  { month: "T6", tuyenMoi: 18, nghiViec: 7, ungTuyen: 88 },
-  { month: "T7", tuyenMoi: 24, nghiViec: 4, ungTuyen: 121 },
-  { month: "T8", tuyenMoi: 19, nghiViec: 9, ungTuyen: 96 },
-];
 
 export type RecentDocument = {
   id: string;

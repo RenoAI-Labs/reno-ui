@@ -131,6 +131,10 @@ the grid, and is worth using rather than hand-rolling — a hand-rolled copy ten
 to lose the indeterminate header state, the `selectAll` / `selectRow` labels, and
 the guard that stops ticking a box from also firing `onRowClick`.
 
+The header checkbox selects the rows on the current page only; reaching every row
+matching the filter is the separate "select all N matching" step (see
+`@reno/bulk-action-bar`), which a server grid expresses as an `exclude` selection.
+
 Pass `enableRowSelection={false}` when a screen has no bulk actions. That also
 drops `aria-selected` from every row, so assistive tech stops announcing a
 selection the screen does not offer.

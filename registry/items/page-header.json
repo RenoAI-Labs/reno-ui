@@ -1,0 +1,23 @@
+{
+  "name": "page-header",
+  "type": "registry:ui",
+  "title": "PageHeader",
+  "description": "Đầu trang của một màn hình quản trị: breadcrumb tuỳ chọn, tiêu đề, dòng phụ, rồi bộ lọc trang và nút chính ở bên phải. Vị trí các phần cố định theo admin-layout-standard §2.3.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@reno/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/page-header.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Là một component chứ không phải quy ước className vì vị trí breadcrumb, tiêu đề, bộ lọc và nút chính là một phần của chuẩn layout admin",
+    "added": "2026-10-21",
+    "group": "Layout"
+  }
+}

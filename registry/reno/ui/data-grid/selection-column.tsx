@@ -10,6 +10,12 @@ import { createGridColumns, type GridColumn } from "@/lib/grid-state";
 /**
  * The checkbox column for row selection.
  *
+ * The header checkbox selects the rows on the current page, not every row the
+ * grid holds. "Select all" that silently reaches across pages is how a bulk
+ * delete takes out rows the user never saw; reaching every row matching the
+ * filter is a separate, explicit step — the "select all N matching" offer of
+ * the bulk action bar — and the admin layout standard (§7) says select page.
+ *
  * `enableRowSelection` turns the *state* on; something still has to render the
  * control. Shipping that here rather than leaving it to each screen matters for
  * more than convenience: a hand-rolled copy tends to lose the indeterminate
@@ -33,13 +39,13 @@ export function selectionColumn<TData extends RowData>(
         <Checkbox
           aria-label={labels.selectAll}
           checked={
-            table.getIsAllRowsSelected()
+            table.getIsAllPageRowsSelected()
               ? true
-              : table.getIsSomeRowsSelected()
+              : table.getIsSomePageRowsSelected()
                 ? "indeterminate"
                 : false
           }
-          onCheckedChange={(checked) => table.toggleAllRowsSelected(checked === true)}
+          onCheckedChange={(checked) => table.toggleAllPageRowsSelected(checked === true)}
         />
       ),
       cell: ({ row }) => (

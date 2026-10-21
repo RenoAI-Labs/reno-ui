@@ -1,0 +1,32 @@
+{
+  "name": "user-menu",
+  "type": "registry:ui",
+  "title": "UserMenu",
+  "description": "Popover dưới avatar ở header: danh tính, thẻ hạn mức, các mục tài khoản, ngôn ngữ, giao diện Sáng/Tối/Auto, trợ giúp, đăng xuất. Nội dung và thứ tự cố định theo admin-layout-standard §3.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/avatar",
+    "@reno/badge",
+    "@reno/button",
+    "@reno/popover",
+    "@reno/quota-widget",
+    "@reno/separator",
+    "@reno/toggle-group"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/user-menu.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Là popover chứ không phải dropdown-menu vì thẻ tiến độ và nhóm nút phân đoạn không phải mục của role menu",
+    "added": "2026-10-21",
+    "group": "Nav"
+  }
+}

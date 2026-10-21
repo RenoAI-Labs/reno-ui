@@ -115,7 +115,7 @@ export const defaultLabels: DataGridLabels = {
   page: (page) => `Trang ${page}`,
   morePages: "Còn nhiều trang nữa",
 
-  selectAll: "Chọn tất cả",
+  selectAll: "Chọn tất cả dòng trên trang",
   selectAllMatching: "Chọn tất cả kết quả khớp bộ lọc",
   clearSelection: "Bỏ chọn",
   selectRow: "Chọn dòng",
@@ -168,7 +168,7 @@ export const englishLabels: DataGridLabels = {
   page: (page) => `Page ${page}`,
   morePages: "More pages",
 
-  selectAll: "Select all",
+  selectAll: "Select all rows on this page",
   selectAllMatching: "Select all matching the current filter",
   clearSelection: "Clear selection",
   selectRow: "Select row",

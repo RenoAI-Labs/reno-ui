@@ -1,0 +1,28 @@
+{
+  "name": "permission-matrix",
+  "type": "registry:ui",
+  "title": "PermissionMatrix",
+  "description": "Ma trận phân quyền: vai trò là cột, quyền là hàng nhóm theo tài nguyên, mỗi ô một checkbox; badge \"Phạm vi khác\"; hàng tiêu đề và cột đầu dính; nút Tạo vai trò, Hoàn tác, Lưu tất cả thay đổi (n). Quyền ngụ ý (Toàn quyền) được giữ đúng hai chiều.",
+  "dependencies": [
+    "lucide-react@^1.38.0"
+  ],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/badge",
+    "@reno/button",
+    "@reno/checkbox"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/permission-matrix.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Mô hình quyền của harness: một tài khoản có nhiều vai trò, quyền hiệu lực là hợp các cột; ma trận chỉ sửa vai trò",
+    "added": "2026-10-21",
+    "group": "Data"
+  }
+}

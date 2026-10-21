@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { DEMOS } from "@/app/lib/demo-index.generated";
 import { groupedUiItems } from "@/app/lib/registry-catalog";
 import { EdgeStates } from "../_parts/edge-states";
-import { ShowcasePageHeader } from "../_parts/showcase-page-header";
+import { PageHeader } from "@/components/ui/page-header";
 
 export const metadata: Metadata = {
   title: "Tất cả component",
@@ -21,7 +21,10 @@ export const metadata: Metadata = {
  * visible gap rather than silently missing from visual review.
  *
  * The dashboard at `/showcase` is the opposite exercise — it has to look like a
- * product. This page has to be exhaustive, which is why they are separate.
+ * product. This page has to be exhaustive, which is why they are separate. It
+ * is reference material, not one of the five portal pages of the layout
+ * standard, but it renders inside the same shell so the brand panel and the
+ * theme toggle still apply.
  */
 export default function AllComponentsPage() {
   const groups = groupedUiItems();
@@ -32,14 +35,12 @@ export default function AllComponentsPage() {
 
   return (
     <>
-      <ShowcasePageHeader
+      <PageHeader
         title="Tất cả component"
-        description={`${total} primitive, sinh tự động từ registry.json`}
-        backHref="/showcase"
-        backLabel="Dashboard"
+        subtitle={`${total} primitive, sinh tự động từ registry.json`}
       />
 
-      <main className="flex flex-col gap-10 px-4 py-8">
+      <div className="flex flex-col gap-10 pb-8">
         <nav className="flex flex-wrap gap-2" aria-label="Nhóm component">
           {groups.map((group) => (
             <a
@@ -103,7 +104,7 @@ export default function AllComponentsPage() {
             </div>
           </section>
         ))}
-      </main>
+      </div>
     </>
   );
 }

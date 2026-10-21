@@ -1,0 +1,24 @@
+{
+  "name": "quota-widget",
+  "type": "registry:ui",
+  "title": "QuotaWidget",
+  "description": "Đồng hồ hạn mức hoặc điểm còn lại: nhãn, số còn lại trên tổng, thanh tiến độ, dòng chú thích và một hành động. Nằm cuối sidebar và trong menu người dùng.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@reno/utils",
+    "@reno/progress"
+  ],
+  "files": [
+    {
+      "path": "registry/reno/ui/quota-widget.tsx",
+      "type": "registry:ui"
+    }
+  ],
+  "meta": {
+    "source": "original",
+    "license": "original",
+    "upstream": "Viết cho reno; shadcn/ui không có. Thanh vẽ từ số thô còn con số hiển thị do dự án định dạng, nên chuỗi định dạng sai không thể vẽ sai thanh",
+    "added": "2026-10-21",
+    "group": "Data"
+  }
+}

@@ -2,11 +2,10 @@
 
 import * as React from "react";
 import { wcagContrast } from "culori";
-import { CheckIcon, CopyIcon, PaletteIcon, RotateCcwIcon, TriangleAlertIcon } from "lucide-react";
+import { CheckIcon, CopyIcon, RotateCcwIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -102,29 +101,36 @@ type BrandSettings = {
 
 const EMPTY: BrandSettings = { brand: null, secondary: null, density: null, radius: null };
 
-export function ShowcaseBrandPanel() {
-  const { mode } = useTheme();
+type BrandContextValue = {
+  settings: BrandSettings;
+  update: (patch: Partial<BrandSettings>) => void;
+  reset: () => void;
+  overrides: TokenOverride[];
+};
 
-  /*
-    Plain state now. It used to be scoped to the preset it was dialled under, so
-    that switching preset dropped the overrides by derivation — there is no
-    preset to switch, so there is nothing to scope it to.
-  */
+const BrandContext = React.createContext<BrandContextValue | null>(null);
+
+/**
+ * Holds the brand settings for the whole showcase shell.
+ *
+ * Mounted once by the shell rather than inside the settings page: the overrides
+ * are custom properties written onto `<html>`, and a provider that unmounted
+ * with the page would drop the brand the moment a reviewer clicked another menu
+ * item — which is exactly the check the panel exists for ("the colour changed,
+ * nothing moved").
+ */
+export function BrandProvider({ children }: { children: React.ReactNode }) {
+  const { mode } = useTheme();
   const [settings, setSettings] = React.useState<BrandSettings>(EMPTY);
 
-  const update = (patch: Partial<BrandSettings>) =>
-    setSettings((current) => ({ ...current, ...patch }));
-
-  const [copied, setCopied] = React.useState(false);
-  const [contrast, setContrast] = React.useState<{ primary: number | null; secondary: number | null }>(
-    { primary: null, secondary: null },
+  const update = React.useCallback(
+    (patch: Partial<BrandSettings>) => setSettings((current) => ({ ...current, ...patch })),
+    [],
   );
-
-  const primaryProbe = React.useRef<HTMLSpanElement>(null);
-  const secondaryProbe = React.useRef<HTMLSpanElement>(null);
+  const reset = React.useCallback(() => setSettings(EMPTY), []);
 
   /**
-   * The overrides this panel is currently applying.
+   * The overrides currently applied.
    *
    * Derived entirely from state and the theme config — nothing here reads the
    * page. An earlier draft read the current `--secondary` off `<html>` to
@@ -153,6 +159,31 @@ export function ShowcaseBrandPanel() {
     };
   }, [overrides]);
 
+  const value = React.useMemo(
+    () => ({ settings, update, reset, overrides }),
+    [settings, update, reset, overrides],
+  );
+
+  return <BrandContext.Provider value={value}>{children}</BrandContext.Provider>;
+}
+
+function useBrand() {
+  const context = React.useContext(BrandContext);
+  if (!context) throw new Error("ShowcaseBrandPanel needs a BrandProvider above it.");
+  return context;
+}
+
+export function ShowcaseBrandPanel() {
+  const { settings, update, reset, overrides } = useBrand();
+
+  const [copied, setCopied] = React.useState(false);
+  const [contrast, setContrast] = React.useState<{ primary: number | null; secondary: number | null }>(
+    { primary: null, secondary: null },
+  );
+
+  const primaryProbe = React.useRef<HTMLSpanElement>(null);
+  const secondaryProbe = React.useRef<HTMLSpanElement>(null);
+
   /**
    * Measure what was painted instead of re-deriving it.
    *
@@ -177,10 +208,6 @@ export function ShowcaseBrandPanel() {
   const activeDensity = settings.density ?? presetDensityStep(BASE_PRESET.density) ?? "normal";
 
   const cssBlock = toCssBlock(overrides);
-  const failing =
-    (contrast.primary !== null && contrast.primary < AA_TEXT) ||
-    (contrast.secondary !== null && contrast.secondary < AA_TEXT);
-
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(cssBlock);
@@ -194,16 +221,7 @@ export function ShowcaseBrandPanel() {
   };
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" size="sm">
-          <PaletteIcon />
-          <span className="hidden sm:inline">Thương hiệu</span>
-          {failing ? <TriangleAlertIcon className="text-warning" /> : null}
-        </Button>
-      </PopoverTrigger>
-
-      <PopoverContent align="end" className="w-80">
+    <div data-slot="brand-panel" className="flex max-w-md flex-col gap-[var(--density-gap)]">
         <div className="flex flex-col gap-[var(--density-gap)]">
           <div className="flex flex-col gap-1">
             <p className="text-sm font-medium">Thương hiệu</p>
@@ -306,7 +324,7 @@ export function ShowcaseBrandPanel() {
               variant="ghost"
               size="sm"
               disabled={cssBlock.length === 0}
-              onClick={() => setSettings(EMPTY)}
+              onClick={reset}
             >
               <RotateCcwIcon />
               Đặt lại
@@ -331,8 +349,7 @@ export function ShowcaseBrandPanel() {
           className="pointer-events-none absolute size-0 overflow-hidden"
           style={{ color: "var(--secondary-foreground)", background: "var(--secondary)" }}
         />
-      </PopoverContent>
-    </Popover>
+    </div>
   );
 }
 

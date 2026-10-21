@@ -1,59 +1,44 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { ActivityChart } from "./activity-chart";
-import { KpiCards } from "./kpi-cards";
-import { PeopleTable } from "./people-table";
-import { RecentDocuments } from "./recent-documents";
+import { BrandProvider } from "./showcase-brand-panel";
 import { ShowcaseCommand } from "./showcase-command";
+import { ShowcaseHeader } from "./showcase-header";
 import { ShowcaseSidebar } from "./showcase-sidebar";
-import { ShowcaseTopbar } from "./showcase-topbar";
-import { ALL_NAV_ITEMS } from "./showcase-nav";
 
 /**
- * Composition root for the dashboard.
+ * The shell every showcase page mounts inside, rendered once by
+ * `app/showcase/layout.tsx` so the sidebar, header and palette keep their state
+ * (collapsed, open groups, workspace) while pages swap underneath.
  *
- * Client-side because the shell owns two pieces of interaction state — which nav
- * item is active and whether the ⌘K palette is open — that both the sidebar and
- * the palette read. Everything below it is a plain reno primitive; nothing here
- * styles a component, which is the property the page is meant to demonstrate.
+ * Client-side because it owns the palette's open state, which the header's
+ * search field and the Ctrl K shortcut both drive. `BrandProvider` is here for
+ * the same reason it must outlive a page: the brand a reviewer dialled in
+ * Cấu hình has to survive clicking any other menu item.
  */
-export function ShowcaseShell() {
-  const [active, setActive] = React.useState("dashboard");
+export function ShowcaseShell({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const [searchOpen, setSearchOpen] = React.useState(false);
 
-  const title = ALL_NAV_ITEMS.find((item) => item.key === active)?.label ?? "Bảng điều khiển";
-
   return (
-    <SidebarProvider>
-      <ShowcaseSidebar
-        active={active}
-        onNavigate={setActive}
-        onOpenSearch={() => setSearchOpen(true)}
-      />
+    <BrandProvider>
+      <SidebarProvider>
+        <ShowcaseSidebar />
 
-      <SidebarInset>
-        <ShowcaseTopbar title={title} />
+        <SidebarInset>
+          <ShowcaseHeader onOpenSearch={() => setSearchOpen(true)} />
+          <main className="flex flex-1 flex-col gap-[var(--density-gap)] p-4">{children}</main>
+        </SidebarInset>
 
-        <div className="flex flex-1 flex-col gap-[var(--density-gap)] p-4">
-          <KpiCards />
-
-          <div className="grid gap-[var(--density-gap)] xl:grid-cols-3">
-            <ActivityChart className="xl:col-span-2" />
-            <RecentDocuments />
-          </div>
-
-          <PeopleTable />
-        </div>
-      </SidebarInset>
-
-      <ShowcaseCommand
-        open={searchOpen}
-        onOpenChange={setSearchOpen}
-        onSelect={setActive}
-      />
-    </SidebarProvider>
+        <ShowcaseCommand
+          open={searchOpen}
+          onOpenChange={setSearchOpen}
+          onSelect={(href) => router.push(href)}
+        />
+      </SidebarProvider>
+    </BrandProvider>
   );
 }
