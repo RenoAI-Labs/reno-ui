@@ -127,6 +127,11 @@ const PAGES = [
   },
   { path: "/perf/data-grid", label: "perf harness (10k rows, virtualized)", minRows: 1 },
   { path: "/theming", label: "theming" },
+  { path: "/showcase", label: "showcase dashboard" },
+  { path: "/showcase/reports", label: "showcase reports" },
+  { path: "/showcase/employees", label: "showcase employees grid", minRows: 1 },
+  { path: "/showcase/settings", label: "showcase settings" },
+  { path: "/showcase/profile", label: "showcase profile" },
   { path: "/showcase/all-components", label: "kitchen sink" },
 ];
 
@@ -231,6 +236,9 @@ async function checkPage(context, spec, errors) {
   console.log(`  ✓ ${spec.path} — ${metrics.rows} grid row(s), no overflow`);
 }
 
+/** The showcase page that carries the people grid; the colour-mode sweep runs there. */
+const SHOWCASE_GRID_PAGE = "/showcase/employees";
+
 /**
  * The showcase in both colour modes.
  *
@@ -253,7 +261,7 @@ async function checkShowcase(context, viewport, errors) {
   await page.setViewportSize(viewport);
 
   // First load establishes the origin so localStorage can be written.
-  await page.goto(`${BASE}/showcase`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}${SHOWCASE_GRID_PAGE}`, { waitUntil: "networkidle" });
 
   for (const mode of MODES) {
     await page.evaluate(
@@ -270,7 +278,7 @@ async function checkShowcase(context, viewport, errors) {
       )
       .catch(() => {});
 
-    const where = `/showcase [${mode} @ ${viewport.width}px]`;
+    const where = `${SHOWCASE_GRID_PAGE} [${mode} @ ${viewport.width}px]`;
     const metrics = await measure(page);
     checkOverflow(where, metrics, errors);
 
@@ -280,7 +288,7 @@ async function checkShowcase(context, viewport, errors) {
     console.log(`  ✓ ${where} — ${metrics.rows} grid row(s)`);
   }
 
-  for (const message of consoleErrors) errors.push(`/showcase: ${message}`);
+  for (const message of consoleErrors) errors.push(`${SHOWCASE_GRID_PAGE}: ${message}`);
   await page.close();
 }
 
