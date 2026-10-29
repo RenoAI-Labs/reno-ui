@@ -123,6 +123,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `separator` | ui | Layout | shadcn/ui | MIT | shadcn separator, new-york style; unchanged | 2026-09-01 |
 | `sheet` | ui | Overlay | shadcn/ui | MIT | shadcn sheet, new-york style; content/overlay z-index read from --z-modal/--z-overlay | 2026-09-01 |
 | `sidebar` | ui | Nav | shadcn/ui | MIT | shadcn sidebar, new-york style; restyled to --sidebar* tokens, control heights read density tokens, split into a sidebar/ directory to keep each file under the 200-line ceiling, no next/link import (menu buttons take asChild) | 2026-09-01 |
+| `site-brand` | ui | Nav | original | original | Viết cho reno để thay site-brand.tsx viết tay trong các dự án (SEO.BRAND.02); theo cấu trúc của badge/breadcrumb (cva, asChild qua Slot) và cỡ density của avatar. shadcn/ui không có component này | 2026-10-29 |
 | `skeleton` | ui | Feedback | shadcn/ui | MIT | shadcn skeleton, new-york style; bg-muted swapped for bg-accent to match reno's token set | 2026-09-01 |
 | `slider` | ui | Form | shadcn/ui | MIT | shadcn slider, new-york style; unchanged | 2026-09-01 |
 | `sonner` | ui | Feedback | shadcn/ui | MIT | shadcn sonner, new-york style; next-themes swapped for an overridable theme prop (default "system") to stay framework-neutral | 2026-09-01 |
@@ -198,7 +199,7 @@ Allowed: `MIT`, `ISC`, `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `0BSD`, `CC
 | `@radix-ui/react-select` | ^2.3.7 | MIT | `select` |
 | `@radix-ui/react-separator` | ^1.1.15 | MIT | `separator` |
 | `@radix-ui/react-slider` | ^1.4.7 | MIT | `slider` |
-| `@radix-ui/react-slot` | ^1.3.3 | MIT | `badge`, `breadcrumb`, `button`, `form`, `pagination`, `sidebar` |
+| `@radix-ui/react-slot` | ^1.3.3 | MIT | `badge`, `breadcrumb`, `button`, `form`, `pagination`, `sidebar`, `site-brand` |
 | `@radix-ui/react-switch` | ^1.3.7 | MIT | `switch` |
 | `@radix-ui/react-tabs` | ^1.1.21 | MIT | `tabs` |
 | `@radix-ui/react-toggle` | ^1.1.18 | MIT | `toggle` |
@@ -214,7 +215,7 @@ Allowed: `MIT`, `ISC`, `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `0BSD`, `CC
 | `@tiptap/react` | ^3.31.0 | MIT | `rich-text` |
 | `@tiptap/starter-kit` | ^3.31.0 | MIT | `rich-text` |
 | `@uiw/react-codemirror` | ^4.25.11 | MIT | `code-editor` |
-| `class-variance-authority` | ^0.7.1 | Apache-2.0 | `alert`, `avatar`, `badge`, `button`, `navigation-menu`, `sheet`, `sidebar`, `spinner`, `toggle`, `toggle-group` |
+| `class-variance-authority` | ^0.7.1 | Apache-2.0 | `alert`, `avatar`, `badge`, `button`, `navigation-menu`, `sheet`, `sidebar`, `site-brand`, `spinner`, `toggle`, `toggle-group` |
 | `clsx` | ^2.1.1 | MIT | `utils` |
 | `cmdk` | ^1.1.1 | MIT | `command` |
 | `date-fns` | ^4.4.0 | MIT | `calendar`, `date-picker` |
