@@ -66,6 +66,7 @@ export const DEMOS: Record<string, ComponentType> = {
   "separator": dynamic(() => import("@/registry/reno/examples/separator-demo")),
   "sheet": dynamic(() => import("@/registry/reno/examples/sheet-demo")),
   "sidebar": dynamic(() => import("@/registry/reno/examples/sidebar-demo")),
+  "site-brand": dynamic(() => import("@/registry/reno/examples/site-brand-demo")),
   "skeleton": dynamic(() => import("@/registry/reno/examples/skeleton-demo")),
   "slider": dynamic(() => import("@/registry/reno/examples/slider-demo")),
   "sonner": dynamic(() => import("@/registry/reno/examples/sonner-demo")),
