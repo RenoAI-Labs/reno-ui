@@ -2,7 +2,7 @@
   "name": "avatar",
   "type": "registry:ui",
   "title": "Avatar",
-  "description": "Ảnh đại diện với ảnh, chữ viết tắt dự phòng và ba cỡ đọc token density, đồng bộ chiều cao với Button.",
+  "description": "Ảnh đại diện với ảnh, chữ viết tắt dự phòng và ba cỡ đọc token density, đồng bộ chiều cao với Button. Biến thể shape=\"logo\" hiển thị logo thương hiệu (chiều cao theo token density, chiều rộng theo ảnh) hoặc chữ wordmark khi chưa có logo.",
   "dependencies": [
     "@radix-ui/react-avatar@^1.2.6",
     "class-variance-authority@^0.7.1"
@@ -19,7 +19,7 @@
   "meta": {
     "source": "shadcn/ui",
     "license": "MIT",
-    "upstream": "shadcn avatar, new-york style; size variants rewritten to read density tokens",
+    "upstream": "shadcn avatar, new-york style; size variants rewritten to read density tokens; shape variant (circle, logo) added for brand marks in site header/footer, logo fallback is a text wordmark",
     "added": "2026-09-01",
     "group": "Data"
   }

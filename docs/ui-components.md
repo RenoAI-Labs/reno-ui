@@ -72,7 +72,7 @@ _Generated from `registry/items/*.json` by `scripts/check-provenance.mjs`. Do no
 | `aspect-ratio` | ui | Layout | shadcn/ui | MIT | shadcn aspect-ratio, new-york style; unchanged | 2026-09-01 |
 | `attention-card` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Màu nhấn lấy từ --warning và --destructive ở alpha thấp, không dùng màu palette | 2026-10-21 |
 | `audio-player` | ui | Data | original | original | video-player covers video via hls.js; pulling hls.js in to play an mp3 is bundle cost for nothing | 2026-09-05 |
-| `avatar` | ui | Data | shadcn/ui | MIT | shadcn avatar, new-york style; size variants rewritten to read density tokens | 2026-09-01 |
+| `avatar` | ui | Data | shadcn/ui | MIT | shadcn avatar, new-york style; size variants rewritten to read density tokens; shape variant (circle, logo) added for brand marks in site header/footer, logo fallback is a text wordmark | 2026-09-01 |
 | `badge` | ui | Feedback | shadcn/ui | MIT | shadcn badge, new-york style; added success/warning/info variants | 2026-09-01 |
 | `breadcrumb` | ui | Nav | shadcn/ui | MIT | shadcn breadcrumb, new-york style; ellipsis size rewritten to read density tokens | 2026-09-01 |
 | `bulk-action-bar` | ui | Data | original | original | Viết cho reno; shadcn/ui không có. Luật bắt buộc của admin-layout-standard §7: danh sách có thao tác hàng loạt thì có cột chọn và thanh này | 2026-10-21 |
