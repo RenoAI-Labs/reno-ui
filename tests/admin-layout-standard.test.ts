@@ -70,7 +70,7 @@ describe("docs/admin-layout-standard.md", () => {
   const standard = readFileSync(join(ROOT, "docs/admin-layout-standard.md"), "utf8");
 
   it("carries its version and a changelog", () => {
-    expect(standard).toContain("`admin-layout-standard v1`");
+    expect(standard).toContain("`admin-layout-standard v2`");
     expect(standard).toMatch(/^## Changelog/m);
   });
 
