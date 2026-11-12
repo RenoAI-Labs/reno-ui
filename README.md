@@ -99,7 +99,7 @@ reports, a list page, settings with a permission matrix, and a profile — and i
 shell, header, avatar menu, grid and settings layout are the fixed layout of
 every project's admin portal. Positions and functions are the standard; brand
 colour and style are per project, through tokens. The contract, its version
-(`admin-layout-standard v1`) and the list of what may and may not vary are in
+(`admin-layout-standard v2`) and the list of what may and may not vary are in
 [docs/admin-layout-standard.md](./docs/admin-layout-standard.md). The parts a
 project installs for it are the registry items `page-header`, `user-menu`,
 `quota-widget`, `attention-card`, `bulk-action-bar`, `row-actions`, `save-bar`

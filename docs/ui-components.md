@@ -269,7 +269,7 @@ MIT members are counted rather than listed; everything else is named.
 ## Admin layout standard
 
 The showcase's admin portal is the reference implementation of
-[admin-layout-standard.md](./admin-layout-standard.md) (`admin-layout-standard v1`).
+[admin-layout-standard.md](./admin-layout-standard.md) (`admin-layout-standard v2`).
 These registry items exist because that standard uses them, and the showcase
 consumes them the way a project would — all `original` / `original`, added
 2026-10-21:

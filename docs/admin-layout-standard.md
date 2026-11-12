@@ -1,6 +1,6 @@
 # Admin layout standard
 
-**Version: `admin-layout-standard v1`** · 2026-10-21
+**Version: `admin-layout-standard v2`** · 2026-11-12
 
 This is the fixed layout of every admin portal built on reno-ui. The live
 reference is the showcase at https://ui.reno.ai.vn/showcase (source in
@@ -253,10 +253,18 @@ Bảo mật, Tích hợp, Gói và thanh toán, Vai trò và phân quyền.**
 ## 9. Profile page (Hồ sơ cá nhân)
 
 Avatar with upload and crop (`@reno/image-cropper`, `@reno/file-upload`),
-personal information form, change password, two-factor settings, active sessions
-and login history table, language and theme preference, notification
-preference toggles, and the account's roles as **multiple role chips** with a
-"Gán vai trò" control.
+personal information form, active sessions and login history table, language
+and theme preference, notification preference toggles, and the account's roles
+as **multiple role chips** with a "Gán vai trò" control.
+
+Two blocks depend on how the project signs in. **Change password** and
+**two-factor settings** appear only when the project signs in with a password.
+A second factor is required only for a password sign-in; a project whose
+sign-in is an e-mailed code, a magic link, a passkey or single sign-on shows
+neither block, because that sign-in already is the proof and the project stores
+no password to change. The project says which case applies in its requirements
+(the sign-in requirement), and a sensitive action still asks the user to
+sign in again.
 
 ## 10. What a project may vary, and what it may not
 
@@ -318,3 +326,9 @@ private copies of them under `app/showcase/`.
   menu, dashboard, reports, grid (select column, bulk action bar, Hành động
   column, pagination), settings with the permission matrix, profile with
   multi-role chips.
+- **v2 (2026-11-12):** the profile page (§9) shows change password and
+  two-factor settings only when the project signs in with a password; a project
+  with an e-mailed code, magic link, passkey or single sign-on sign-in shows
+  neither. Nothing else changes. Reason: a second factor is required only for a
+  password sign-in (security baseline 1.3.0, decision
+  `mfa-only-for-password-sign-in`).
